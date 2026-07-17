@@ -1,0 +1,38 @@
+import { Star } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import type { CSSProperties } from "react";
+import type { Book } from "@/types/book";
+import { formatPrice } from "@/lib/format";
+import { FavoriteButton } from "./FavoriteButton";
+
+export function BookCard({ book }: { book: Book }) {
+  const style = { "--book-bg": book.color } as CSSProperties;
+
+  return (
+    <article className="book-card group" style={style}>
+      <div className="relative aspect-[4/4.7] overflow-hidden rounded-xl bg-[var(--book-bg)]">
+        {book.badge && <span className="absolute left-2.5 top-2.5 z-10 rounded-full bg-brand-gold px-2.5 py-1 text-[10px] font-bold text-ink">{book.badge}</span>}
+        <FavoriteButton book={book} />
+        <Image
+          src={book.image}
+          alt={`${book.title} kitobi muqovasi`}
+          fill
+          sizes="(max-width: 640px) 44vw, (max-width: 1024px) 30vw, 190px"
+          className="object-cover transition duration-500 group-hover:scale-[1.035]"
+        />
+      </div>
+      <div className="flex flex-1 flex-col pt-3">
+        <h3 className="line-clamp-2 text-[15px] font-bold leading-5 text-ink sm:text-base">{book.title}</h3>
+        <p className="mt-1 line-clamp-2 min-h-9 text-[12px] leading-[18px] text-muted sm:text-[13px]">{book.description}</p>
+        <p className="mt-2 text-[15px] font-extrabold text-brand sm:text-[17px]">{formatPrice(book.price)}</p>
+        <div className="mt-2 flex items-center gap-1 text-[11px] text-muted">
+          <Star size={14} className="fill-amber-400 text-amber-400" aria-hidden="true" />
+          <span className="font-semibold text-ink">{book.rating}</span>
+          <span>({book.reviews} sharh)</span>
+        </div>
+      </div>
+      <Link href={`/books/${book.slug}`} className="absolute inset-0 z-10 rounded-2xl" aria-label={`${book.title} mahsulot sahifasiga o‘tish`} />
+    </article>
+  );
+}

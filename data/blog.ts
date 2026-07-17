@@ -1,0 +1,8 @@
+export const posts = [
+  { slug: "kitob-tanlash-boyicha-7-tavsiya", category: "Mutolaa", title: "Kitob tanlash bo‘yicha 7 amaliy tavsiya", excerpt: "Qiziqishingiz va maqsadingizga mos kitobni topish uchun sodda, ammo foydali yo‘l-yo‘riqlar.", date: "15-iyul, 2026", readTime: "6 daqiqa", color: "#E7F0EA" },
+  { slug: "oilaviy-kutubxona-qanday-tuziladi", category: "Oila", title: "Oilaviy kutubxona qanday tuziladi?", excerpt: "Har bir yoshdagi o‘quvchi uchun mazmunli va muvozanatli uy kutubxonasini shakllantirish.", date: "10-iyul, 2026", readTime: "8 daqiqa", color: "#F2EBDD" },
+  { slug: "bolalarda-mutolaa-odatini-shakllantirish", category: "Bolalar", title: "Bolalarda mutolaa odatini shakllantirish", excerpt: "Kitob o‘qishni majburiyat emas, yoqimli oilaviy odatga aylantirishning sinalgan usullari.", date: "4-iyul, 2026", readTime: "5 daqiqa", color: "#E9EDF3" },
+  { slug: "sifatli-nashrni-qanday-tanib-olish", category: "Qo‘llanma", title: "Sifatli nashrni qanday tanib olish mumkin?", excerpt: "Muqova, qog‘oz, bosma va tarjima sifatini xariddan oldin baholash uchun qisqa qo‘llanma.", date: "28-iyun, 2026", readTime: "7 daqiqa", color: "#F1E9E7" },
+  { slug: "yozgi-mutolaa-uchun-10-kitob", category: "Tavsiya", title: "Yozgi mutolaa uchun 10 kitob", excerpt: "Ta’til kunlarini mazmunli o‘tkazish uchun tahririyatimiz saralagan yengil va foydali asarlar.", date: "20-iyun, 2026", readTime: "9 daqiqa", color: "#E9F0E5" },
+  { slug: "kuniga-20-daqiqa-mutolaa", category: "Odatlar", title: "Kuniga 20 daqiqa mutolaa nimani o‘zgartiradi?", excerpt: "Kichik, ammo muntazam mutolaa odatining diqqat, xotira va dunyoqarashga ta’siri.", date: "12-iyun, 2026", readTime: "4 daqiqa", color: "#F3EEE5" },
+];
