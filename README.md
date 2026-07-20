@@ -16,10 +16,10 @@ Brauzerda `http://localhost:3000` manzilini oching.
 Do‘kon REST API manzilini `.env.local` faylida belgilang:
 
 ```env
-KITOBGO_API_URL=http://127.0.0.1:8080
+KITOBGO_API_URL=https://api.kitobgo.com
 ```
 
-Qiymat berilmasa shu lokal manzil standart sifatida ishlatiladi.
+Qiymat berilmasa `https://api.kitobgo.com` standart sifatida ishlatiladi. Lokal backend bilan ishlash uchun `.env.local` da `http://127.0.0.1:8080` deb belgilang.
 
 ## Tekshiruvlar
 

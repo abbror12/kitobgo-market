@@ -1,6 +1,6 @@
 import type { Book } from "@/types/book";
 
-export const API_BASE_URL = (process.env.KITOBGO_API_URL ?? "http://127.0.0.1:8080").replace(/\/$/, "");
+export const API_BASE_URL = (process.env.KITOBGO_API_URL ?? "https://api.kitobgo.com").replace(/\/$/, "");
 
 export interface ProductImageDto {
   id: string | number;
@@ -84,9 +84,11 @@ async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
 const colors = ["#EAF3ED", "#F3EBDD", "#F4E9DD", "#F5E9EE", "#E8EEE7", "#E9F0F3"];
 
 export function productToBook(product: ProductResponseDto): Book {
+  // Lokal saqlashda url nisbiy (/uploads/...) — /api/media orqali proksilanadi;
+  // s3/CDN saqlashda to'liq URL keladi — borligicha ishlatiladi.
   const productImages = [...(product.images ?? [])]
     .sort((a, b) => a.sortOrder - b.sortOrder)
-    .map((image) => `/api/media?path=${encodeURIComponent(image.url)}`);
+    .map((image) => (image.url.startsWith("/") ? `/api/media?path=${encodeURIComponent(image.url)}` : image.url));
   const primaryImage = productImages[0];
   const effectivePrice = product.hasDiscount && product.discountPrice ? product.discountPrice : product.price;
   const id = String(product.id);
@@ -117,8 +119,8 @@ export function productToBook(product: ProductResponseDto): Book {
 }
 
 export async function getProducts(): Promise<Book[]> {
-  const products = await apiFetch<ProductResponseDto[]>("/api/products", { next: { revalidate: 30 } });
-  return products.map(productToBook);
+  const result = await apiFetch<PagedResponse<ProductResponseDto>>("/api/products?size=200", { next: { revalidate: 30 } });
+  return result.content.map(productToBook);
 }
 
 export async function getProduct(id: string): Promise<Book> {
