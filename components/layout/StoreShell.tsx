@@ -5,6 +5,7 @@ import { MainNavigation } from "./MainNavigation";
 import { MobileBottomNavigation } from "./MobileBottomNavigation";
 import { MobileHeader } from "./MobileHeader";
 import { TopBar } from "./TopBar";
+import { PendingOrderProcessor } from "../orders/PendingOrderProcessor";
 
 export function StoreShell({ children }: { children: ReactNode }) {
   return (
@@ -16,6 +17,7 @@ export function StoreShell({ children }: { children: ReactNode }) {
         <MainNavigation />
       </div>
       <main>{children}</main>
+      <PendingOrderProcessor />
       <Footer />
       <MobileBottomNavigation />
     </>

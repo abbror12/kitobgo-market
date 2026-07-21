@@ -4,7 +4,7 @@ import { Minus, Plus, ShieldCheck, ShoppingBag, Trash2, Truck } from "lucide-rea
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, isExternalImage } from "@/lib/format";
 import type { Book } from "@/types/book";
 
 interface CartItem { book: Book; quantity: number }
@@ -36,7 +36,7 @@ export function CartContent() {
       <div className="space-y-3">
         {items.map(({ book, quantity }) => (
           <article key={book.id} className="flex gap-4 rounded-2xl border border-line bg-white p-3 sm:items-center sm:p-4">
-            <Link href={`/books/${book.slug}`} className="relative aspect-[4/4.7] w-24 shrink-0 overflow-hidden rounded-xl sm:w-32" style={{ backgroundColor: book.color }}><Image src={book.image} alt={book.title} fill sizes="128px" className="object-cover" /></Link>
+            <Link href={`/books/${book.slug}`} className="relative aspect-[4/4.7] w-24 shrink-0 overflow-hidden rounded-xl sm:w-32" style={{ backgroundColor: book.color }}><Image src={book.image} alt={book.title} fill unoptimized={isExternalImage(book.image)} sizes="128px" className="object-cover" /></Link>
             <div className="min-w-0 flex-1 self-stretch py-1"><Link href={`/books/${book.slug}`} className="font-extrabold leading-5 hover:text-brand sm:text-lg">{book.title}</Link><p className="mt-1 line-clamp-1 text-xs text-muted sm:text-sm">{book.author}</p><p className="mt-3 font-extrabold text-brand sm:text-lg">{formatPrice(book.price)}</p><div className="mt-3 flex items-center justify-between sm:hidden"><Quantity value={quantity} onMinus={() => updateQuantity(book.id, -1)} onPlus={() => updateQuantity(book.id, 1)} /><button onClick={() => save(items.filter((item) => item.book.id !== book.id))} className="icon-button text-muted hover:text-red-600" aria-label="Olib tashlash"><Trash2 size={18} /></button></div></div>
             <div className="hidden items-center gap-4 sm:flex"><Quantity value={quantity} onMinus={() => updateQuantity(book.id, -1)} onPlus={() => updateQuantity(book.id, 1)} /><div className="w-28 text-right font-extrabold">{formatPrice(book.price * quantity)}</div><button onClick={() => save(items.filter((item) => item.book.id !== book.id))} className="icon-button text-muted hover:text-red-600" aria-label="Olib tashlash"><Trash2 size={18} /></button></div>
           </article>

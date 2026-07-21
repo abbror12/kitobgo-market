@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { Book } from "@/types/book";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, isExternalImage } from "@/lib/format";
 import { FavoriteButton } from "./FavoriteButton";
 
 export function BookCard({ book }: { book: Book }) {
@@ -18,6 +18,7 @@ export function BookCard({ book }: { book: Book }) {
           src={book.image}
           alt={`${book.title} kitobi muqovasi`}
           fill
+          unoptimized={isExternalImage(book.image)}
           sizes="(max-width: 640px) 44vw, (max-width: 1024px) 30vw, 190px"
           className="object-cover transition duration-500 group-hover:scale-[1.035]"
         />
@@ -27,9 +28,9 @@ export function BookCard({ book }: { book: Book }) {
         <p className="mt-1 line-clamp-2 min-h-9 text-[12px] leading-[18px] text-muted sm:text-[13px]">{book.description}</p>
         <p className="mt-2 text-[15px] font-extrabold text-brand sm:text-[17px]">{formatPrice(book.price)}</p>
         <div className="mt-2 flex items-center gap-1 text-[11px] text-muted">
-          <Star size={14} className="fill-amber-400 text-amber-400" aria-hidden="true" />
-          <span className="font-semibold text-ink">{book.rating}</span>
-          <span>({book.reviews} sharh)</span>
+          <Star size={14} className={book.rating ? "fill-amber-400 text-amber-400" : "text-line"} aria-hidden="true" />
+          <span className="font-semibold text-ink">{book.rating || "Yangi"}</span>
+          {book.reviews > 0 && <span>({book.reviews} sharh)</span>}
         </div>
       </div>
       <Link href={`/books/${book.slug}`} className="absolute inset-0 z-10 rounded-2xl" aria-label={`${book.title} mahsulot sahifasiga o‘tish`} />

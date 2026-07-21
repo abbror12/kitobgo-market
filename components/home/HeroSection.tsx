@@ -1,7 +1,7 @@
 import { BadgeCheck, Check, CirclePlay, CreditCard, ShoppingBag, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { formatPrice } from "@/lib/format";
+import { formatPrice, isExternalImage } from "@/lib/format";
 import type { Book } from "@/types/book";
 
 const benefits = ["So‘zma-so‘z tarjima", "Rangli izohlar", "Oson tushunarli", "Din ishlari qo‘mitasi ruxsatiga ega"];
@@ -32,7 +32,7 @@ export function HeroSection({ book }: { book: Book }) {
           </div>
           <div className="relative min-h-[220px] sm:min-h-full">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(199,168,74,.13),transparent_65%)]" />
-            <Image src={book.image} alt={`${book.title} kitobi`} fill priority sizes="(max-width: 640px) 45vw, 50vw" className="object-cover object-[56%_center]" />
+            <Image src={book.image} alt={`${book.title} kitobi`} fill priority unoptimized={isExternalImage(book.image)} sizes="(max-width: 640px) 45vw, 50vw" className="object-contain p-3 sm:p-8 lg:p-10" />
             <div className="absolute bottom-5 right-5 hidden w-52 space-y-2.5 xl:block">
               <div className="hero-fact"><BadgeCheck size={21} aria-hidden="true" /><span><strong>Rasmiy ruxsat</strong>Din ishlari qo‘mitasi</span></div>
               <div className="hero-fact"><Truck size={21} aria-hidden="true" /><span><strong>Bepul yetkazish</strong>Butun O‘zbekiston bo‘ylab</span></div>

@@ -11,6 +11,8 @@ export interface Book {
   badge?: string;
   color: string;
   category: string;
+  categoryName?: string;
+  categories?: Array<{ id: string; name: string }>;
   author: string;
   publisher: string;
   publishedYear: number;
@@ -35,7 +37,7 @@ export interface Author {
 export interface Category {
   id: string;
   name: string;
-  icon: CategoryIcon;
+  icon?: CategoryIcon;
 }
 
 export type CategoryIcon =

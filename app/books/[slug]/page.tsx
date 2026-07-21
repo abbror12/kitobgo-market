@@ -8,7 +8,6 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductSection } from "@/components/product/ProductSection";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { getBookBySlug } from "@/data/books";
-import { categories } from "@/data/home";
 import { formatPrice } from "@/lib/format";
 import { getProduct, getProducts } from "@/lib/store-api";
 
@@ -22,9 +21,14 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const book = await getProduct(slug).catch(() => getBookBySlug(slug));
   if (!book) notFound();
-  const categoryName = categories.find((item) => item.id === book.category)?.name ?? "Kitoblar";
+  const categoryName = book.categoryName ?? "Kitoblar";
   const allBooks = await getProducts().catch(() => []);
-  const related = allBooks.filter((item) => item.id !== book.id).sort((a, b) => Number(b.author === book.author) - Number(a.author === book.author)).slice(0, 4);
+  const categoryIds = new Set(book.categories?.map((category) => category.id) ?? []);
+  const related = allBooks.filter((item) => item.id !== book.id).sort((a, b) => {
+    const bRelated = b.categories?.some((category) => categoryIds.has(category.id)) || b.author === book.author;
+    const aRelated = a.categories?.some((category) => categoryIds.has(category.id)) || a.author === book.author;
+    return Number(bRelated) - Number(aRelated);
+  }).slice(0, 4);
 
   return (
     <StoreShell>
@@ -37,7 +41,7 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
             <h1 className="mt-3 text-3xl font-extrabold leading-tight tracking-[-0.035em] text-ink sm:text-[42px]">{book.title}</h1>
             <Link href={`/authors?q=${encodeURIComponent(book.author)}`} className="mt-2 w-fit text-sm font-medium text-muted transition hover:text-brand">{book.author}</Link>
             <div className="mt-4 flex flex-wrap items-center gap-3 text-sm"><span className="inline-flex items-center gap-1 font-bold"><Star size={17} className="fill-amber-400 text-amber-400" /> {book.rating || "Yangi"}</span>{book.reviews > 0 && <span className="text-muted">{book.reviews} ta sharh</span>}<span className="h-4 w-px bg-line" /><span className={`inline-flex items-center gap-1.5 font-semibold ${book.inStock ? "text-brand" : "text-red-600"}`}><PackageCheck size={17} /> {book.inStock ? "Omborda mavjud" : "Hozircha mavjud emas"}</span></div>
-            <p className="mt-5 max-w-xl leading-7 text-muted">{book.description}. Sifatli nashr, o‘qishga qulay sahifalar va uzoq muddat foydalanish uchun puxta muqova.</p>
+            <p className="mt-5 max-w-xl leading-7 text-muted">{book.description}</p>
             <div className="mt-6 flex items-end gap-3"><span className="text-3xl font-extrabold text-brand">{formatPrice(book.price)}</span>{book.oldPrice && <span className="pb-1 text-sm text-muted line-through">{formatPrice(book.oldPrice)}</span>}</div>
             <ProductActions book={book} />
             <div className="mt-7 grid gap-3 border-t border-line pt-6 sm:grid-cols-2">
@@ -50,7 +54,7 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
       <section className="border-y border-line bg-white py-12 sm:py-16">
         <div className="container-page grid gap-10 lg:grid-cols-[1.1fr_.9fr] lg:gap-16">
           <div><span className="eyebrow">Kitob haqida</span><h2 className="mt-3 text-2xl font-extrabold sm:text-3xl">Mazmunli va sifatli nashr</h2><p className="mt-4 leading-8 text-muted">Ushbu kitob ishonchli nashriyot tomonidan tayyorlangan. Matn terilishi, qog‘oz sifati va muqova dizayni kundalik mutolaa uchun qulay. Buyurtmangiz maxsus himoyalangan qadoqda yetkaziladi.</p><div className="mt-6 flex gap-3 rounded-2xl bg-[#F3F6F3] p-4"><ShieldCheck className="shrink-0 text-brand" /><p className="text-sm leading-6 text-muted"><strong className="block text-ink">Original mahsulot kafolati</strong>Har bir nashr rasmiy hamkorlardan olinadi va jo‘natishdan oldin tekshiriladi.</p></div></div>
-          <div className="rounded-2xl border border-line p-5 sm:p-6"><h2 className="flex items-center gap-2 font-extrabold"><BookOpen size={19} className="text-brand" /> Kitob xususiyatlari</h2><dl className="mt-4 divide-y divide-line text-sm">{[["Muallif", book.author], ["Nashriyot", book.publisher], ["Nashr yili", String(book.publishedYear)], ["Sahifalar", `${book.pages} bet`], ["Til", book.language], ["Muqova", book.cover], ["ISBN", book.isbn]].map(([label, value]) => <div key={label} className="grid grid-cols-[110px_1fr] gap-3 py-3"><dt className="text-muted">{label}</dt><dd className="font-semibold text-ink">{value}</dd></div>)}</dl></div>
+          <div className="rounded-2xl border border-line p-5 sm:p-6"><h2 className="flex items-center gap-2 font-extrabold"><BookOpen size={19} className="text-brand" /> Kitob xususiyatlari</h2><dl className="mt-4 divide-y divide-line text-sm">{[["Muallif", book.author], ["Nashriyot", book.publisher], ["Nashr yili", book.publishedYear ? String(book.publishedYear) : "—"], ["Sahifalar", book.pages ? `${book.pages} bet` : "—"], ["Til", book.language], ["Muqova", book.cover], ["ISBN", book.isbn]].map(([label, value]) => <div key={label} className="grid grid-cols-[110px_1fr] gap-3 py-3"><dt className="text-muted">{label}</dt><dd className="font-semibold text-ink">{value}</dd></div>)}</dl></div>
         </div>
       </section>
       <div className="container-page grid gap-3 py-8 sm:grid-cols-3">{[{ icon: BadgeCheck, title: "Tekshirilgan nashr", text: "Sifat va mazmun nazorati" }, { icon: Truck, title: "Tezkor yetkazish", text: "1–3 ish kuni ichida" }, { icon: ShieldCheck, title: "14 kun kafolat", text: "Qaytarish imkoniyati" }].map(({ icon: Icon, title, text }) => <div key={title} className="flex items-center gap-3 rounded-2xl border border-line bg-white p-4"><span className="grid size-11 place-items-center rounded-xl bg-brand/10 text-brand"><Icon size={21} /></span><span><strong className="block text-sm">{title}</strong><small className="text-muted">{text}</small></span></div>)}</div>

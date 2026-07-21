@@ -1,14 +1,20 @@
 import { Clock3, Instagram, Phone, Send } from "lucide-react";
 import Link from "next/link";
+import { categories as fallbackCategories } from "@/data/home";
+import { getCategories } from "@/lib/store-api";
 import { Logo } from "./Logo";
 
-const columns = [
-  { title: "Xaridorlarga", links: [{ label: "Yetkazib berish", href: "/about#delivery" }, { label: "To‘lov", href: "/about#payment" }, { label: "Qaytarish", href: "/about#returns" }, { label: "Ko‘p beriladigan savollar", href: "/#faq" }] },
-  { title: "Kategoriyalar", links: [{ label: "Qur’oni Karim", href: "/catalog?category=quran" }, { label: "Hadis", href: "/catalog?category=hadis" }, { label: "Tafsir", href: "/catalog?category=tafsir" }, { label: "Tarix", href: "/catalog?category=tarix" }] },
-  { title: "Kitob.go haqida", links: [{ label: "Biz haqimizda", href: "/about" }, { label: "Blog", href: "/blog" }, { label: "Hamkorlik", href: "/contact" }, { label: "Mualliflar", href: "/authors" }] },
-];
+export async function Footer() {
+  const apiCategories = await getCategories().catch(() => []);
+  const categoryLinks = (apiCategories.length ? apiCategories : fallbackCategories)
+    .slice(0, 4)
+    .map((category) => ({ label: category.name, href: `/catalog?category=${category.id}` }));
+  const columns = [
+    { title: "Xaridorlarga", links: [{ label: "Yetkazib berish", href: "/about#delivery" }, { label: "To‘lov", href: "/about#payment" }, { label: "Qaytarish", href: "/about#returns" }, { label: "Ko‘p beriladigan savollar", href: "/#faq" }] },
+    { title: "Kategoriyalar", links: categoryLinks },
+    { title: "Kitob.go haqida", links: [{ label: "Biz haqimizda", href: "/about" }, { label: "Blog", href: "/blog" }, { label: "Hamkorlik", href: "/contact" }, { label: "Mualliflar", href: "/authors" }] },
+  ];
 
-export function Footer() {
   return (
     <footer id="contact" className="border-t border-line bg-white pb-24 pt-14 md:pb-8">
       <div className="container-page grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">

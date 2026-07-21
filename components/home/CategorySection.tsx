@@ -1,9 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { categories } from "@/data/home";
+import type { Category } from "@/types/book";
 import { CategoryCard } from "./CategoryCard";
 
-export function CategorySection() {
+export function CategorySection({ categories }: { categories: Category[] }) {
   return (
     <section id="kategoriyalar" className="section-space">
       <div className="container-page">
