@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://kitobgo.com"),
   title: "Kitob.go — O‘zbekistondagi onlayn kitob do‘koni",
   description: "Qur’oni Karim, hadis, tafsir, tarix va boshqa kitoblarni bepul yetkazib berish hamda qabul qilgandan keyin to‘lash imkoniyati bilan xarid qiling.",
   keywords: ["kitob", "onlayn kitob do‘koni", "Qur’oni Karim", "hadis", "tafsir", "O‘zbekiston"],

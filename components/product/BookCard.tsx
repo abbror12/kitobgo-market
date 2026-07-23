@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { Book } from "@/types/book";
 import { formatPrice, isExternalImage } from "@/lib/format";
+import { BookCardActions } from "./BookCardActions";
 import { FavoriteButton } from "./FavoriteButton";
 
 export function BookCard({ book }: { book: Book }) {
@@ -33,6 +34,7 @@ export function BookCard({ book }: { book: Book }) {
           {book.reviews > 0 && <span>({book.reviews} sharh)</span>}
         </div>
       </div>
+      <BookCardActions book={book} />
       <Link href={`/books/${book.slug}`} className="absolute inset-0 z-10 rounded-2xl" aria-label={`${book.title} mahsulot sahifasiga o‘tish`} />
     </article>
   );
