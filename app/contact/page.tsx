@@ -19,9 +19,9 @@ export default function ContactPage() {
         breadcrumbs={[{ label: "Aloqa" }]}
       />
 
-      <section className="container-page py-8 sm:py-12">
+      <section className="container-page py-5 sm:py-12">
         <div className="grid gap-6 lg:grid-cols-[.75fr_1.25fr] xl:gap-8">
-          <div className="space-y-4">
+          <div className="mobile-rail sm:grid sm:grid-cols-2 sm:gap-4 lg:block lg:space-y-4">
             <ContactCard
               icon={Phone}
               label="Telefon"
@@ -44,7 +44,7 @@ export default function ContactPage() {
               note="Hamkorlik va takliflar uchun"
             />
 
-            <div className="rounded-2xl bg-brand-dark p-6 text-white">
+            <div className="rounded-2xl bg-brand-dark p-4 text-white sm:p-6">
               <MapPin className="text-brand-gold" />
               <h2 className="mt-5 font-extrabold">Ofisimiz</h2>
               <p className="mt-2 text-sm leading-6 text-white/70">
@@ -60,9 +60,9 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="border-y border-line bg-white py-10">
+      <section className="border-y border-line bg-white py-6 sm:py-10">
         <div className="container-page">
-          <div className="relative grid min-h-64 place-items-center overflow-hidden rounded-2xl bg-[#E5ECE7] text-center">
+          <div className="relative grid min-h-44 place-items-center overflow-hidden rounded-2xl bg-[#E5ECE7] text-center sm:min-h-64">
             <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(#12633d_1px,transparent_1px),linear-gradient(90deg,#12633d_1px,transparent_1px)] [background-size:32px_32px]" />
             <div className="relative rounded-2xl bg-white/95 p-6 shadow-card">
               <span className="mx-auto grid size-11 place-items-center rounded-full bg-brand text-white">
@@ -94,7 +94,7 @@ function ContactCard({
   return (
     <a
       href={href}
-      className="group flex items-center gap-4 rounded-2xl border border-line bg-white p-5 transition hover:border-brand/25 hover:shadow-card"
+      className="group flex items-center gap-3 rounded-2xl border border-line bg-white p-4 transition hover:border-brand/25 hover:shadow-card sm:gap-4 sm:p-5"
     >
       <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-brand/10 text-brand transition group-hover:bg-brand group-hover:text-white">
         <Icon size={22} />

@@ -24,11 +24,11 @@ export function BookCard({ book }: { book: Book }) {
           className="object-cover transition duration-500 group-hover:scale-[1.035]"
         />
       </div>
-      <div className="flex flex-1 flex-col pt-3">
-        <h3 className="line-clamp-2 text-[15px] font-bold leading-5 text-ink sm:text-base">{book.title}</h3>
-        <p className="mt-1 line-clamp-2 min-h-9 text-[12px] leading-[18px] text-muted sm:text-[13px]">{book.description}</p>
-        <p className="mt-2 text-[15px] font-extrabold text-brand sm:text-[17px]">{formatPrice(book.price)}</p>
-        <div className="mt-2 flex items-center gap-1 text-[11px] text-muted">
+      <div className="flex flex-1 flex-col pt-2 sm:pt-3">
+        <h3 className="line-clamp-2 text-[14px] font-bold leading-[18px] text-ink sm:text-base sm:leading-5">{book.title}</h3>
+        <p className="mt-1 hidden line-clamp-2 min-h-9 text-[12px] leading-[18px] text-muted sm:block sm:text-[13px]">{book.description}</p>
+        <p className="mt-1.5 text-[15px] font-extrabold text-brand sm:mt-2 sm:text-[17px]">{formatPrice(book.price)}</p>
+        <div className="mt-1.5 flex items-center gap-1 text-[10px] text-muted sm:mt-2 sm:text-[11px]">
           <Star size={14} className={book.rating ? "fill-amber-400 text-amber-400" : "text-line"} aria-hidden="true" />
           <span className="font-semibold text-ink">{book.rating || "Yangi"}</span>
           {book.reviews > 0 && <span>({book.reviews} sharh)</span>}

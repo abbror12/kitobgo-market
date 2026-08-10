@@ -125,9 +125,9 @@ export function SearchBar({ mobile = false }: { mobile?: boolean }) {
           aria-controls={isOpen ? listboxId : undefined}
           aria-expanded={isOpen}
           aria-activedescendant={activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined}
-          className="h-12 w-full rounded-xl border border-line bg-white pl-4 pr-12 text-[15px] text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+          className={`${mobile ? "h-10 pl-3 pr-10 text-[13px]" : "h-12 pl-4 pr-12 text-[15px]"} w-full rounded-xl border border-line bg-white text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10`}
         />
-        <button type="submit" aria-label="Qidirish" className="absolute right-1.5 top-1.5 grid size-9 place-items-center rounded-lg text-ink transition hover:bg-brand/10 hover:text-brand">
+        <button type="submit" aria-label="Qidirish" className={`absolute grid place-items-center rounded-lg text-ink transition hover:bg-brand/10 hover:text-brand ${mobile ? "right-1 top-1 size-8" : "right-1.5 top-1.5 size-9"}`}>
           {isLoading
             ? <LoaderCircle size={19} className="animate-spin text-brand" aria-hidden="true" />
             : <Search size={19} aria-hidden="true" />}

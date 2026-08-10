@@ -23,7 +23,7 @@ export function ProductSection({ id, title, subtitle, books, compact = false }: 
           <Link href="/catalog" className="section-link">Barchasi <ArrowRight size={17} aria-hidden="true" /></Link>
         </div>
         {books.length > 0 ? (
-          <div className={`mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 ${compact ? "lg:grid-cols-4" : "lg:grid-cols-6"}`}>
+          <div className={`mobile-rail product-rail mt-4 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-4 md:grid-cols-3 ${compact ? "lg:grid-cols-4" : "lg:grid-cols-6"}`}>
             {books.map((book) => <BookCard key={book.id} book={book} />)}
           </div>
         ) : <ProductEmptyState />}

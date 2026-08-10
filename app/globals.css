@@ -140,12 +140,68 @@ input {
 }
 
 @media (max-width: 639px) {
+  body {
+    font-size: 15px;
+  }
+
+  .container-page {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .section-space {
+    padding-top: 28px;
+    padding-bottom: 28px;
+  }
+
+  .section-heading {
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-heading h2 {
+    font-size: 21px;
+    line-height: 1.2;
+  }
+
+  .book-card {
+    border-radius: 14px;
+    padding: 7px;
+  }
+
   .hero-panel {
-    border-radius: 18px;
+    border-radius: 16px;
   }
 
   .hero-panel h1 {
-    font-size: clamp(25px, 7.8vw, 31px);
+    font-size: clamp(23px, 7vw, 28px);
+  }
+
+  .mobile-rail {
+    margin-left: -12px;
+    margin-right: -12px;
+    display: flex;
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    overflow-x: auto;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    scrollbar-width: none;
+  }
+
+  .mobile-rail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mobile-rail > * {
+    width: min(78vw, 292px);
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+  }
+
+  .product-rail > * {
+    width: min(56vw, 210px);
   }
 }
 

@@ -17,16 +17,16 @@ const mobileLinks = [
 
 export function MobileHeader() {
   return (
-    <div className="bg-white px-4 pb-3 pt-2 md:hidden">
-      <div className="flex h-14 items-center justify-between">
+    <div className="bg-white px-3 pb-2 md:hidden">
+      <div className="flex h-12 items-center justify-between">
         <details className="mobile-menu relative">
-          <summary className="grid size-11 cursor-pointer list-none place-items-center rounded-xl border border-line" aria-label="Menyuni ochish">
-            <Menu className="menu-open" size={22} aria-hidden="true" />
-            <X className="menu-close hidden" size={22} aria-hidden="true" />
+          <summary className="grid size-10 cursor-pointer list-none place-items-center rounded-xl border border-line" aria-label="Menyuni ochish">
+            <Menu className="menu-open" size={20} aria-hidden="true" />
+            <X className="menu-close hidden" size={20} aria-hidden="true" />
           </summary>
-          <nav aria-label="Mobil navigatsiya" className="absolute left-0 top-[52px] z-50 w-[min(82vw,320px)] rounded-2xl border border-line bg-white p-3 shadow-card">
+          <nav aria-label="Mobil navigatsiya" className="absolute left-0 top-[46px] z-50 w-[min(82vw,320px)] rounded-2xl border border-line bg-white p-2 shadow-card">
             {mobileLinks.map(({ label, href }) => (
-              <Link key={label} href={href} className="block rounded-xl px-4 py-3.5 font-medium text-ink hover:bg-canvas hover:text-brand">
+              <Link key={label} href={href} className="block rounded-xl px-3 py-2.5 text-sm font-medium text-ink hover:bg-canvas hover:text-brand">
                 {label}
               </Link>
             ))}
@@ -34,9 +34,9 @@ export function MobileHeader() {
         </details>
         <Logo compact />
         <div className="flex items-center gap-1">
-          <Link href="/favorites" className="icon-button" aria-label="Sevimlilar"><Heart size={21} aria-hidden="true" /></Link>
-          <Link href="/cart" className="icon-button relative" aria-label="Savatcha">
-            <ShoppingCart size={22} aria-hidden="true" />
+          <Link href="/favorites" className="grid size-10 place-items-center rounded-xl" aria-label="Sevimlilar"><Heart size={19} aria-hidden="true" /></Link>
+          <Link href="/cart" className="relative grid size-10 place-items-center rounded-xl" aria-label="Savatcha">
+            <ShoppingCart size={20} aria-hidden="true" />
             <CartBadge className="absolute right-0.5 top-0.5 grid min-h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[9px] font-bold text-white" />
           </Link>
         </div>
