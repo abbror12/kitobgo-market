@@ -22,6 +22,7 @@ export interface Book {
   isbn: string;
   inStock: boolean;
   oldPrice?: number;
+  availableQuantity?: number;
 }
 
 export interface Author {

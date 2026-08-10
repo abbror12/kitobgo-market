@@ -5,9 +5,12 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
   images: {
-    // Backend s3/CDN saqlashga o'tsa rasm to'liq URL bo'lib keladi —
-    // CDN hostini shu ro'yxatga qo'shish kerak.
-    remotePatterns: [{ protocol: "https", hostname: "api.kitobgo.com" }],
+    // Muqova va banner rasmlari backenddan to'liq URL bo'lib keladi (MinIO/CDN).
+    remotePatterns: [
+      { protocol: "https", hostname: "api.kitobgo.com" },
+      { protocol: "https", hostname: "cdn.kitobgo.com" },
+      { protocol: "https", hostname: "*.kitobgo.com" },
+    ],
   },
 };
 

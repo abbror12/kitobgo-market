@@ -4,7 +4,7 @@ import Link from "next/link";
 import { StoreShell } from "@/components/layout/StoreShell";
 import { BookCard } from "@/components/product/BookCard";
 import { PageIntro } from "@/components/shared/PageIntro";
-import { getCategories, searchProducts } from "@/lib/store-api";
+import { flattenCategoryTree, getBooks, getCategoryTree } from "@/lib/store-api";
 
 export const metadata: Metadata = { title: "Kitoblar katalogi — Kitob.go", description: "Saralangan original kitoblarni kategoriya, narx va muallif bo‘yicha toping." };
 
@@ -25,25 +25,30 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
   const params = await searchParams;
   const query = params.q?.trim() ?? "";
   const maxPrice = Number(params.max) || undefined;
-  const selectedCategory = params.category ?? "";
+  // Kategoriya id raqam (API.md §3.1). Raqam bo'lmagan qiymat filtr sifatida yuborilmaydi.
+  const categoryId = /^\d+$/.test(params.category ?? "") ? Number(params.category) : undefined;
+  const selectedCategory = categoryId !== undefined ? String(categoryId) : "";
   const selectedSort = params.sort ?? "popular";
   const requestedPage = Math.max(1, Number.parseInt(params.page ?? "1", 10) || 1);
-  const categories = await getCategories().catch(() => []);
+  const categoryTree = await getCategoryTree().catch(() => []);
+  const categories = flattenCategoryTree(categoryTree);
+  const rootCategories = categoryTree.map((node) => ({ id: node.id, name: node.name }));
   const selectedName = categories.find((category) => String(category.id) === selectedCategory)?.name;
-  const sortMap: Record<string, string> = { popular: "rating,desc", newest: "publishedYear,desc", "price-asc": "price,asc", "price-desc": "price,desc" };
+  // API.md §3.1 sort ro'yxati: price, title, createdAt, ratingAvg, ratingCount, publicationYear.
+  const sortMap: Record<string, string> = { popular: "ratingAvg,desc", newest: "createdAt,desc", "price-asc": "price,asc", "price-desc": "price,desc" };
   let apiUnavailable = false;
-  const result = await searchProducts({
+  const result = await getBooks({
     q: query || undefined,
     maxPrice,
     inStock: params.stock === "true" ? true : undefined,
-    hasDiscount: params.discount === "true" ? true : undefined,
-    categoryId: selectedCategory || undefined,
+    discounted: params.discount === "true" ? true : undefined,
+    categoryId,
     sort: sortMap[selectedSort] ?? sortMap.popular,
     page: requestedPage - 1,
     size: 24,
-  }).catch(() => {
+  }, 0).catch(() => {
     apiUnavailable = true;
-    return { content: [], page: requestedPage - 1, size: 24, totalElements: 0, totalPages: 0, last: true };
+    return { content: [], page: requestedPage - 1, size: 24, totalElements: 0, totalPages: 0, first: true, last: true };
   });
   const currentPage = result.page + 1;
   const hasFilters = Boolean(query || selectedCategory || params.max || params.stock || params.discount);
@@ -51,21 +56,27 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
   return (
     <StoreShell>
       <PageIntro eyebrow="Onlayn kutubxona" title={selectedName ?? (query ? `“${query}” bo‘yicha natijalar` : "Kitoblar katalogi")} description="Didingiz va ehtiyojingizga mos kitobni qulay filtrlar yordamida toping." breadcrumbs={[{ label: "Katalog" }]} aside={<span className="rounded-full bg-brand/10 px-4 py-2 text-sm font-bold text-brand">{result.totalElements} ta kitob</span>} />
-      <section className="container-page py-8 sm:py-12">
-        {categories.length > 0 && <div id="kategoriyalar" className="scrollbar-hide -mx-4 flex gap-2 overflow-x-auto px-4 pb-6 sm:mx-0 sm:flex-wrap sm:px-0">
+      <section className="container-page py-5 sm:py-12">
+        {rootCategories.length > 0 && <div id="kategoriyalar" className="scrollbar-hide -mx-3 flex gap-2 overflow-x-auto px-3 pb-4 sm:mx-0 sm:flex-wrap sm:px-0 sm:pb-6">
           <Link href="/catalog" className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${!selectedCategory ? "border-brand bg-brand text-white" : "border-line bg-white text-ink hover:border-brand/30"}`}>Barchasi</Link>
-          {categories.map((category) => <Link key={category.id} href={`/catalog?category=${category.id}`} className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${selectedCategory === String(category.id) ? "border-brand bg-brand text-white" : "border-line bg-white text-ink hover:border-brand/30"}`}>{category.name}</Link>)}
+          {rootCategories.map((category) => <Link key={category.id} href={`/catalog?category=${category.id}`} className={`shrink-0 rounded-full border px-4 py-2 text-sm font-semibold transition ${selectedCategory === String(category.id) ? "border-brand bg-brand text-white" : "border-line bg-white text-ink hover:border-brand/30"}`}>{category.name}</Link>)}
         </div>}
-        <div className="grid gap-7 lg:grid-cols-[240px_1fr] xl:grid-cols-[260px_1fr]">
+        <div className="grid gap-4 lg:grid-cols-[240px_1fr] lg:gap-7 xl:grid-cols-[260px_1fr]">
           <aside>
-            <form action="/catalog" className="rounded-2xl border border-line bg-white p-5 lg:sticky lg:top-40">
+            <details className="group">
+              <summary className="flex h-11 cursor-pointer list-none items-center justify-between rounded-xl border border-line bg-white px-4 text-sm font-bold lg:hidden">
+                <span className="inline-flex items-center gap-2"><SlidersHorizontal size={17} className="text-brand" /> Filtrlar</span>
+                <span className="text-xs font-semibold text-brand group-open:hidden">Ochish</span>
+                <span className="hidden text-xs font-semibold text-brand group-open:inline">Yopish</span>
+              </summary>
+            <form action="/catalog" className="mt-2 hidden rounded-2xl border border-line bg-white p-4 group-open:block lg:sticky lg:top-40 lg:mt-0 lg:block lg:p-5">
               <div className="flex items-center gap-2 border-b border-line pb-4"><SlidersHorizontal size={18} className="text-brand" /><h2 className="font-extrabold">Filtrlar</h2></div>
               <label className="mt-5 block text-sm font-bold" htmlFor="catalog-query">Qidiruv</label>
               <input id="catalog-query" name="q" defaultValue={params.q} placeholder="Kitob yoki muallif" className="mt-2 h-11 w-full rounded-xl border border-line px-3 text-sm outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10" />
               <label className="mt-5 block text-sm font-bold" htmlFor="category">Kategoriya</label>
               <select id="category" name="category" defaultValue={selectedCategory} className="mt-2 h-11 w-full rounded-xl border border-line bg-white px-3 text-sm outline-none focus:border-brand">
                 <option value="">Barcha kategoriyalar</option>
-                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                {categories.map((category) => <option key={category.id} value={category.id}>{`${"  ".repeat(category.depth)}${category.name}`}</option>)}
               </select>
               <label className="mt-5 block text-sm font-bold" htmlFor="max">Eng yuqori narx</label>
               <select id="max" name="max" defaultValue={params.max ?? ""} className="mt-2 h-11 w-full rounded-xl border border-line bg-white px-3 text-sm outline-none focus:border-brand">
@@ -82,6 +93,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Sear
               <button className="button-primary mt-6 h-11 w-full px-4 text-sm" type="submit">Natijalarni ko‘rsatish</button>
               {hasFilters && <Link href="/catalog" className="mt-3 flex items-center justify-center gap-1.5 text-sm font-semibold text-muted hover:text-brand"><X size={15} /> Tozalash</Link>}
             </form>
+            </details>
           </aside>
           <div>
             <div className="mb-5 flex items-center justify-between gap-3">

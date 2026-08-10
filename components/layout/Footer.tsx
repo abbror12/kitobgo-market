@@ -1,12 +1,14 @@
 import { Clock3, Instagram, Phone, Send } from "lucide-react";
 import Link from "next/link";
 import { categories as fallbackCategories } from "@/data/home";
-import { getCategories } from "@/lib/store-api";
+import { getCategoryTree } from "@/lib/store-api";
 import { Logo } from "./Logo";
 
 export async function Footer() {
-  const apiCategories = await getCategories().catch(() => []);
-  const categoryLinks = (apiCategories.length ? apiCategories : fallbackCategories)
+  const tree = await getCategoryTree().catch(() => []);
+  const categoryLinks = (tree.length
+    ? tree.map((node) => ({ id: String(node.id), name: node.name }))
+    : fallbackCategories.map((category) => ({ id: category.id, name: category.name })))
     .slice(0, 4)
     .map((category) => ({ label: category.name, href: `/catalog?category=${category.id}` }));
   const columns = [
@@ -16,21 +18,21 @@ export async function Footer() {
   ];
 
   return (
-    <footer id="contact" className="border-t border-line bg-white pb-24 pt-14 md:pb-8">
-      <div className="container-page grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
-        <div>
+    <footer id="contact" className="border-t border-line bg-white pb-20 pt-8 sm:pt-14 md:pb-8">
+      <div className="container-page grid grid-cols-2 gap-6 sm:gap-10 lg:grid-cols-[1.3fr_1fr_1fr_1fr_1.2fr]">
+        <div className="col-span-2 lg:col-span-1">
           <Logo />
-          <p className="mt-5 max-w-xs text-[15px] leading-7 text-muted">Original va saralangan kitoblarni xotirjam xarid qilishingiz uchun yaratilgan ishonchli onlayn do‘kon.</p>
+          <p className="mt-3 max-w-xs text-[13px] leading-5 text-muted sm:mt-5 sm:text-[15px] sm:leading-7">Original va saralangan kitoblarni xotirjam xarid qilishingiz uchun yaratilgan ishonchli onlayn do‘kon.</p>
         </div>
         {columns.map((column) => (
           <div key={column.title}>
             <h3 className="font-bold text-ink">{column.title}</h3>
-            <ul className="mt-4 space-y-3 text-[14px] text-muted">
+            <ul className="mt-3 space-y-2 text-[13px] text-muted sm:mt-4 sm:space-y-3 sm:text-[14px]">
               {column.links.map((link) => <li key={link.label}><Link href={link.href} className="hover:text-brand">{link.label}</Link></li>)}
             </ul>
           </div>
         ))}
-        <div>
+        <div className="col-span-2 sm:col-span-1">
           <h3 className="font-bold text-ink">Aloqa va ijtimoiy tarmoqlar</h3>
           <div className="mt-4 space-y-3 text-[14px] text-muted">
             <a href="tel:+998712000000" className="flex items-center gap-2 hover:text-brand"><Phone size={17} aria-hidden="true" /> +998 71 200 00 00</a>
@@ -43,7 +45,7 @@ export async function Footer() {
           </div>
         </div>
       </div>
-      <div className="container-page mt-12 flex flex-col gap-3 border-t border-line pt-6 text-[13px] text-muted sm:flex-row sm:items-center sm:justify-between">
+      <div className="container-page mt-7 flex flex-col gap-2 border-t border-line pt-4 text-[11px] text-muted sm:mt-12 sm:gap-3 sm:pt-6 sm:text-[13px] sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Kitob.go. Barcha huquqlar himoyalangan.</p>
         <div className="flex gap-5"><Link href="/about">Maxfiylik siyosati</Link><Link href="/about">Foydalanish shartlari</Link></div>
       </div>

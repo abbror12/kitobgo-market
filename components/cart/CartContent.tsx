@@ -5,31 +5,33 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { formatPrice, isExternalImage } from "@/lib/format";
-import type { Book } from "@/types/book";
-
-interface CartItem { book: Book; quantity: number }
+import { readCart, writeCart, type CartItem } from "@/lib/client-store";
 
 export function CartContent() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [ready, setReady] = useState(false);
   const subtotal = useMemo(() => items.reduce((sum, item) => sum + item.book.price * item.quantity, 0), [items]);
-  const checkoutItems = items.map((item) => `${encodeURIComponent(item.book.id)}:${item.quantity}`).join(",");
+  // Checkout sahifasi kitoblarni slug bo'yicha qayta yuklaydi (GET /books/{slug}).
+  const checkoutItems = items.map((item) => `${encodeURIComponent(item.book.slug)}:${item.quantity}`).join(",");
 
   useEffect(() => {
-    setItems(JSON.parse(localStorage.getItem("kitobgo-cart") ?? "[]") as CartItem[]);
+    setItems(readCart());
     setReady(true);
   }, []);
 
   function save(next: CartItem[]) {
     setItems(next);
-    localStorage.setItem("kitobgo-cart", JSON.stringify(next));
-    window.dispatchEvent(new Event("kitobgo-cart-updated"));
+    writeCart(next);
   }
 
-  const updateQuantity = (id: string, change: number) => save(items.map((item) => item.book.id === id ? { ...item, quantity: Math.max(1, item.quantity + change) } : item));
+  const updateQuantity = (id: string, change: number) => save(items.map((item) => {
+    if (item.book.id !== id) return item;
+    const max = Math.min(item.book.availableQuantity ?? 50, 50);
+    return { ...item, quantity: Math.min(max, Math.max(1, item.quantity + change)) };
+  }));
 
-  if (!ready) return <div className="h-80 animate-pulse rounded-3xl bg-black/5" />;
-  if (!items.length) return <div className="rounded-3xl border border-line bg-white px-6 py-20 text-center"><span className="mx-auto grid size-16 place-items-center rounded-2xl bg-brand/10 text-brand"><ShoppingBag size={28} /></span><h2 className="mt-5 text-2xl font-extrabold">Savatchangiz bo‘sh</h2><p className="mt-2 text-muted">O‘zingizga yoqqan kitoblarni katalogdan tanlang.</p><Link href="/catalog" className="button-primary mt-6 h-12 px-6">Katalogga o‘tish</Link></div>;
+  if (!ready) return <div className="h-52 animate-pulse rounded-2xl bg-black/5 sm:h-80 sm:rounded-3xl" />;
+  if (!items.length) return <div className="rounded-2xl border border-line bg-white px-5 py-10 text-center sm:rounded-3xl sm:px-6 sm:py-20"><span className="mx-auto grid size-12 place-items-center rounded-2xl bg-brand/10 text-brand sm:size-16"><ShoppingBag size={25} /></span><h2 className="mt-4 text-xl font-extrabold sm:mt-5 sm:text-2xl">Savatchangiz bo‘sh</h2><p className="mt-1.5 text-sm text-muted sm:mt-2 sm:text-base">O‘zingizga yoqqan kitoblarni katalogdan tanlang.</p><Link href="/catalog" className="button-primary mt-5 h-11 px-5 text-sm sm:mt-6 sm:h-12 sm:px-6 sm:text-base">Katalogga o‘tish</Link></div>;
 
   return (
     <div className="grid gap-6 lg:grid-cols-[1fr_360px] xl:gap-8">

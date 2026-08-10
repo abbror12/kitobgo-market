@@ -4,6 +4,7 @@ import { Heart } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { BookCard } from "@/components/product/BookCard";
+import { FAVORITES_EVENT, readFavorites } from "@/lib/client-store";
 import type { Book } from "@/types/book";
 
 export function FavoritesContent() {
@@ -11,15 +12,15 @@ export function FavoritesContent() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const update = () => setBooks(JSON.parse(localStorage.getItem("kitobgo-favorites") ?? "[]") as Book[]);
+    const update = () => setBooks(readFavorites());
     update();
     setReady(true);
-    window.addEventListener("kitobgo-favorites-updated", update);
-    return () => window.removeEventListener("kitobgo-favorites-updated", update);
+    window.addEventListener(FAVORITES_EVENT, update);
+    return () => window.removeEventListener(FAVORITES_EVENT, update);
   }, []);
 
-  if (!ready) return <div className="h-80 animate-pulse rounded-2xl bg-black/5" />;
-  if (!books.length) return <div className="rounded-3xl border border-line bg-white px-6 py-20 text-center"><span className="mx-auto grid size-16 place-items-center rounded-2xl bg-brand/10 text-brand"><Heart size={28} /></span><h2 className="mt-5 text-2xl font-extrabold">Sevimlilar ro‘yxati bo‘sh</h2><p className="mt-2 text-muted">Yoqtirgan kitoblaringizni yurakcha orqali saqlang.</p><Link href="/catalog" className="button-primary mt-6 h-12 px-6">Katalogga o‘tish</Link></div>;
+  if (!ready) return <div className="h-52 animate-pulse rounded-2xl bg-black/5 sm:h-80" />;
+  if (!books.length) return <div className="rounded-2xl border border-line bg-white px-5 py-10 text-center sm:rounded-3xl sm:px-6 sm:py-20"><span className="mx-auto grid size-12 place-items-center rounded-2xl bg-brand/10 text-brand sm:size-16"><Heart size={25} /></span><h2 className="mt-4 text-xl font-extrabold sm:mt-5 sm:text-2xl">Sevimlilar ro‘yxati bo‘sh</h2><p className="mt-1.5 text-sm text-muted sm:mt-2 sm:text-base">Yoqtirgan kitoblaringizni yurakcha orqali saqlang.</p><Link href="/catalog" className="button-primary mt-5 h-11 px-5 text-sm sm:mt-6 sm:h-12 sm:px-6 sm:text-base">Katalogga o‘tish</Link></div>;
 
   return <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">{books.map((book) => <BookCard key={book.id} book={book} />)}</div>;
 }

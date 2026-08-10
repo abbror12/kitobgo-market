@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { books as fallbackBooks } from "@/data/books";
-import { searchProducts } from "@/lib/store-api";
+import { getBooks } from "@/lib/store-api";
 import type { Book } from "@/types/book";
 
 const MAX_RESULTS = 6;
@@ -25,7 +25,8 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const response = await searchProducts({ q: query, page: 0, size: MAX_RESULTS });
+    // API.md §3.1: q — sarlavha va muallif bo'yicha trigram qidiruv (xatoga chidamli).
+    const response = await getBooks({ q: query, page: 0, size: MAX_RESULTS }, 0);
     return NextResponse.json(
       { results: response.content.map(toSearchResult) },
       { headers: { "Cache-Control": "no-store" } },
