@@ -6,6 +6,7 @@ import { CartBadge } from "../cart/CartBadge";
 
 const mobileLinks = [
   { label: "Bosh sahifa", href: "/" },
+  { label: "Shaxsiy kabinet", href: "/profile" },
   { label: "Katalog", href: "/catalog" },
   { label: "Kategoriyalar", href: "/catalog#kategoriyalar" },
   { label: "Mualliflar", href: "/authors" },

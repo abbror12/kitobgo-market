@@ -7,6 +7,12 @@ export const CART_KEY = "kitobgo:cart:v2";
 export const FAVORITES_KEY = "kitobgo:favorites:v2";
 export const CART_EVENT = "kitobgo-cart-updated";
 export const FAVORITES_EVENT = "kitobgo-favorites-updated";
+export const AUTH_EVENT = "kitobgo-auth-updated";
+
+// Login/logout'dan keyin chaqiriladi — header'dagi Kirish/Profil havolasi yangilanadi.
+export function notifyAuthChanged(): void {
+  window.dispatchEvent(new Event(AUTH_EVENT));
+}
 
 export interface CartItem {
   book: Book;

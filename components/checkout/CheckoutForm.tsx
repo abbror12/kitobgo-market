@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { OtpSignIn } from "@/components/auth/OtpSignIn";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
-import { clearCart, readCart, writeCart } from "@/lib/client-store";
+import { clearCart, notifyAuthChanged, readCart, writeCart } from "@/lib/client-store";
 import { formatPrice, isExternalImage } from "@/lib/format";
 import type {
   DeliveryMethod, DeliveryQuoteDto, OrderDetailDto, PaymentInitiationDto,
@@ -302,6 +302,7 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                   compact
                   onSuccess={() => {
                     setFormError("");
+                    notifyAuthChanged();
                     apiFetch<{ authenticated: boolean; profile?: ProfileDto }>("/api/auth/session")
                       .then((result) => {
                         if (result.authenticated && result.profile) {

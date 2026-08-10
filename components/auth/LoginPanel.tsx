@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { notifyAuthChanged } from "@/lib/client-store";
 import { EmailSignIn } from "./EmailSignIn";
 import { OtpSignIn } from "./OtpSignIn";
 
@@ -12,6 +13,7 @@ export function LoginPanel({ next }: { next: string }) {
   const [tab, setTab] = useState<"phone" | "email">("phone");
 
   function finish() {
+    notifyAuthChanged();
     router.push(next);
     router.refresh();
   }

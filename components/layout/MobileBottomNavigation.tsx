@@ -1,15 +1,16 @@
 "use client";
 
-import { BookOpen, Headphones, Heart, Home, ShoppingCart } from "lucide-react";
+import { BookOpen, Heart, Home, ShoppingCart, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { CartBadge } from "../cart/CartBadge";
 
+// "Profil" kirilmagan foydalanuvchini /profile → /login zanjiri orqali kirishga olib boradi.
 const items = [
   { label: "Bosh sahifa", href: "/", icon: Home },
   { label: "Katalog", href: "/catalog", icon: BookOpen },
   { label: "Sevimlilar", href: "/favorites", icon: Heart },
-  { label: "Yordam", href: "/contact", icon: Headphones },
+  { label: "Profil", href: "/profile", icon: UserRound },
   { label: "Savatcha", href: "/cart", icon: ShoppingCart },
 ];
 

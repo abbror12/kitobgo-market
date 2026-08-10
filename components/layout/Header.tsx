@@ -1,5 +1,6 @@
 import { Heart, Menu, MessageCircle, ShoppingCart } from "lucide-react";
 import Link from "next/link";
+import { AccountLink } from "./AccountLink";
 import { Logo } from "./Logo";
 import { SearchBar } from "./SearchBar";
 import { CartBadge } from "../cart/CartBadge";
@@ -32,6 +33,7 @@ export function Header() {
             </span>
             <span>Savatcha</span>
           </Link>
+          <AccountLink />
         </div>
       </div>
     </div>

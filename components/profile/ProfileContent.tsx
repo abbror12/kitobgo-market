@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
-import { readFavorites } from "@/lib/client-store";
+import { notifyAuthChanged, readFavorites } from "@/lib/client-store";
 import { formatPrice } from "@/lib/format";
 import type { OrderDetailDto, OrderStatus, OrderSummaryDto, PageResponse, ProfileDto } from "@/lib/store-api";
 
@@ -137,6 +137,7 @@ export function ProfileContent() {
     try {
       await apiFetch("/api/auth/logout", { method: "POST" });
     } finally {
+      notifyAuthChanged();
       router.push("/");
       router.refresh();
     }
