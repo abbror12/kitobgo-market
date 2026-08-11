@@ -11,7 +11,7 @@ import { apiFetch, ClientApiError } from "@/lib/client-api";
 export function ResetPasswordContent({ token }: { token: string | null }) {
   return (
     <section className="container-page py-16 sm:py-24">
-      <div className="mx-auto max-w-xl rounded-[28px] border border-line bg-white p-7 shadow-soft sm:p-12">
+      <div className="mx-auto max-w-xl rounded-[28px] border border-line bg-cream p-7 shadow-soft sm:p-12">
         {token ? <ResetForm token={token} /> : <ForgotForm />}
       </div>
     </section>
@@ -62,9 +62,9 @@ function ResetForm({ token }: { token: string }) {
   if (done) {
     return (
       <div className="text-center">
-        <span className="mx-auto grid size-20 place-items-center rounded-full bg-brand text-white"><CheckCircle2 size={36} /></span>
-        <h1 className="mt-6 text-2xl font-extrabold sm:text-3xl">Parol yangilandi!</h1>
-        <p className="mt-3 leading-7 text-muted">Xavfsizlik uchun barcha qurilmalardan chiqarildingiz. Yangi parol bilan qaytadan kiring.</p>
+        <span className="mx-auto grid size-20 place-items-center rounded-full bg-cocoa text-cream"><CheckCircle2 size={36} /></span>
+        <h1 className="font-serif mt-6 text-2xl font-semibold sm:text-3xl">Parol yangilandi!</h1>
+        <p className="mt-3 leading-7 text-bodyText">Xavfsizlik uchun barcha qurilmalardan chiqarildingiz. Yangi parol bilan qaytadan kiring.</p>
         <Link href="/login" className="button-primary mx-auto mt-7 h-12 px-6">Kirish</Link>
       </div>
     );
@@ -72,9 +72,9 @@ function ResetForm({ token }: { token: string }) {
 
   return (
     <div>
-      <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-brand/10 text-brand"><KeyRound size={28} /></span>
-      <h1 className="mt-5 text-center text-2xl font-extrabold sm:text-3xl">Yangi parol o‘rnatish</h1>
-      <p className="mt-2 text-center text-sm leading-6 text-muted">Kamida 8 belgi, ichida harf va raqam bo‘lsin.</p>
+      <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-sand text-cocoa"><KeyRound size={28} /></span>
+      <h1 className="font-serif mt-5 text-center text-2xl font-semibold sm:text-3xl">Yangi parol o‘rnatish</h1>
+      <p className="mt-2 text-center text-sm leading-6 text-bodyText">Kamida 8 belgi, ichida harf va raqam bo‘lsin.</p>
       <form className="mt-6" onSubmit={(event) => { event.preventDefault(); void submit(); }}>
         <label htmlFor="new-password" className="block text-sm font-bold">Yangi parol</label>
         <input
@@ -84,7 +84,7 @@ function ResetForm({ token }: { token: string }) {
           required
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10"
+          className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
         />
         <label htmlFor="confirm-password" className="mt-4 block text-sm font-bold">Yangi parolni takrorlang</label>
         <input
@@ -94,10 +94,10 @@ function ResetForm({ token }: { token: string }) {
           required
           value={confirm}
           onChange={(event) => setConfirm(event.target.value)}
-          className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10"
+          className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
         />
-        {error && <p className="mt-3 text-sm font-medium text-red-600" role="alert">{error}</p>}
-        {expired && <p className="mt-2 text-sm text-muted">Havola eskirgan bo‘lsa, <Link href="/reset-password" className="font-bold text-brand">yangi havola so‘rang</Link>.</p>}
+        {error && <p className="mt-3 text-sm font-medium text-danger" role="alert">{error}</p>}
+        {expired && <p className="mt-2 text-sm text-bodyText">Havola eskirgan bo‘lsa, <Link href="/reset-password" className="font-bold text-cocoa">yangi havola so‘rang</Link>.</p>}
         <button type="submit" disabled={busy} className="button-primary mt-5 h-12 w-full px-5 disabled:cursor-not-allowed disabled:opacity-60">
           {busy ? <><LoaderCircle size={18} className="animate-spin" /> Saqlanmoqda…</> : "Parolni yangilash"}
         </button>
@@ -131,11 +131,11 @@ function ForgotForm() {
 
   return (
     <div>
-      <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-brand/10 text-brand"><KeyRound size={28} /></span>
-      <h1 className="mt-5 text-center text-2xl font-extrabold sm:text-3xl">Parolni tiklash</h1>
-      <p className="mt-2 text-center text-sm leading-6 text-muted">Email manzilingizni kiriting — parolni yangilash havolasini yuboramiz.</p>
+      <span className="mx-auto grid size-16 place-items-center rounded-2xl bg-sand text-cocoa"><KeyRound size={28} /></span>
+      <h1 className="font-serif mt-5 text-center text-2xl font-semibold sm:text-3xl">Parolni tiklash</h1>
+      <p className="mt-2 text-center text-sm leading-6 text-bodyText">Email manzilingizni kiriting — parolni yangilash havolasini yuboramiz.</p>
       {sent ? (
-        <p className="mt-6 rounded-xl bg-brand/5 p-4 text-center text-sm font-medium text-brand" role="status">
+        <p className="mt-6 rounded-xl bg-sand/50 p-4 text-center text-sm font-medium text-cocoa" role="status">
           Agar bu email ro‘yxatdan o‘tgan bo‘lsa, havola yuborildi. Pochtangizni (spam papkasini ham) tekshiring.
         </p>
       ) : (
@@ -149,15 +149,15 @@ function ForgotForm() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="siz@example.com"
-            className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10"
+            className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
           />
-          {error && <p className="mt-3 text-sm font-medium text-red-600" role="alert">{error}</p>}
+          {error && <p className="mt-3 text-sm font-medium text-danger" role="alert">{error}</p>}
           <button type="submit" disabled={busy} className="button-primary mt-5 h-12 w-full px-5 disabled:cursor-not-allowed disabled:opacity-60">
             {busy ? <><LoaderCircle size={18} className="animate-spin" /> Yuborilmoqda…</> : "Havola yuborish"}
           </button>
         </form>
       )}
-      <p className="mt-6 text-center text-sm text-muted">Telefon orqali kirasizmi? <Link href="/login" className="font-bold text-brand">Kirish sahifasi</Link></p>
+      <p className="mt-6 text-center text-sm text-bodyText">Telefon orqali kirasizmi? <Link href="/login" className="font-bold text-cocoa">Kirish sahifasi</Link></p>
     </div>
   );
 }

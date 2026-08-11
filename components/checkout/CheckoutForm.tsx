@@ -287,11 +287,11 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
       <form onSubmit={(event) => { event.preventDefault(); void submit(); }} className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_380px] xl:gap-8">
         <div className="space-y-4 sm:space-y-5">
 
-          <div ref={authBlockRef} className="rounded-2xl border border-line bg-white p-4 sm:p-7">
-            <h2 className="flex items-center gap-2 text-lg font-extrabold"><UserRound size={20} className="text-brand" /> Kirish</h2>
-            {session.state === "loading" && <div className="mt-4 h-14 animate-pulse rounded-xl bg-black/5" />}
+          <div ref={authBlockRef} className="rounded-2xl border border-line bg-cream p-4 sm:p-7">
+            <h2 className="font-serif flex items-center gap-2 text-lg font-semibold"><UserRound size={20} className="text-cocoa" /> Kirish</h2>
+            {session.state === "loading" && <div className="mt-4 h-14 animate-pulse rounded-xl bg-sand/60" />}
             {session.state === "authed" && (
-              <p className="mt-3 flex items-center gap-2 rounded-xl bg-brand/5 p-3.5 text-sm font-medium text-brand">
+              <p className="mt-3 flex items-center gap-2 rounded-xl bg-sand/50 p-3.5 text-sm font-medium text-cocoa">
                 <CheckCircle2 size={17} className="shrink-0" />
                 {session.profile.fullName ? `${session.profile.fullName} · ` : ""}{session.profile.phone ?? session.profile.email} bilan kirdingiz
               </p>
@@ -318,7 +318,7 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
             )}
           </div>
 
-          <fieldset disabled={busy} className="rounded-2xl border border-line bg-white p-4 disabled:opacity-70 sm:p-7">
+          <fieldset disabled={busy} className="rounded-2xl border border-line bg-cream p-4 disabled:opacity-70 sm:p-7">
             <legend className="px-2 text-lg font-extrabold">Yetkazib berish</legend>
             <div>
               <label className="text-sm font-bold" htmlFor="region">Viloyat yoki shahar</label>
@@ -327,20 +327,20 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                 value={regionId}
                 onChange={(event) => setRegionId(event.target.value ? Number(event.target.value) : "")}
                 required
-                className="mt-2 h-12 w-full rounded-xl border border-line bg-white px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10"
+                className="mt-2 h-12 w-full rounded-xl border border-line bg-cream px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
               >
                 <option value="" disabled>Hududingizni tanlang</option>
                 {regions.map((region) => <option key={region.id} value={region.id}>{region.nameUz}</option>)}
               </select>
-              {!regions.length && <p className="mt-2 text-xs font-medium text-red-600">Hududlar ro‘yxati yuklanmadi. Sahifani yangilang.</p>}
-              {fieldErrors.regionId && <p className="mt-2 text-xs font-medium text-red-600">{fieldErrors.regionId}</p>}
+              {!regions.length && <p className="mt-2 text-xs font-medium text-danger">Hududlar ro‘yxati yuklanmadi. Sahifani yangilang.</p>}
+              {fieldErrors.regionId && <p className="mt-2 text-xs font-medium text-danger">{fieldErrors.regionId}</p>}
             </div>
 
             {regionId !== "" && (
               <div className="mt-4">
-                {quotesLoading && <div className="h-16 animate-pulse rounded-xl bg-black/5" />}
+                {quotesLoading && <div className="h-16 animate-pulse rounded-xl bg-sand/60" />}
                 {!quotesLoading && quotes && quotes.length === 0 && (
-                  <p className="rounded-xl bg-amber-50 p-3.5 text-sm font-medium text-amber-800">Bu hududga yetkazish hozircha mavjud emas. Boshqa hudud tanlang.</p>
+                  <p className="rounded-xl bg-warningSoft p-3.5 text-sm font-medium text-warning">Bu hududga yetkazish hozircha mavjud emas. Boshqa hudud tanlang.</p>
                 )}
                 {!quotesLoading && quotes && quotes.length > 0 && (
                   <div className="grid gap-2 sm:grid-cols-2">
@@ -348,16 +348,16 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                       const { title, icon: Icon } = METHOD_LABELS[quote.method];
                       const active = method === quote.method;
                       return (
-                        <label key={quote.method} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-3.5 transition ${active ? "border-brand bg-brand/5" : "border-line bg-white hover:border-brand/40"}`}>
+                        <label key={quote.method} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-3.5 transition ${active ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
                           <input type="radio" name="deliveryMethod" className="sr-only" checked={active} onChange={() => setMethod(quote.method)} />
-                          <Icon size={21} className={`mt-0.5 shrink-0 ${active ? "text-brand" : "text-muted"}`} />
+                          <Icon size={21} className={`mt-0.5 shrink-0 ${active ? "text-cocoa" : "text-bodyText"}`} />
                           <span className="min-w-0 text-sm">
                             <strong className="block">{title}</strong>
-                            <span className="mt-0.5 block text-muted">
+                            <span className="mt-0.5 block text-bodyText">
                               {quote.free ? "Bepul" : formatPrice(quote.fee)} · {quote.minDays === quote.maxDays ? `${quote.minDays} kun` : `${quote.minDays}–${quote.maxDays} kun`}
                             </span>
                             {!quote.free && quote.amountUntilFree !== undefined && (
-                              <span className="mt-1 block text-xs font-medium text-brand">Yana {formatPrice(quote.amountUntilFree)} xarid qilsangiz — bepul</span>
+                              <span className="mt-1 block text-xs font-medium text-cocoa">Yana {formatPrice(quote.amountUntilFree)} xarid qilsangiz — bepul</span>
                             )}
                           </span>
                         </label>
@@ -371,57 +371,57 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="text-sm font-bold" htmlFor="recipientName">Qabul qiluvchi ismi</label>
-                <input id="recipientName" value={recipientName} onChange={(event) => setRecipientName(event.target.value)} required placeholder="Ismingiz" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
-                {fieldErrors.recipientName && <p className="mt-1.5 text-xs font-medium text-red-600">{fieldErrors.recipientName}</p>}
+                <input id="recipientName" value={recipientName} onChange={(event) => setRecipientName(event.target.value)} required placeholder="Ismingiz" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                {fieldErrors.recipientName && <p className="mt-1.5 text-xs font-medium text-danger">{fieldErrors.recipientName}</p>}
               </div>
               <div>
                 <label className="text-sm font-bold" htmlFor="recipientPhone">Telefon raqam</label>
-                <input id="recipientPhone" type="tel" value={recipientPhone} onChange={(event) => setRecipientPhone(event.target.value)} required placeholder="+998 90 123 45 67" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
-                {fieldErrors.recipientPhone && <p className="mt-1.5 text-xs font-medium text-red-600">{fieldErrors.recipientPhone}</p>}
+                <input id="recipientPhone" type="tel" value={recipientPhone} onChange={(event) => setRecipientPhone(event.target.value)} required placeholder="+998 90 123 45 67" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                {fieldErrors.recipientPhone && <p className="mt-1.5 text-xs font-medium text-danger">{fieldErrors.recipientPhone}</p>}
               </div>
               {method !== "PICKUP" && (
                 <>
                   <div>
-                    <label className="text-sm font-bold" htmlFor="district">Tuman <span className="font-normal text-muted">(ixtiyoriy)</span></label>
-                    <input id="district" value={district} onChange={(event) => setDistrict(event.target.value)} placeholder="Chilonzor tumani" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
+                    <label className="text-sm font-bold" htmlFor="district">Tuman <span className="font-normal text-bodyText">(ixtiyoriy)</span></label>
+                    <input id="district" value={district} onChange={(event) => setDistrict(event.target.value)} placeholder="Chilonzor tumani" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
                   </div>
                   <div>
-                    <label className="text-sm font-bold" htmlFor="addressLine">Manzil <span className="font-normal text-muted">(ixtiyoriy)</span></label>
-                    <input id="addressLine" value={addressLine} onChange={(event) => setAddressLine(event.target.value)} placeholder="Ko‘cha, uy, xonadon" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
+                    <label className="text-sm font-bold" htmlFor="addressLine">Manzil <span className="font-normal text-bodyText">(ixtiyoriy)</span></label>
+                    <input id="addressLine" value={addressLine} onChange={(event) => setAddressLine(event.target.value)} placeholder="Ko‘cha, uy, xonadon" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
                   </div>
                 </>
               )}
               <div className="sm:col-span-2">
-                <label className="text-sm font-bold" htmlFor="note">Izoh <span className="font-normal text-muted">(ixtiyoriy)</span></label>
-                <input id="note" value={note} onChange={(event) => setNote(event.target.value)} placeholder="Masalan: ertalab yetkazing" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
+                <label className="text-sm font-bold" htmlFor="note">Izoh <span className="font-normal text-bodyText">(ixtiyoriy)</span></label>
+                <input id="note" value={note} onChange={(event) => setNote(event.target.value)} placeholder="Masalan: ertalab yetkazing" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
               </div>
             </div>
             {method === "COURIER" && (
-              <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-muted"><MapPin size={15} className="mt-0.5 shrink-0 text-brand" /> Manzilni yozmasangiz ham bo‘ladi — kuryer aniq manzilni telefon orqali kelishib oladi.</p>
+              <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-bodyText"><MapPin size={15} className="mt-0.5 shrink-0 text-cocoa" /> Manzilni yozmasangiz ham bo‘ladi — kuryer aniq manzilni telefon orqali kelishib oladi.</p>
             )}
           </fieldset>
 
-          <fieldset disabled={busy} className="rounded-2xl border border-line bg-white p-4 disabled:opacity-70 sm:p-7">
+          <fieldset disabled={busy} className="rounded-2xl border border-line bg-cream p-4 disabled:opacity-70 sm:p-7">
             <legend className="px-2 text-lg font-extrabold">To‘lov usuli</legend>
             <div className="grid gap-2">
-              <label className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === "COD" ? "border-brand bg-brand/5" : "border-line bg-white hover:border-brand/40"}`}>
+              <label className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === "COD" ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
                 <input type="radio" name="paymentMethod" className="sr-only" checked={paymentMethod === "COD"} onChange={() => setPaymentMethod("COD")} />
-                <Banknote size={22} className={`shrink-0 ${paymentMethod === "COD" ? "text-brand" : "text-muted"}`} />
-                <span className="text-sm"><strong className="block">Qabul qilganda to‘lash</strong><span className="mt-0.5 block text-muted">Kitobni tekshirgandan keyin naqd yoki karta orqali</span></span>
+                <Banknote size={22} className={`shrink-0 ${paymentMethod === "COD" ? "text-cocoa" : "text-bodyText"}`} />
+                <span className="text-sm"><strong className="block">Qabul qilganda to‘lash</strong><span className="mt-0.5 block text-bodyText">Kitobni tekshirgandan keyin naqd yoki karta orqali</span></span>
               </label>
               {providers.map((provider) => (
-                <label key={provider} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === provider ? "border-brand bg-brand/5" : "border-line bg-white hover:border-brand/40"}`}>
+                <label key={provider} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === provider ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
                   <input type="radio" name="paymentMethod" className="sr-only" checked={paymentMethod === provider} onChange={() => setPaymentMethod(provider)} />
-                  <CreditCard size={22} className={`shrink-0 ${paymentMethod === provider ? "text-brand" : "text-muted"}`} />
-                  <span className="text-sm"><strong className="block">{provider === "CLICK" ? "Click" : "Payme"} orqali onlayn to‘lash</strong><span className="mt-0.5 block text-muted">To‘lov sahifasiga yo‘naltiramiz; buyurtma to‘lovdan so‘ng tasdiqlanadi</span></span>
+                  <CreditCard size={22} className={`shrink-0 ${paymentMethod === provider ? "text-cocoa" : "text-bodyText"}`} />
+                  <span className="text-sm"><strong className="block">{provider === "CLICK" ? "Click" : "Payme"} orqali onlayn to‘lash</strong><span className="mt-0.5 block text-bodyText">To‘lov sahifasiga yo‘naltiramiz; buyurtma to‘lovdan so‘ng tasdiqlanadi</span></span>
                 </label>
               ))}
             </div>
           </fieldset>
         </div>
 
-        <aside className="h-fit rounded-2xl border border-line bg-white p-5 shadow-soft lg:sticky lg:top-40 sm:p-6">
-          <h2 className="text-lg font-extrabold">Buyurtmangiz</h2>
+        <aside className="h-fit rounded-2xl border border-line bg-cream p-5 shadow-soft lg:sticky lg:top-40 sm:p-6">
+          <h2 className="font-serif text-lg font-semibold">Buyurtmangiz</h2>
           <div className="mt-4 space-y-4">
             {lines.map(({ book, quantity }) => (
               <div key={book.id} className="flex gap-3">
@@ -430,25 +430,25 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                 </div>
                 <div className="min-w-0 flex-1">
                   <p className="line-clamp-2 text-sm font-bold">{book.title}</p>
-                  <p className="mt-1 text-xs text-muted">{quantity} dona</p>
+                  <p className="mt-1 text-xs text-bodyText">{quantity} dona</p>
                 </div>
                 <strong className="shrink-0 text-sm">{formatPrice(book.price * quantity)}</strong>
               </div>
             ))}
           </div>
           <dl className="mt-5 space-y-3 border-t border-line pt-5 text-sm">
-            <div className="flex justify-between"><dt className="text-muted">Mahsulotlar</dt><dd>{formatPrice(itemsTotal)}</dd></div>
+            <div className="flex justify-between"><dt className="text-bodyText">Mahsulotlar</dt><dd>{formatPrice(itemsTotal)}</dd></div>
             <div className="flex justify-between">
-              <dt className="text-muted">Yetkazish</dt>
-              <dd className={deliveryFee === 0 ? "font-bold text-brand" : "font-semibold"}>
+              <dt className="text-bodyText">Yetkazish</dt>
+              <dd className={deliveryFee === 0 ? "font-bold text-cocoa" : "font-semibold"}>
                 {deliveryFee === null ? "Hudud tanlang" : deliveryFee === 0 ? "Bepul" : formatPrice(deliveryFee)}
               </dd>
             </div>
-            <div className="flex items-end justify-between border-t border-line pt-4"><dt className="font-bold">Jami</dt><dd className="text-2xl font-extrabold text-brand">{formatPrice(grandTotal)}</dd></div>
+            <div className="flex items-end justify-between border-t border-line pt-4"><dt className="font-bold">Jami</dt><dd className="font-serif text-2xl font-semibold text-cocoa">{formatPrice(grandTotal)}</dd></div>
           </dl>
 
           {priceChanges && priceChanges.length > 0 && (
-            <div className="mt-4 rounded-xl bg-amber-50 p-3.5 text-sm text-amber-900" role="alert">
+            <div className="mt-4 rounded-xl bg-warningSoft p-3.5 text-sm text-warning" role="alert">
               <strong className="flex items-center gap-1.5"><AlertCircle size={16} /> Narxlar yangilandi</strong>
               <ul className="mt-2 space-y-1">
                 {priceChanges.map((change) => (
@@ -458,8 +458,8 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
               <button type="button" onClick={() => void submit(true)} disabled={busy} className="button-primary mt-3 h-10 w-full px-4 text-sm">Yangi narxlarga roziman — davom etish</button>
             </div>
           )}
-          {formNotice && <p className="mt-4 flex items-start gap-2 rounded-xl bg-amber-50 p-3 text-sm font-medium text-amber-800" role="status"><AlertCircle size={17} className="mt-0.5 shrink-0" />{formNotice}</p>}
-          {formError && <p className="mt-4 flex items-start gap-2 rounded-xl bg-red-50 p-3 text-sm font-medium text-red-700" role="alert"><AlertCircle size={17} className="mt-0.5 shrink-0" />{formError}</p>}
+          {formNotice && <p className="mt-4 flex items-start gap-2 rounded-xl bg-warningSoft p-3 text-sm font-medium text-warning" role="status"><AlertCircle size={17} className="mt-0.5 shrink-0" />{formNotice}</p>}
+          {formError && <p className="mt-4 flex items-start gap-2 rounded-xl bg-dangerSoft p-3 text-sm font-medium text-danger" role="alert"><AlertCircle size={17} className="mt-0.5 shrink-0" />{formError}</p>}
 
           <button
             type="submit"
@@ -470,8 +470,8 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
               ? <><LoaderCircle size={18} className="animate-spin" /> Yuborilmoqda…</>
               : paymentMethod === "COD" ? "Buyurtmani tasdiqlash" : "To‘lovga o‘tish"}
           </button>
-          <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-muted"><LockKeyhole size={15} className="mt-0.5 shrink-0 text-brand" /> Ma’lumotlaringiz xavfsiz saqlanadi va faqat buyurtmani bajarish uchun ishlatiladi.</p>
-          <div className="mt-5 grid grid-cols-2 gap-2"><span className="flex items-center gap-1.5 text-[11px] text-muted"><Truck size={15} className="text-brand" /> Tez yetkazish</span><span className="flex items-center gap-1.5 text-[11px] text-muted"><CheckCircle2 size={15} className="text-brand" /> Sifat kafolati</span></div>
+          <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-bodyText"><LockKeyhole size={15} className="mt-0.5 shrink-0 text-cocoa" /> Ma’lumotlaringiz xavfsiz saqlanadi va faqat buyurtmani bajarish uchun ishlatiladi.</p>
+          <div className="mt-5 grid grid-cols-2 gap-2"><span className="flex items-center gap-1.5 text-[11px] text-bodyText"><Truck size={15} className="text-cocoa" /> Tez yetkazish</span><span className="flex items-center gap-1.5 text-[11px] text-bodyText"><CheckCircle2 size={15} className="text-cocoa" /> Sifat kafolati</span></div>
         </aside>
       </form>
     </section>

@@ -6,6 +6,54 @@ shartnoma **faqat** `docs/API.md` (o'sha repoda).
 
 > 2026-08-10: sayt eski (boshqa) backenddan haqiqiy KitobGo backendiga to'liq o'tkazildi.
 > Eski `/api/products`, anonim buyurtma, IndexedDB oflayn-navbat — olib tashlangan.
+>
+> 2026-08-11: sayt mobil ilova brendiga qayta bo'yaldi — to'q yashil + oltin (Inter)
+> o'rniga iliq krem + terrakota (Lora serif). Pastdagi "Dizayn tizimi" bo'limiga qarang.
+
+## Dizayn tizimi
+
+**Yagona manba — mobil ilova:** `D:\Project\kitobgo-flutter\lib\ui\theme\colors.dart`
+(+ `text_styles.dart`, `status_colors.dart`). Sayt unga ergashadi, teskarisi emas.
+Tokenlarning **nomlari ilovadagi bilan bir xil va barqaror**: qiymatni o'zgartirish hech
+narsani buzmaydi, nomni o'zgartirish butun saytga tegadi.
+
+Palitra [tailwind.config.ts](tailwind.config.ts) da: `page` `cream` `sand` `navSurface`
+`cocoa` `cocoaDark` `inkButton` `ink` `bodyText` `muted` `line` `lineSoft` `field`
+`chevron` `gold` + `success`/`warning`/`danger` va ularning `*Soft` juftlari.
+
+**Qo'llanishi (ilovadagidek):**
+
+| Element | Token |
+|---|---|
+| Sahifa foni | `page` (oq) |
+| Kartochka, input, panel | `cream` |
+| Sticky header, to'liq kenglikdagi tasmalar | `navSurface` + `border-y border-line` |
+| Asosiy tugma | `bg-inkButton text-cream`, hover `bg-ink` |
+| Ikkilamchi tugma, havola, narx, faol tab | `cocoa` (hover `cocoaDark`) |
+| Yumshoq to'ldirish: ikonka disklari, tanlangan pill | `sand` |
+| Buyurtma status badge'lari | `status_colors.dart` mantiqiga mos: hal bo'lgan → `successSoft/success`, yo'ldagi → `warningSoft/cocoaDark`, to'xtagan → `dangerSoft/danger`, neytral → `sand/bodyText` |
+
+**Tipografiya.** Lora (serif) — `font-serif` orqali **faqat** sarlavhalar, kitob nomlari va
+narxlar uchun; qolgan hamma matn tizim sans-serif'da. Lora `next/font` bilan
+[app/layout.tsx](app/layout.tsx) da `--font-lora` sifatida ulanadi (global emas). Kichik
+katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) va `.eyebrow`.
+
+**Diqqat qilinadigan to'rt joy** (kelajakdagi o'zgarishlarda ham shu qoidalar):
+
+1. **`tailwind.config.ts` yolg'iz yetarli emas.** [app/globals.css](app/globals.css) ichida
+   xom `rgba()` qiymatlar bor: soyalar (`shadow-soft/card/button` — ink #241D12 asosida),
+   fokus halqasi (`outline: rgba(163,74,36,.34)` — cocoa) va `.faq-item[open] .faq-plus`
+   foni. Palitra o'zgarsa bularni ham yangilang.
+2. **`muted` (#97896F) cream fonda 3.37:1 — WCAG AA dan past.** Ilovada bu ataylab, faqat
+   bezak uchun. Webda u **faqat placeholder** rangi sifatida ishlatiladi (globals.css dagi
+   `::placeholder`); mijoz o'qishi kerak bo'lgan har qanday matn — `bodyText` (7.61:1).
+3. **Oq page ustidagi cream kartochka kontrasti nozik** (1.02:1) — keng desktop ekranda
+   ko'rinmay qoladi. Shuning uchun kartochkalar `border-line` + `shadow-soft` bilan,
+   to'liq kenglikdagi tasmalar esa `navSurface` + `border-y` bilan ajratiladi.
+   Tokenlar o'zgarmagan, faqat qo'llanishi web uchun moslashtirilgan.
+4. **Muqova ortidagi pastel fonlar** ([lib/store-api.ts](lib/store-api.ts) `colors` massivi
+   va `data/*.ts` dagi `color` maydonlari) ham iliq ohangda — sovuq pastel qo'shilsa
+   ko'zga tashlanadi.
 
 ## Arxitektura
 

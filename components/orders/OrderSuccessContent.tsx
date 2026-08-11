@@ -95,7 +95,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
   if (!orderNumber) {
     return (
       <SuccessShell icon={<Check size={36} strokeWidth={2.5} />} eyebrow="Buyurtma" title="Buyurtma raqami topilmadi">
-        <p className="mx-auto mt-4 max-w-lg leading-7 text-muted">Buyurtmalaringiz holatini shaxsiy kabinetdan ko‘rishingiz mumkin.</p>
+        <p className="mx-auto mt-4 max-w-lg leading-7 text-bodyText">Buyurtmalaringiz holatini shaxsiy kabinetdan ko‘rishingiz mumkin.</p>
         <Actions />
       </SuccessShell>
     );
@@ -104,7 +104,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
   if (loadState === "loading") {
     return (
       <SuccessShell icon={<LoaderCircle size={36} className="animate-spin" />} eyebrow="Buyurtma" title="Ma’lumot yuklanmoqda…">
-        <p className="mx-auto mt-4 max-w-lg leading-7 text-muted">Buyurtma raqami: <strong>{orderNumber}</strong></p>
+        <p className="mx-auto mt-4 max-w-lg leading-7 text-bodyText">Buyurtma raqami: <strong>{orderNumber}</strong></p>
       </SuccessShell>
     );
   }
@@ -112,7 +112,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
   if (loadState !== "ready" || !order) {
     return (
       <SuccessShell icon={<Check size={36} strokeWidth={2.5} />} eyebrow="Buyurtma qabul qilindi" title="Buyurtmangiz rasmiylashtirildi">
-        <p className="mx-auto mt-4 max-w-lg leading-7 text-muted">
+        <p className="mx-auto mt-4 max-w-lg leading-7 text-bodyText">
           Buyurtma raqami: <strong>{orderNumber}</strong>. Tafsilotlar SMS orqali yuborildi{loadState === "unauthorized" ? " — holatini ko‘rish uchun qaytadan kiring" : ""}.
         </p>
         {loadState === "unauthorized" && <Link href={`/login?next=/order-success?order=${encodeURIComponent(orderNumber)}`} className="button-secondary mx-auto mt-5 inline-flex h-11 px-5">Kirish</Link>}
@@ -137,7 +137,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
       eyebrow={STATUS_LABELS[order.status]}
       title={title}
     >
-      <p className="mx-auto mt-4 max-w-lg leading-7 text-muted">
+      <p className="mx-auto mt-4 max-w-lg leading-7 text-bodyText">
         {pendingPayment
           ? "Buyurtma 30 daqiqa davomida siz uchun band qilib turiladi. To‘lov tasdiqlangach tayyorlashni boshlaymiz."
           : codDone
@@ -146,15 +146,15 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
       </p>
 
       <div className="mx-auto mt-7 max-w-md space-y-2 text-left">
-        <div className="flex items-center gap-3 rounded-2xl bg-[#F3F6F3] p-4">
-          <PackageCheck className="shrink-0 text-brand" />
+        <div className="flex items-center gap-3 rounded-2xl bg-successSoft/40 p-4">
+          <PackageCheck className="shrink-0 text-cocoa" />
           <span>
             <strong className="block text-sm">Buyurtma raqami: {order.orderNumber}</strong>
-            <small className="text-muted">{order.items.reduce((sum, item) => sum + item.quantity, 0)} ta kitob · Jami {formatPrice(order.grandTotal)}{order.deliveryFee > 0 ? ` (yetkazish ${formatPrice(order.deliveryFee)})` : ""}</small>
+            <small className="text-bodyText">{order.items.reduce((sum, item) => sum + item.quantity, 0)} ta kitob · Jami {formatPrice(order.grandTotal)}{order.deliveryFee > 0 ? ` (yetkazish ${formatPrice(order.deliveryFee)})` : ""}</small>
           </span>
         </div>
         {pendingPayment && (
-          <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+          <div className="rounded-2xl border border-warning/30 bg-warningSoft p-4 text-sm text-warning">
             <strong className="flex items-center gap-1.5"><AlertCircle size={16} /> 30 daqiqa ichida to‘lanmasa, buyurtma avtomatik bekor qilinadi.</strong>
             <div className="mt-3 grid gap-2">
               {payPending && <p className="flex items-center gap-2 text-xs"><LoaderCircle size={14} className="animate-spin" /> To‘lov holati tekshirilmoqda…</p>}
@@ -166,7 +166,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
               <button type="button" onClick={() => void switchToCod()} disabled={codBusy} className="button-secondary inline-flex h-11 w-full px-4 text-sm disabled:opacity-60">
                 {codBusy ? <LoaderCircle size={17} className="animate-spin" /> : <Banknote size={17} />} Qabul qilganda to‘lashga o‘tish
               </button>
-              {actionError && <p className="text-xs font-medium text-red-700" role="alert">{actionError}</p>}
+              {actionError && <p className="text-xs font-medium text-danger" role="alert">{actionError}</p>}
             </div>
           </div>
         )}
@@ -179,10 +179,10 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
 function SuccessShell({ icon, eyebrow, title, children }: { icon: React.ReactNode; eyebrow: string; title: string; children: React.ReactNode }) {
   return (
     <section className="container-page py-16 sm:py-24">
-      <div className="mx-auto max-w-2xl rounded-[28px] border border-line bg-white p-7 text-center shadow-soft sm:p-12">
-        <span className="mx-auto grid size-20 place-items-center rounded-full bg-brand text-white">{icon}</span>
+      <div className="mx-auto max-w-2xl rounded-[28px] border border-line bg-cream p-7 text-center shadow-soft sm:p-12">
+        <span className="mx-auto grid size-20 place-items-center rounded-full bg-cocoa text-cream">{icon}</span>
         <span className="eyebrow mt-6 inline-block">{eyebrow}</span>
-        <h1 className="mt-3 text-3xl font-extrabold tracking-tight sm:text-4xl">{title}</h1>
+        <h1 className="font-serif mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
         {children}
       </div>
     </section>

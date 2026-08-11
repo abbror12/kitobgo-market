@@ -20,18 +20,18 @@ export function LoginPanel({ next }: { next: string }) {
 
   return (
     <div>
-      <div className="flex rounded-xl border border-line bg-canvas p-1 text-sm font-bold">
+      <div className="flex rounded-xl border border-line bg-navSurface p-1 text-sm font-bold">
         <button
           type="button"
           onClick={() => setTab("phone")}
-          className={`h-10 flex-1 rounded-lg transition ${tab === "phone" ? "bg-white text-brand shadow-sm" : "text-muted"}`}
+          className={`h-10 flex-1 rounded-lg transition ${tab === "phone" ? "bg-cream text-cocoa shadow-sm" : "text-bodyText"}`}
         >
           Telefon
         </button>
         <button
           type="button"
           onClick={() => setTab("email")}
-          className={`h-10 flex-1 rounded-lg transition ${tab === "email" ? "bg-white text-brand shadow-sm" : "text-muted"}`}
+          className={`h-10 flex-1 rounded-lg transition ${tab === "email" ? "bg-cream text-cocoa shadow-sm" : "text-bodyText"}`}
         >
           Email
         </button>

@@ -27,13 +27,13 @@ export function BookCardActions({ book }: { book: Book }) {
   if (!book.inStock) {
     return (
       <div className="relative z-20 mt-2 flex gap-1.5 sm:mt-3 sm:gap-2">
-        <span className="flex h-9 flex-1 items-center justify-center rounded-xl bg-black/[0.06] px-2 text-center text-[10px] font-bold text-muted sm:h-10 sm:text-xs">
+        <span className="flex h-9 flex-1 items-center justify-center rounded-xl bg-sand/70 px-2 text-center text-[10px] font-bold text-bodyText sm:h-10 sm:text-xs">
           Hozircha mavjud emas
         </span>
         <button
           type="button"
           disabled
-          className="grid size-9 shrink-0 cursor-not-allowed place-items-center rounded-xl border border-line bg-canvas text-muted opacity-60 sm:size-10"
+          className="grid size-9 shrink-0 cursor-not-allowed place-items-center rounded-xl border border-line bg-navSurface text-bodyText opacity-60 sm:size-10"
           aria-label={`${book.title} hozircha savatchaga qo‘shib bo‘lmaydi`}
         >
           <ShoppingCart size={18} aria-hidden="true" />
@@ -58,8 +58,8 @@ export function BookCardActions({ book }: { book: Book }) {
         onClick={addToCart}
         className={`grid size-9 shrink-0 place-items-center rounded-xl transition active:scale-95 sm:size-10 ${
           added
-            ? "bg-brand text-white"
-            : "bg-brand-gold text-ink shadow-[0_7px_16px_rgba(199,168,74,.22)] hover:bg-[#b99a3f]"
+            ? "bg-success text-cream"
+            : "bg-cocoa text-cream shadow-[0_7px_16px_rgba(163,74,36,.22)] hover:bg-cocoaDark"
         }`}
         aria-label={added ? `${book.title} savatchaga qo‘shildi` : `${book.title} kitobini savatchaga qo‘shish`}
         aria-live="polite"

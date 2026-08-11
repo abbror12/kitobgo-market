@@ -32,14 +32,14 @@ export default function TermsPage() {
       <LegalSection title="1. Umumiy qoidalar">
         <p>1.1. Ushbu shartlar <Ph>[YURIDIK NOM]</Ph> (keyingi o‘rinlarda — “Sotuvchi”, STIR <Ph>[RAQAM]</Ph>, manzil <Ph>[MANZIL]</Ph>) va KitobGo ilovasidan foydalanuvchi jismoniy shaxs (keyingi o‘rinlarda — “Xaridor”) o‘rtasidagi munosabatni tartibga soladi.</p>
         <p>1.2. Ilovadan foydalanish, ro‘yxatdan o‘tish yoki buyurtma berish ushbu shartlarga to‘liq rozilik bildirish hisoblanadi. Rozi bo‘lmasangiz, ilovadan foydalanmang.</p>
-        <p>1.3. <Link href="/privacy" className="font-semibold text-brand hover:underline">Maxfiylik siyosati</Link> ushbu shartlarning ajralmas qismidir.</p>
+        <p>1.3. <Link href="/privacy" className="font-semibold text-cocoa hover:underline">Maxfiylik siyosati</Link> ushbu shartlarning ajralmas qismidir.</p>
       </LegalSection>
 
       <LegalSection title="2. Hisob">
         <p>2.1. Buyurtma berish uchun telefon raqami (SMS kod), elektron pochta yoki Google/Apple hisobi orqali kirish talab qilinadi. Katalogni ko‘rish uchun hisob shart emas.</p>
         <p>2.2. Xaridor kiritgan ma’lumotlarning to‘g‘riligi uchun javobgardir. Noto‘g‘ri telefon yoki manzil tufayli yetkazib berilmagan buyurtma uchun Sotuvchi javob bermaydi.</p>
         <p>2.3. Hisobga kirish uchun kelgan SMS kodni yoki parolni boshqalarga bermang. Hisobingizdan qilingan harakatlar sizning harakatingiz hisoblanadi.</p>
-        <p>2.4. Xaridor istalgan vaqtda <Link href="/account/delete" className="font-semibold text-brand hover:underline">hisobini o‘chirishi</Link> mumkin.</p>
+        <p>2.4. Xaridor istalgan vaqtda <Link href="/account/delete" className="font-semibold text-cocoa hover:underline">hisobini o‘chirishi</Link> mumkin.</p>
       </LegalSection>
 
       <LegalSection title="3. Tovar va narx">
@@ -104,9 +104,9 @@ export default function TermsPage() {
       </LegalSection>
 
       <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-5 text-sm font-semibold">
-        <Link href="/" className="text-brand hover:underline">Bosh sahifa</Link>
-        <Link href="/privacy" className="text-brand hover:underline">Maxfiylik siyosati</Link>
-        <Link href="/account/delete" className="text-brand hover:underline">Hisobni o‘chirish</Link>
+        <Link href="/" className="text-cocoa hover:underline">Bosh sahifa</Link>
+        <Link href="/privacy" className="text-cocoa hover:underline">Maxfiylik siyosati</Link>
+        <Link href="/account/delete" className="text-cocoa hover:underline">Hisobni o‘chirish</Link>
       </nav>
     </LegalPage>
   );

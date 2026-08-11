@@ -34,7 +34,7 @@ export function ProductSection({ id, title, subtitle, books, compact = false }: 
 
 export function ProductEmptyState() {
   return (
-    <div className="mt-6 rounded-2xl border border-dashed border-line bg-white p-10 text-center text-muted" role="status">
+    <div className="mt-6 rounded-2xl border border-dashed border-line bg-cream p-10 text-center text-bodyText" role="status">
       Hozircha bu bo‘limda kitoblar yo‘q.
     </div>
   );
@@ -43,7 +43,7 @@ export function ProductEmptyState() {
 export function ProductLoadingState() {
   return (
     <div className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6" aria-label="Kitoblar yuklanmoqda" aria-busy="true">
-      {Array.from({ length: 6 }, (_, index) => <div key={index} className="h-80 animate-pulse rounded-2xl bg-black/5" />)}
+      {Array.from({ length: 6 }, (_, index) => <div key={index} className="h-80 animate-pulse rounded-2xl bg-sand/60" />)}
     </div>
   );
 }

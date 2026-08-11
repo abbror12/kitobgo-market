@@ -60,10 +60,10 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
 
   return (
     <form onSubmit={(event) => { event.preventDefault(); void submit(); }}>
-      <p className="text-sm leading-6 text-muted">Ilovada email bilan ro‘yxatdan o‘tgan bo‘lsangiz, shu yerdan kiring.</p>
+      <p className="text-sm leading-6 text-bodyText">Ilovada email bilan ro‘yxatdan o‘tgan bo‘lsangiz, shu yerdan kiring.</p>
       <label htmlFor="login-email" className="mt-4 block text-sm font-bold">Email</label>
       <div className="relative mt-2">
-        <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted" aria-hidden="true" />
+        <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-bodyText" aria-hidden="true" />
         <input
           id="login-email"
           type="email"
@@ -72,7 +72,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
           value={email}
           onChange={(event) => setEmail(event.target.value)}
           placeholder="siz@example.com"
-          className="h-[52px] w-full rounded-xl border border-line py-3.5 pl-11 pr-4 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+          className="h-[52px] w-full rounded-xl border border-line py-3.5 pl-11 pr-4 outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
         />
       </div>
       <label htmlFor="login-password" className="mt-4 block text-sm font-bold">Parol</label>
@@ -84,19 +84,19 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
         value={password}
         onChange={(event) => setPassword(event.target.value)}
         placeholder="••••••••"
-        className="mt-2 h-[52px] w-full rounded-xl border border-line px-4 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
+        className="mt-2 h-[52px] w-full rounded-xl border border-line px-4 outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
       />
-      {error && <p className="mt-3 text-sm font-medium text-red-600" role="alert">{error}</p>}
+      {error && <p className="mt-3 text-sm font-medium text-danger" role="alert">{error}</p>}
       {needsVerification && (
-        <button type="button" onClick={() => void resendVerification()} disabled={busy || resent} className="mt-2 text-sm font-bold text-brand disabled:text-muted">
+        <button type="button" onClick={() => void resendVerification()} disabled={busy || resent} className="mt-2 text-sm font-bold text-cocoa disabled:text-bodyText">
           {resent ? "Havola yuborildi — pochtangizni tekshiring." : "Tasdiqlash havolasini qayta yuborish"}
         </button>
       )}
       <button type="submit" disabled={busy} className="button-primary mt-4 h-12 w-full px-5 disabled:cursor-not-allowed disabled:opacity-60">
         {busy ? <><LoaderCircle size={18} className="animate-spin" /> Tekshirilmoqda…</> : "Kirish"}
       </button>
-      <p className="mt-3 text-center text-sm text-muted">
-        <Link href="/reset-password" className="font-bold text-brand">Parolni unutdingizmi?</Link>
+      <p className="mt-3 text-center text-sm text-bodyText">
+        <Link href="/reset-password" className="font-bold text-cocoa">Parolni unutdingizmi?</Link>
       </p>
     </form>
   );

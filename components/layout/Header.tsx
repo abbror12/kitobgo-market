@@ -12,7 +12,7 @@ const actions = [
 
 export function Header() {
   return (
-    <div className="hidden bg-white md:block">
+    <div className="hidden md:block">
       <div className="container-page flex h-[86px] items-center gap-5">
         <Logo />
         <Link href="/catalog" className="button-primary h-12 shrink-0 px-5">
@@ -29,7 +29,7 @@ export function Header() {
           <Link href="/cart" className="header-action relative" aria-label="Savatcha">
             <span className="relative">
               <ShoppingCart size={23} aria-hidden="true" />
-              <CartBadge className="absolute -right-2 -top-2 grid min-h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[10px] font-bold text-white" />
+              <CartBadge className="absolute -right-2 -top-2 grid min-h-4 min-w-4 place-items-center rounded-full bg-cocoa px-1 text-[10px] font-bold text-cream" />
             </span>
             <span>Savatcha</span>
           </Link>

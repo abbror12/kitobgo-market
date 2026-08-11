@@ -10,9 +10,9 @@ export const metadata: Metadata = {
   description: "KitobGo ilovasi va sayti qanday shaxsiy ma'lumot yig'ishi, ular kimga berilishi va qancha saqlanishi.",
 };
 
-const TH = "bg-canvas px-3 py-2.5 text-xs font-bold uppercase tracking-wide text-ink";
+const TH = "bg-navSurface px-3 py-2.5 text-xs font-bold uppercase tracking-wide text-ink";
 const TD = "border-t border-line px-3 py-2.5 align-top";
-const ROW_TH = "border-t border-line bg-canvas px-3 py-2.5 text-left align-top font-bold text-ink";
+const ROW_TH = "border-t border-line bg-navSurface px-3 py-2.5 text-left align-top font-bold text-ink";
 
 export default function PrivacyPage() {
   return (
@@ -122,7 +122,7 @@ export default function PrivacyPage() {
         </ul>
 
         <LegalSubheading>Hisobni qanday o‘chirasiz</LegalSubheading>
-        <p className="mt-3">Hisobingizni o‘chirish uchun <Link href="/account/delete" className="font-semibold text-brand hover:underline">kitobgo.com/account/delete</Link> sahifasiga o‘ting — u yerda nima o‘chishi va nima qolishi batafsil yozilgan.</p>
+        <p className="mt-3">Hisobingizni o‘chirish uchun <Link href="/account/delete" className="font-semibold text-cocoa hover:underline">kitobgo.com/account/delete</Link> sahifasiga o‘ting — u yerda nima o‘chishi va nima qolishi batafsil yozilgan.</p>
         <p>So‘rov <Ph>[N]</Ph> ish kunida bajariladi. Buyurtma va to‘lov yozuvlari 5-banddagi muddat davomida saqlanib qoladi — bu qonun talabi, biz undan voz kecha olmaymiz.</p>
       </LegalSection>
 
@@ -148,9 +148,9 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-5 text-sm font-semibold">
-        <Link href="/" className="text-brand hover:underline">Bosh sahifa</Link>
-        <Link href="/terms" className="text-brand hover:underline">Foydalanish shartlari</Link>
-        <Link href="/account/delete" className="text-brand hover:underline">Hisobni o‘chirish</Link>
+        <Link href="/" className="text-cocoa hover:underline">Bosh sahifa</Link>
+        <Link href="/terms" className="text-cocoa hover:underline">Foydalanish shartlari</Link>
+        <Link href="/account/delete" className="text-cocoa hover:underline">Hisobni o‘chirish</Link>
       </nav>
     </LegalPage>
   );

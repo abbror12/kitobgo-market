@@ -13,14 +13,16 @@ import { notifyAuthChanged, readFavorites } from "@/lib/client-store";
 import { formatPrice } from "@/lib/format";
 import type { OrderDetailDto, OrderStatus, OrderSummaryDto, PageResponse, ProfileDto } from "@/lib/store-api";
 
+// Badge ohanglari ilovadagi status_colors.dart bilan bir xil: uchta ohang —
+// hal bo'lgan (yashil), yo'ldagi (terrakota), to'xtagan (qizil) va neytral (sand).
 const STATUS_BADGES: Record<OrderStatus, { label: string; className: string }> = {
-  PENDING_PAYMENT: { label: "To‘lov kutilmoqda", className: "bg-amber-100 text-amber-700" },
-  PAID: { label: "To‘landi", className: "bg-brand/10 text-brand" },
-  PROCESSING: { label: "Tayyorlanmoqda", className: "bg-sky-100 text-sky-700" },
-  SHIPPED: { label: "Kuryerda", className: "bg-indigo-100 text-indigo-700" },
-  DELIVERED: { label: "Yetkazildi", className: "bg-brand/10 text-brand" },
-  CANCELLED: { label: "Bekor qilindi", className: "bg-black/5 text-muted" },
-  REFUNDED: { label: "Qaytarildi", className: "bg-black/5 text-muted" },
+  PENDING_PAYMENT: { label: "To‘lov kutilmoqda", className: "bg-warningSoft text-warning" },
+  PAID: { label: "To‘landi", className: "bg-successSoft text-success" },
+  PROCESSING: { label: "Tayyorlanmoqda", className: "bg-warningSoft text-cocoaDark" },
+  SHIPPED: { label: "Yo‘lda", className: "bg-warningSoft text-cocoaDark" },
+  DELIVERED: { label: "Yetkazildi", className: "bg-successSoft text-success" },
+  CANCELLED: { label: "Bekor qilindi", className: "bg-dangerSoft text-danger" },
+  REFUNDED: { label: "Pul qaytarildi", className: "bg-sand text-bodyText" },
 };
 
 const ACTIVE_STATUSES: OrderStatus[] = ["PENDING_PAYMENT", "PAID", "PROCESSING", "SHIPPED"];
@@ -144,7 +146,7 @@ export function ProfileContent() {
   }
 
   if (checking) {
-    return <div className="grid gap-3"><div className="h-24 animate-pulse rounded-2xl bg-black/5" /><div className="h-64 animate-pulse rounded-2xl bg-black/5" /></div>;
+    return <div className="grid gap-3"><div className="h-24 animate-pulse rounded-2xl bg-sand/60" /><div className="h-64 animate-pulse rounded-2xl bg-sand/60" /></div>;
   }
 
   const displayName = profile?.fullName ?? "Mijoz";
@@ -153,18 +155,18 @@ export function ProfileContent() {
 
   return (
     <div className="grid gap-6 lg:grid-cols-[260px_1fr]">
-      <aside className="h-fit rounded-2xl border border-line bg-white p-3">
+      <aside className="h-fit rounded-2xl border border-line bg-cream p-3">
         <div className="flex items-center gap-3 border-b border-line p-3 pb-5">
-          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-brand text-sm font-extrabold text-white">{initials}</span>
+          <span className="grid size-11 shrink-0 place-items-center rounded-full bg-cocoa text-sm font-extrabold text-cream">{initials}</span>
           <span className="min-w-0">
             <strong className="block truncate text-sm">{displayName}</strong>
-            <small className="text-muted">{profile?.phone ?? profile?.email ?? ""}</small>
+            <small className="text-bodyText">{profile?.phone ?? profile?.email ?? ""}</small>
           </span>
         </div>
         <nav className="mt-2">
-          <span className="flex items-center gap-3 rounded-xl bg-brand/10 px-3 py-3 text-sm font-semibold text-brand"><Package size={18} /> Buyurtmalarim<ChevronRight size={15} className="ml-auto" /></span>
-          <Link href="/favorites" className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-ink transition hover:bg-canvas"><Heart size={18} /> Sevimlilar<ChevronRight size={15} className="ml-auto" /></Link>
-          <button type="button" onClick={() => void logout()} className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-red-600 transition hover:bg-red-50"><LogOut size={18} /> Chiqish</button>
+          <span className="flex items-center gap-3 rounded-xl bg-sand px-3 py-3 text-sm font-semibold text-cocoa"><Package size={18} /> Buyurtmalarim<ChevronRight size={15} className="ml-auto" /></span>
+          <Link href="/favorites" className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-ink transition hover:bg-sand"><Heart size={18} /> Sevimlilar<ChevronRight size={15} className="ml-auto" /></Link>
+          <button type="button" onClick={() => void logout()} className="flex w-full items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-danger transition hover:bg-dangerSoft"><LogOut size={18} /> Chiqish</button>
         </nav>
       </aside>
 
@@ -175,23 +177,23 @@ export function ProfileContent() {
             { label: "Jarayonda", value: activeCount, icon: LoaderCircle },
             { label: "Sevimlilar", value: favoritesCount, icon: Heart },
           ].map(({ label, value, icon: Icon }) => (
-            <div key={label} className="rounded-2xl border border-line bg-white p-5">
-              <span className="grid size-10 place-items-center rounded-xl bg-brand/10 text-brand"><Icon size={19} /></span>
+            <div key={label} className="rounded-2xl border border-line bg-cream p-5">
+              <span className="grid size-10 place-items-center rounded-xl bg-sand text-cocoa"><Icon size={19} /></span>
               <strong className="mt-4 block text-2xl">{value}</strong>
-              <span className="text-sm text-muted">{label}</span>
+              <span className="text-sm text-bodyText">{label}</span>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 rounded-2xl border border-line bg-white p-5 sm:p-7">
+        <div className="mt-6 rounded-2xl border border-line bg-cream p-5 sm:p-7">
           <div className="flex items-center justify-between">
-            <div><h2 className="text-xl font-extrabold">Buyurtmalarim</h2><p className="mt-1 text-sm text-muted">Holatini kuzating, kerak bo‘lsa bekor qiling</p></div>
-            <Link href="/catalog" className="text-sm font-bold text-brand">Yangi xarid</Link>
+            <div><h2 className="font-serif text-xl font-semibold">Buyurtmalarim</h2><p className="mt-1 text-sm text-bodyText">Holatini kuzating, kerak bo‘lsa bekor qiling</p></div>
+            <Link href="/catalog" className="text-sm font-bold text-cocoa">Yangi xarid</Link>
           </div>
-          {error && <p className="mt-4 rounded-xl bg-red-50 p-3 text-sm font-medium text-red-700" role="alert">{error}</p>}
+          {error && <p className="mt-4 rounded-xl bg-dangerSoft p-3 text-sm font-medium text-danger" role="alert">{error}</p>}
 
           {orders.length === 0 && !ordersLoading ? (
-            <p className="mt-6 rounded-xl border border-dashed border-line p-6 text-center text-sm text-muted">Hozircha buyurtma yo‘q. <Link href="/catalog" className="font-bold text-brand">Katalogga o‘tish</Link></p>
+            <p className="mt-6 rounded-xl border border-dashed border-line p-6 text-center text-sm text-bodyText">Hozircha buyurtma yo‘q. <Link href="/catalog" className="font-bold text-cocoa">Katalogga o‘tish</Link></p>
           ) : (
             <div className="mt-5 divide-y divide-line">
               {orders.map((order) => {
@@ -200,29 +202,29 @@ export function ProfileContent() {
                 const isOpen = expanded === order.orderNumber;
                 return (
                   <div key={order.orderNumber} className="py-3">
-                    <button type="button" onClick={() => void toggleOrder(order.orderNumber)} className="flex w-full flex-wrap items-center gap-x-4 gap-y-1 rounded-lg px-1 py-2 text-left hover:bg-canvas">
+                    <button type="button" onClick={() => void toggleOrder(order.orderNumber)} className="flex w-full flex-wrap items-center gap-x-4 gap-y-1 rounded-lg px-1 py-2 text-left hover:bg-sand">
                       <strong className="text-sm">{order.orderNumber}</strong>
-                      <span className="text-xs text-muted">{formatDate(order.placedAt)}</span>
+                      <span className="text-xs text-bodyText">{formatDate(order.placedAt)}</span>
                       <span className="text-sm font-semibold">{formatPrice(order.grandTotal)}</span>
                       <span className={`rounded-full px-3 py-1 text-xs font-bold ${badge.className}`}>{badge.label}</span>
-                      <ChevronDown size={16} className={`ml-auto text-muted transition ${isOpen ? "rotate-180" : ""}`} />
+                      <ChevronDown size={16} className={`ml-auto text-bodyText transition ${isOpen ? "rotate-180" : ""}`} />
                     </button>
                     {isOpen && (
-                      <div className="mt-2 rounded-xl bg-canvas p-4 text-sm">
+                      <div className="mt-2 rounded-xl bg-navSurface p-4 text-sm">
                         {detail === "loading" || !detail ? (
-                          <p className="flex items-center gap-2 text-muted"><LoaderCircle size={15} className="animate-spin" /> Yuklanmoqda…</p>
+                          <p className="flex items-center gap-2 text-bodyText"><LoaderCircle size={15} className="animate-spin" /> Yuklanmoqda…</p>
                         ) : (
                           <>
                             <ul className="space-y-1.5">
                               {detail.items.map((item) => (
                                 <li key={item.bookId} className="flex justify-between gap-3">
-                                  <Link href={`/books/${item.slug}`} className="min-w-0 truncate font-medium hover:text-brand">{item.title}</Link>
-                                  <span className="shrink-0 text-muted">{item.quantity} × {formatPrice(item.unitPrice)}</span>
+                                  <Link href={`/books/${item.slug}`} className="min-w-0 truncate font-medium hover:text-cocoa">{item.title}</Link>
+                                  <span className="shrink-0 text-bodyText">{item.quantity} × {formatPrice(item.unitPrice)}</span>
                                 </li>
                               ))}
                             </ul>
                             <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-line pt-3">
-                              <span className="text-muted">
+                              <span className="text-bodyText">
                                 {detail.deliveryMethod === "PICKUP" ? "Olib ketish" : `Yetkazish: ${detail.destination?.regionName ?? ""}`}
                                 {detail.deliveryFee > 0 ? ` · ${formatPrice(detail.deliveryFee)}` : " · Bepul"}
                                 {detail.cashOnDelivery ? " · Qabul qilganda to‘lov" : ""}
@@ -230,10 +232,10 @@ export function ProfileContent() {
                               <strong>Jami: {formatPrice(detail.grandTotal)}</strong>
                             </div>
                             {detail.status === "PENDING_PAYMENT" && (
-                              <Link href={`/order-success?order=${encodeURIComponent(detail.orderNumber)}`} className="mt-3 inline-flex text-sm font-bold text-brand">To‘lovni yakunlash →</Link>
+                              <Link href={`/order-success?order=${encodeURIComponent(detail.orderNumber)}`} className="mt-3 inline-flex text-sm font-bold text-cocoa">To‘lovni yakunlash →</Link>
                             )}
                             {detail.cancellable && (
-                              <button type="button" onClick={() => void cancelOrder(order.orderNumber)} disabled={cancelBusy === order.orderNumber} className="mt-3 ml-4 inline-flex items-center gap-1.5 text-sm font-bold text-red-600 disabled:opacity-60">
+                              <button type="button" onClick={() => void cancelOrder(order.orderNumber)} disabled={cancelBusy === order.orderNumber} className="mt-3 ml-4 inline-flex items-center gap-1.5 text-sm font-bold text-danger disabled:opacity-60">
                                 {cancelBusy === order.orderNumber ? <LoaderCircle size={15} className="animate-spin" /> : <X size={15} />} Bekor qilish
                               </button>
                             )}
@@ -246,29 +248,29 @@ export function ProfileContent() {
               })}
             </div>
           )}
-          {ordersLoading && <p className="mt-4 flex items-center gap-2 text-sm text-muted"><LoaderCircle size={16} className="animate-spin" /> Yuklanmoqda…</p>}
+          {ordersLoading && <p className="mt-4 flex items-center gap-2 text-sm text-bodyText"><LoaderCircle size={16} className="animate-spin" /> Yuklanmoqda…</p>}
           {ordersPage && !ordersPage.last && !ordersLoading && (
             <button type="button" onClick={() => void loadOrders(ordersPage.page + 1)} className="button-secondary mt-5 inline-flex h-11 px-5 text-sm">Yana yuklash</button>
           )}
         </div>
 
-        <div className="mt-6 rounded-2xl border border-line bg-white p-5 sm:p-7">
+        <div className="mt-6 rounded-2xl border border-line bg-cream p-5 sm:p-7">
           <div className="flex flex-wrap items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-xl bg-brand/10 text-brand"><UserRound size={19} /></span>
+            <span className="grid size-10 place-items-center rounded-xl bg-sand text-cocoa"><UserRound size={19} /></span>
             <div className="min-w-0 flex-1">
-              <h2 className="font-extrabold">Shaxsiy ma’lumotlar</h2>
+              <h2 className="font-serif font-semibold">Shaxsiy ma’lumotlar</h2>
               {editingName ? (
                 <form className="mt-2 flex gap-2" onSubmit={(event) => { event.preventDefault(); void saveName(); }}>
-                  <input value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder="Ism-familiya" className="h-10 w-full max-w-xs rounded-xl border border-line px-3 text-sm outline-none focus:border-brand" />
+                  <input value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder="Ism-familiya" className="h-10 w-full max-w-xs rounded-xl border border-line px-3 text-sm outline-none focus:border-cocoa" />
                   <button type="submit" disabled={nameBusy} className="button-primary h-10 px-4 text-sm disabled:opacity-60">{nameBusy ? <LoaderCircle size={15} className="animate-spin" /> : <Check size={15} />}</button>
                   <button type="button" onClick={() => { setEditingName(false); setNameDraft(profile?.fullName ?? ""); }} className="button-secondary inline-flex h-10 px-3 text-sm"><X size={15} /></button>
                 </form>
               ) : (
-                <p className="text-sm text-muted">{displayName}{profile?.phone ? ` · ${profile.phone}` : ""}{profile?.email ? ` · ${profile.email}` : ""}</p>
+                <p className="text-sm text-bodyText">{displayName}{profile?.phone ? ` · ${profile.phone}` : ""}{profile?.email ? ` · ${profile.email}` : ""}</p>
               )}
             </div>
             {!editingName && (
-              <button type="button" onClick={() => setEditingName(true)} className="ml-auto inline-flex items-center gap-1.5 text-sm font-bold text-brand"><Pencil size={15} /> Tahrirlash</button>
+              <button type="button" onClick={() => setEditingName(true)} className="ml-auto inline-flex items-center gap-1.5 text-sm font-bold text-cocoa"><Pencil size={15} /> Tahrirlash</button>
             )}
           </div>
         </div>

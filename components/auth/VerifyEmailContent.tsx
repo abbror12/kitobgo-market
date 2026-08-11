@@ -43,30 +43,30 @@ export function VerifyEmailContent({ token }: { token: string | null }) {
 
   return (
     <section className="container-page py-16 sm:py-24">
-      <div className="mx-auto max-w-xl rounded-[28px] border border-line bg-white p-7 text-center shadow-soft sm:p-12">
+      <div className="mx-auto max-w-xl rounded-[28px] border border-line bg-cream p-7 text-center shadow-soft sm:p-12">
         {state === "verifying" && (
           <>
-            <span className="mx-auto grid size-20 place-items-center rounded-full bg-brand/10 text-brand"><LoaderCircle size={34} className="animate-spin" /></span>
-            <h1 className="mt-6 text-2xl font-extrabold sm:text-3xl">Email tasdiqlanmoqda…</h1>
-            <p className="mt-3 leading-7 text-muted">Bir necha soniya kuting.</p>
+            <span className="mx-auto grid size-20 place-items-center rounded-full bg-sand text-cocoa"><LoaderCircle size={34} className="animate-spin" /></span>
+            <h1 className="font-serif mt-6 text-2xl font-semibold sm:text-3xl">Email tasdiqlanmoqda…</h1>
+            <p className="mt-3 leading-7 text-bodyText">Bir necha soniya kuting.</p>
           </>
         )}
         {state === "success" && (
           <>
-            <span className="mx-auto grid size-20 place-items-center rounded-full bg-brand text-white"><CheckCircle2 size={36} /></span>
-            <h1 className="mt-6 text-2xl font-extrabold sm:text-3xl">Email tasdiqlandi!</h1>
-            <p className="mt-3 leading-7 text-muted">Endi hisobingizga email va parol bilan kirishingiz mumkin.</p>
+            <span className="mx-auto grid size-20 place-items-center rounded-full bg-cocoa text-cream"><CheckCircle2 size={36} /></span>
+            <h1 className="font-serif mt-6 text-2xl font-semibold sm:text-3xl">Email tasdiqlandi!</h1>
+            <p className="mt-3 leading-7 text-bodyText">Endi hisobingizga email va parol bilan kirishingiz mumkin.</p>
             <Link href="/login" className="button-primary mx-auto mt-7 h-12 px-6">Kirish</Link>
           </>
         )}
         {state === "error" && (
           <>
-            <span className="mx-auto grid size-20 place-items-center rounded-full bg-amber-100 text-amber-600"><MailWarning size={34} /></span>
-            <h1 className="mt-6 text-2xl font-extrabold sm:text-3xl">Tasdiqlab bo‘lmadi</h1>
-            <p className="mt-3 leading-7 text-muted">{error}</p>
+            <span className="mx-auto grid size-20 place-items-center rounded-full bg-warningSoft text-warning"><MailWarning size={34} /></span>
+            <h1 className="font-serif mt-6 text-2xl font-semibold sm:text-3xl">Tasdiqlab bo‘lmadi</h1>
+            <p className="mt-3 leading-7 text-bodyText">{error}</p>
             <form className="mx-auto mt-6 max-w-sm" onSubmit={(event) => { event.preventDefault(); void resend(); }}>
               {resendState === "sent" ? (
-                <p className="rounded-xl bg-brand/5 p-4 text-sm font-medium text-brand" role="status">Agar bu email ro‘yxatdan o‘tgan bo‘lsa, yangi havola yuborildi. Pochtangizni tekshiring.</p>
+                <p className="rounded-xl bg-sand/50 p-4 text-sm font-medium text-cocoa" role="status">Agar bu email ro‘yxatdan o‘tgan bo‘lsa, yangi havola yuborildi. Pochtangizni tekshiring.</p>
               ) : (
                 <>
                   <label htmlFor="verify-email-input" className="block text-left text-sm font-bold">Email manzilingiz</label>
@@ -77,7 +77,7 @@ export function VerifyEmailContent({ token }: { token: string | null }) {
                     value={email}
                     onChange={(event) => setEmail(event.target.value)}
                     placeholder="siz@example.com"
-                    className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10"
+                    className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
                   />
                   <button type="submit" disabled={resendState === "busy"} className="button-primary mt-3 h-12 w-full px-5 disabled:opacity-60">
                     {resendState === "busy" ? <LoaderCircle size={17} className="animate-spin" /> : "Yangi havola yuborish"}

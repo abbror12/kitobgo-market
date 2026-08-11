@@ -10,7 +10,8 @@ export function StoreShell({ children }: { children: ReactNode }) {
   return (
     <>
       <TopBar />
-      <div className="sticky top-0 z-40 border-b border-line bg-white/95 shadow-[0_5px_20px_rgba(29,29,31,.04)] backdrop-blur-lg">
+      {/* Sticky header — ilovadagi navSurface: page bilan cream orasidagi "javon" ohangi. */}
+      <div className="sticky top-0 z-40 border-b border-line bg-navSurface/95 shadow-[0_5px_20px_rgba(36,29,18,.05)] backdrop-blur-lg">
         <Header />
         <MobileHeader />
         <MainNavigation />
