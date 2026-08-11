@@ -47,7 +47,7 @@ export async function Footer() {
       </div>
       <div className="container-page mt-7 flex flex-col gap-2 border-t border-line pt-4 text-[11px] text-muted sm:mt-12 sm:gap-3 sm:pt-6 sm:text-[13px] sm:flex-row sm:items-center sm:justify-between">
         <p>© 2026 Kitob.go. Barcha huquqlar himoyalangan.</p>
-        <div className="flex gap-5"><Link href="/about">Maxfiylik siyosati</Link><Link href="/about">Foydalanish shartlari</Link></div>
+        <div className="flex flex-wrap gap-x-5 gap-y-2"><Link href="/privacy">Maxfiylik siyosati</Link><Link href="/terms">Foydalanish shartlari</Link></div>
       </div>
     </footer>
   );
