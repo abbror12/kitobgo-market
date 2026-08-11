@@ -36,10 +36,10 @@ export async function Footer() {
           <h3 className="font-bold text-ink">Aloqa va ijtimoiy tarmoqlar</h3>
           <div className="mt-4 space-y-3 text-[14px] text-muted">
             <a href="tel:+998712000000" className="flex items-center gap-2 hover:text-brand"><Phone size={17} aria-hidden="true" /> +998 71 200 00 00</a>
-            <a href="https://t.me/kitobgo" className="flex items-center gap-2 hover:text-brand"><Send size={17} aria-hidden="true" /> @kitobgo</a>
+            <a href="https://t.me/kitobgouz" className="flex items-center gap-2 hover:text-brand"><Send size={17} aria-hidden="true" /> @kitobgouz</a>
             <span className="flex items-center gap-2"><Clock3 size={17} aria-hidden="true" /> Har kuni, 09:00–21:00</span>
             <div className="flex gap-2 pt-2">
-              <a href="https://t.me/kitobgo" className="social-button" aria-label="Telegram"><Send size={18} /></a>
+              <a href="https://t.me/kitobgouz" className="social-button" aria-label="Telegram"><Send size={18} /></a>
               <a href="https://instagram.com/kitobgo" className="social-button" aria-label="Instagram"><Instagram size={18} /></a>
             </div>
           </div>

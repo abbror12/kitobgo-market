@@ -11,7 +11,7 @@ export function TopBar() {
           <span className="hidden items-center gap-1.5 xl:inline-flex"><BadgeCheck size={15} aria-hidden="true" /> Din ishlari qo‘mitasi ruxsatiga ega kitoblar</span>
         </div>
         <nav aria-label="Yordamchi navigatsiya" className="flex items-center gap-5 text-white/85">
-          <Link href="https://t.me/kitobgo">Telegram</Link>
+          <Link href="https://t.me/kitobgouz">Telegram</Link>
           <Link href="/blog">Blog</Link>
           <Link href="/about">Biz haqimizda</Link>
           <Link href="/contact">Aloqa</Link>
