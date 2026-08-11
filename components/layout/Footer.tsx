@@ -40,7 +40,7 @@ export async function Footer() {
             <span className="flex items-center gap-2"><Clock3 size={17} aria-hidden="true" /> Har kuni, 09:00–21:00</span>
             <div className="flex gap-2 pt-2">
               <a href="https://t.me/kitobgouz" className="social-button" aria-label="Telegram"><Send size={18} /></a>
-              <a href="https://instagram.com/kitobgo" className="social-button" aria-label="Instagram"><Instagram size={18} /></a>
+              <a href="https://www.instagram.com/kitob.go" className="social-button" aria-label="Instagram"><Instagram size={18} /></a>
             </div>
           </div>
         </div>
