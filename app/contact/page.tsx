@@ -63,7 +63,7 @@ export default function ContactPage() {
       <section className="border-y border-line bg-navSurface py-6 sm:py-10">
         <div className="container-page">
           <div className="relative grid min-h-44 place-items-center overflow-hidden rounded-2xl bg-sand text-center sm:min-h-64">
-            <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(#12633d_1px,transparent_1px),linear-gradient(90deg,#12633d_1px,transparent_1px)] [background-size:32px_32px]" />
+            <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(#a34a24_1px,transparent_1px),linear-gradient(90deg,#a34a24_1px,transparent_1px)] [background-size:32px_32px]" />
             <div className="relative rounded-2xl bg-cream/95 p-6 shadow-card">
               <span className="mx-auto grid size-11 place-items-center rounded-full bg-cocoa text-cream">
                 <MapPin size={20} />
