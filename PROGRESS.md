@@ -108,6 +108,13 @@ Ataylab qoldirilgan ikkita "takror": logotip + "Bosh sahifa" (odatiy naqsh) va b
 - Savat va sevimlilar **localStorage'da** (`kitobgo:cart:v2`, `kitobgo:favorites:v2` —
   [lib/client-store.ts](lib/client-store.ts)). Kalitlar ataylab v2: eski backend id'lari yangi
   katalog bilan mos emas edi.
+- **`Intl` ni `uz-UZ` bilan ishlatmang** — [lib/format.ts](lib/format.ts) da sabab yozilgan.
+  Qisqasi: bu lokal Node ICU sida bor, brauzerda yo'q, ya'ni bitta qiymat ikki xil chiqadi
+  (`65[U+00A0]000` ↔ `65,000`, `14-avgust, 2026` ↔ `2026 M08 14`). Birinchisi SSR matnini
+  mijoznikidan farqlantirib React'ni butun daraxtni qayta chizishga majbur qilardi
+  ("hydration failed"), ikkinchisi foydalanuvchiga buzuq sana ko'rsatardi. Narx va sana
+  formati shu fayldan olinadi; sana Toshkent vaqtida (UTC+5) hisoblanadi, chunki konteyner
+  UTC da ishlaydi.
 
 ## Oqimlar
 

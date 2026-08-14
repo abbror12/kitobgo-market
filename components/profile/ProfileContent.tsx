@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
 import { notifyAuthChanged, readFavorites } from "@/lib/client-store";
-import { formatPrice } from "@/lib/format";
+import { formatDate, formatPrice } from "@/lib/format";
 import type { OrderDetailDto, OrderStatus, OrderSummaryDto, PageResponse, ProfileDto } from "@/lib/store-api";
 
 // Badge ohanglari ilovadagi status_colors.dart bilan bir xil: uchta ohang —
@@ -26,10 +26,6 @@ const STATUS_BADGES: Record<OrderStatus, { label: string; className: string }> =
 };
 
 const ACTIVE_STATUSES: OrderStatus[] = ["PENDING_PAYMENT", "PAID", "PROCESSING", "SHIPPED"];
-
-function formatDate(value: string): string {
-  return new Date(value).toLocaleDateString("uz-UZ", { day: "numeric", month: "long", year: "numeric" });
-}
 
 export function ProfileContent() {
   const router = useRouter();
