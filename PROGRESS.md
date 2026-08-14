@@ -63,9 +63,7 @@ katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) v
 ### Logotip
 
 [components/layout/Logo.tsx](components/layout/Logo.tsx) → `public/images/logo.png`
-(384×200, shaffof fon). Manba `C:\Users\USER\Desktop\logo.PNG` (500×500, **oq** fonli):
-oq fon chekkadan flood fill bilan olib tashlangan — harflar ichidagi oq saqlanib qolgan —
-va chetlari kesilgan. Xuddi shu manbadan `app/icon.png` (favicon, 512) va
+(384×200, shaffof fon). Xuddi shu manbadan `app/icon.png` (favicon, 512) va
 `app/apple-icon.png` (180, oq fonli — Apple shaffoflikni qora qiladi) chiqarilgan;
 Next ularni fayl nomiga qarab o'zi ulaydi, `metadata.icons` yozilmagan.
 
@@ -73,9 +71,23 @@ O'lchamlar: shapkada 52px balandlik (100px kenglik), mobil shapkada 40px (77px),
 footerda 52px. Yozuv rasm ichida, shuning uchun yonida matn takrorlanmaydi — nomni `alt`
 beradi.
 
-> **Logotipdagi to'q ko'k `#111D7A` — palitrada yo'q va ataylab shunday.** Bu brend belgisi,
-> sayt ranglariga bo'yalmaydi. Krem (`navSurface`) va oq yuzalarda turadi; to'q fonga
-> qo'yish kerak bo'lsa, alohida (oq) variant kerak — hozir bunday joy yo'q.
+**Manbadan qanday olingan.** `C:\Users\USER\Desktop\logo.PNG` — 500×500, **oq** fonli,
+belgining o'zi to'q ko'k `#111D7A`. Ikki amal bajarilgan (skript:
+`scratchpad/extract-logo.js`, repoda saqlanmagan — qaytadan kerak bo'lsa shu tavsifdan
+tiklanadi):
+
+1. Oq fon **chekkadan flood fill** bilan olib tashlangan, ya'ni faqat tashqi oq yo'qolgan —
+   harflar ichidagi oq joyida qolgan.
+2. Har bir piksel oq va ko'kning aralashmasi sifatida qaralib, aralashuv darajasi
+   `k = (255 − min(R,G,B)) / (255 − 17)` bilan o'lchangan; fon tomonda `k` alfaga,
+   kontent tomonda esa oq ↔ brend rangi orasidagi aralashmaga aylantirilgan. Shu tufayli
+   silliqlangan chetlar saqlanib qolgan, "arra tish" chiqmagan.
+
+> **Belgi sayt rangiga bo'yalgan: `cocoa` (#A34A24), manbadagi to'q ko'k emas** —
+> foydalanuvchi so'raganidek. Ya'ni logotip ham palitraning bir qismi: `cocoa` qiymati
+> o'zgarsa, `public/images/logo.png` ni ham qayta chiqarish kerak (aks holda belgi
+> saytdan orqada qoladi). Krem (`navSurface`) va oq yuzalar uchun mo'ljallangan; to'q
+> fonga qo'yish kerak bo'lsa, oq variant alohida chiqariladi.
 
 ### Navigatsiya qoidasi: bitta havola — bitta joy
 
