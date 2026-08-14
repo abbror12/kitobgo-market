@@ -26,7 +26,7 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
       <PageIntro
         eyebrow="Yakuniy qadam"
         title="Buyurtmani rasmiylashtirish"
-        description="Telefon raqamingiz bilan kiring, hududni tanlang — qolganini biz hal qilamiz."
+        description="Hudud va qabul qiluvchi ma’lumotlarini to‘ldiring — tasdiqlashda telefoningizga kod yuboramiz."
         breadcrumbs={[{ label: directBook ? directBook.title : "Savatcha", href: directBook ? `/books/${directBook.slug}` : "/cart" }, { label: "Rasmiylashtirish" }]}
       />
       <CheckoutForm items={items} regions={regions} source={directBook ? "direct" : "cart"} />

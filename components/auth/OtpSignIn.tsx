@@ -6,6 +6,7 @@
 import { LoaderCircle, Phone, RotateCw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
+import { formatSeconds, useCountdown } from "@/lib/use-countdown";
 
 interface CodeSent {
   expiresInSeconds: number;
@@ -15,23 +16,6 @@ interface CodeSent {
 
 export interface OtpSuccess {
   newAccount: boolean;
-}
-
-function useCountdown(target: number | null): number {
-  const [now, setNow] = useState(() => Date.now());
-  useEffect(() => {
-    if (!target) return;
-    const id = window.setInterval(() => setNow(Date.now()), 1000);
-    return () => window.clearInterval(id);
-  }, [target]);
-  if (!target) return 0;
-  return Math.max(0, Math.ceil((target - now) / 1000));
-}
-
-function formatSeconds(total: number): string {
-  const minutes = Math.floor(total / 60);
-  const seconds = total % 60;
-  return `${minutes}:${String(seconds).padStart(2, "0")}`;
 }
 
 export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: OtpSuccess) => void; compact?: boolean }) {

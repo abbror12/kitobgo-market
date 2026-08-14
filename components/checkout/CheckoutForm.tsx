@@ -1,18 +1,23 @@
 "use client";
 
 // Checkout oqimi (API.md §6–§7):
-//   kirish (OTP) → hudud + yetkazish kotirovkasi → qabul qiluvchi → to'lov usuli →
-//   POST /api/checkout (savat sinxroni + buyurtma + to'lov bitta kompozit chaqiruvda).
+//   hudud + yetkazish kotirovkasi → qabul qiluvchi → to'lov usuli → "Tasdiqlash" →
+//   (kirmagan bo'lsa) SMS kod qadami → POST /api/checkout.
+//
+// Kirish ataylab OXIRGI qadamda: mijoz avval ishini bitiradi, telefon tasdiqlash esa
+// buyurtmani tasdiqlash paytida bo'ladi. SMS forma to'liq tekshirilgandan KEYIN yuboriladi —
+// kod so'rovi soatiga 5 marta cheklangan (API.md §9), uni bekorga sarflab bo'lmaydi.
+//
 // Xatolar `code` bo'yicha boshqariladi: CART_ADJUSTED (sayt-ichki), ORDER_PRICE_CHANGED,
 // INSUFFICIENT_STOCK, REGION_NOT_SERVICED, VALIDATION_FAILED, UNAUTHENTICATED.
 import {
   AlertCircle, Banknote, CheckCircle2, CreditCard, LoaderCircle, LockKeyhole,
-  MapPin, Store, Truck, UserRound,
+  MapPin, Store, Truck,
 } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { OtpSignIn } from "@/components/auth/OtpSignIn";
+import { CheckoutCodeStep, type CodeSent } from "@/components/checkout/CheckoutCodeStep";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
 import { clearCart, notifyAuthChanged, readCart, writeCart } from "@/lib/client-store";
 import { formatPrice, isExternalImage } from "@/lib/format";
@@ -58,6 +63,11 @@ const METHOD_LABELS: Record<DeliveryMethod, { title: string; icon: typeof Truck 
   PICKUP: { title: "Do‘kondan olib ketish", icon: Store },
 };
 
+// `GET /payments/providers` token talab qiladi (API.md §7.1), kirish esa endi oxirgi qadamda —
+// shuning uchun kirmagan mijozga do'kon e'lon qilgan usullar ko'rsatiladi. Kirgandan keyin
+// haqiqiy ro'yxat yuklanadi va tanlangan usul unda bo'lmasa, naqdga qaytariladi.
+const ADVERTISED_PROVIDERS: PaymentProvider[] = ["CLICK", "PAYME"];
+
 // Kirish raqami erkin, lekin recipientPhone qat'iy +998XXXXXXXXX bo'lishi shart (API.md §5).
 function normalizePhone(raw: string): string | null {
   let digits = raw.replace(/\D/g, "");
@@ -91,8 +101,11 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
   const [formNotice, setFormNotice] = useState("");
   const [priceChanges, setPriceChanges] = useState<PriceChange[] | null>(null);
   const [busy, setBusy] = useState(false);
+  // Yakuniy qadam: kirmagan mijoz uchun "form" → "code".
+  const [step, setStep] = useState<"form" | "code">("form");
+  const [otp, setOtp] = useState<{ phone: string; meta: CodeSent } | null>(null);
+  const [placing, setPlacing] = useState(false);
   const idempotencyKey = useRef(newIdempotencyKey());
-  const authBlockRef = useRef<HTMLDivElement>(null);
 
   const itemsTotal = useMemo(() => lines.reduce((sum, item) => sum + item.book.price * item.quantity, 0), [lines]);
   const selectedQuote = quotes?.find((quote) => quote.method === method) ?? null;
@@ -118,12 +131,17 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
     return () => { active = false; };
   }, []);
 
-  // To'lov provayderlari — token talab qiladi; xatoda faqat naqd qoladi.
+  // To'lov provayderlari — token talab qiladi, ya'ni faqat kirgandan keyin.
+  // Tanlangan usul haqiqiy ro'yxatda bo'lmasa, naqdga qaytariladi.
   useEffect(() => {
     if (!authed) return;
     let active = true;
     apiFetch<PaymentProvider[]>("/api/payments/providers")
-      .then((list) => { if (active && Array.isArray(list)) setProviders(list); })
+      .then((list) => {
+        if (!active || !Array.isArray(list)) return;
+        setProviders(list);
+        setPaymentMethod((current) => (current === "COD" || list.includes(current) ? current : "COD"));
+      })
       .catch(() => { if (active) setProviders([]); });
     return () => { active = false; };
   }, [authed]);
@@ -179,26 +197,75 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
     syncLocalCart(next);
   }
 
-  async function submit(acceptPrices = false) {
+  // Butun formani tekshiradi. SMS shundan keyin yuboriladi, aks holda mijoz
+  // kod cheklovini to'ldirilmagan maydon uchun sarflab qo'yardi.
+  function validate(): string | null {
+    if (!lines.length) { setFormError("Savat bo‘sh — katalogdan kitob tanlang."); return null; }
+    if (!regionId) { setFieldErrors({ regionId: "Hududingizni tanlang" }); return null; }
+    if (!method) { setFormError("Bu hudud uchun yetkazish usuli topilmadi."); return null; }
+    const phone = normalizePhone(recipientPhone);
+    if (!phone) { setFieldErrors({ recipientPhone: "Telefon raqam +998 XX XXX XX XX ko‘rinishida bo‘lishi kerak" }); return null; }
+    if (!recipientName.trim()) { setFieldErrors({ recipientName: "Qabul qiluvchi ismini kiriting" }); return null; }
+    return phone;
+  }
+
+  async function handleSubmit(acceptPrices = false) {
     if (busy) return;
     setFormError("");
     setFormNotice("");
     setFieldErrors({});
     if (!acceptPrices) setPriceChanges(null);
 
-    if (!lines.length) { setFormError("Savat bo‘sh — katalogdan kitob tanlang."); return; }
-    if (session.state !== "authed") {
-      setFormError("Buyurtma berish uchun avval telefon raqamingiz bilan kiring.");
-      authBlockRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
-      return;
-    }
-    if (!regionId) { setFieldErrors({ regionId: "Hududingizni tanlang" }); return; }
-    if (!method) { setFormError("Bu hudud uchun yetkazish usuli topilmadi."); return; }
-    const phone = normalizePhone(recipientPhone);
-    if (!phone) { setFieldErrors({ recipientPhone: "Telefon raqam +998 XX XXX XX XX ko‘rinishida bo‘lishi kerak" }); return; }
-    if (!recipientName.trim()) { setFieldErrors({ recipientName: "Qabul qiluvchi ismini kiriting" }); return; }
+    const phone = validate();
+    if (!phone) return;
 
+    // Kirgan mijoz uchun kod qadami umuman chiqmaydi.
+    if (authed) { await placeOrder(phone, acceptPrices); return; }
+    await requestCode(phone);
+  }
+
+  async function requestCode(phone: string) {
     setBusy(true);
+    try {
+      const sent = await apiFetch<CodeSent>("/api/auth/otp/request", {
+        method: "POST",
+        body: JSON.stringify({ phone }),
+      });
+      setOtp({ phone, meta: sent });
+      setStep("code");
+    } catch (error) {
+      if (error instanceof ClientApiError) {
+        if (error.code === "VALIDATION_FAILED") setFieldErrors({ recipientPhone: error.message });
+        else if (error.code === "SMS_DELIVERY_FAILED") setFormError("SMS yuborilmadi — aloqada uzilish. Qayta urinib ko‘ring.");
+        else setFormError(error.message);
+      } else {
+        setFormError("Kod yuborilmadi. Internetni tekshirib qayta urining.");
+      }
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  // Kod tasdiqlandi: mijoz endi tizimda. Profilni yangilaymiz va buyurtmani joylaymiz.
+  async function handleVerified({ newAccount }: { newAccount: boolean }) {
+    notifyAuthChanged();
+    const fullName = recipientName.trim();
+    // Yangi hisobda profil bo'sh bo'ladi — formadagi ismni saqlab qo'yamiz (API.md §5).
+    // Bu buyurtmaga ta'sir qilmaydi, shuning uchun xatosi jimgina yutiladi.
+    if (newAccount && fullName) {
+      await apiFetch("/api/account", { method: "PUT", body: JSON.stringify({ fullName }) }).catch(() => null);
+    }
+    const session = await apiFetch<{ authenticated: boolean; profile?: ProfileDto }>("/api/auth/session").catch(() => null);
+    if (session?.authenticated && session.profile) setSession({ state: "authed", profile: session.profile });
+
+    const phone = otp?.phone ?? normalizePhone(recipientPhone);
+    if (!phone) { setStep("form"); setFormError("Telefon raqamni tekshirib, qayta urining."); return; }
+    await placeOrder(phone, false);
+  }
+
+  async function placeOrder(phone: string, acceptPrices: boolean) {
+    setBusy(true);
+    setPlacing(true);
     try {
       const result = await apiFetch<CheckoutSuccess>("/api/checkout", {
         method: "POST",
@@ -230,13 +297,16 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
         router.push(`/order-success?order=${encodeURIComponent(order.orderNumber)}`);
       }
     } catch (error) {
+      // Buyurtma o'tmadi — mijozni formaga qaytaramiz, tuzatadigan narsa o'sha yerda.
+      // Kod allaqachon tasdiqlangan bo'lsa, u endi tizimda: keyingi urinishda kod so'ralmaydi.
+      setStep("form");
       if (error instanceof ClientApiError) {
         const problem = error.problem;
         switch (error.code) {
           case "UNAUTHENTICATED":
             setSession({ state: "anon" });
-            setFormError("Sessiya muddati tugadi — qayta kiring.");
-            authBlockRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+            setOtp(null);
+            setFormError("Sessiya muddati tugadi — buyurtmani qayta tasdiqlang.");
             break;
           case "CART_ADJUSTED":
             applyAdjustments(Array.isArray(problem.adjustments) ? problem.adjustments as Adjustment[] : []);
@@ -279,45 +349,27 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
       }
     } finally {
       setBusy(false);
+      setPlacing(false);
     }
+  }
+
+  if (step === "code" && otp) {
+    return (
+      <CheckoutCodeStep
+        phone={otp.phone}
+        meta={otp.meta}
+        total={formatPrice(grandTotal)}
+        placing={placing}
+        onVerified={(info) => void handleVerified(info)}
+        onBack={() => setStep("form")}
+      />
+    );
   }
 
   return (
     <section className="container-page py-5 sm:py-12">
-      <form onSubmit={(event) => { event.preventDefault(); void submit(); }} className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_380px] xl:gap-8">
+      <form onSubmit={(event) => { event.preventDefault(); void handleSubmit(); }} className="grid gap-4 sm:gap-6 lg:grid-cols-[1fr_380px] xl:gap-8">
         <div className="space-y-4 sm:space-y-5">
-
-          <div ref={authBlockRef} className="rounded-2xl border border-line bg-cream p-4 sm:p-7">
-            <h2 className="font-serif flex items-center gap-2 text-lg font-semibold"><UserRound size={20} className="text-cocoa" /> Kirish</h2>
-            {session.state === "loading" && <div className="mt-4 h-14 animate-pulse rounded-xl bg-sand/60" />}
-            {session.state === "authed" && (
-              <p className="mt-3 flex items-center gap-2 rounded-xl bg-sand/50 p-3.5 text-sm font-medium text-cocoa">
-                <CheckCircle2 size={17} className="shrink-0" />
-                {session.profile.fullName ? `${session.profile.fullName} · ` : ""}{session.profile.phone ?? session.profile.email} bilan kirdingiz
-              </p>
-            )}
-            {session.state === "anon" && (
-              <div className="mt-3">
-                <OtpSignIn
-                  compact
-                  onSuccess={() => {
-                    setFormError("");
-                    notifyAuthChanged();
-                    apiFetch<{ authenticated: boolean; profile?: ProfileDto }>("/api/auth/session")
-                      .then((result) => {
-                        if (result.authenticated && result.profile) {
-                          setSession({ state: "authed", profile: result.profile });
-                          if (result.profile.fullName) setRecipientName((current) => current || result.profile!.fullName!);
-                          if (result.profile.phone) setRecipientPhone((current) => (current.trim() === "+998" ? result.profile!.phone! : current));
-                        }
-                      })
-                      .catch(() => setSession({ state: "anon" }));
-                  }}
-                />
-              </div>
-            )}
-          </div>
-
           <fieldset disabled={busy} className="rounded-2xl border border-line bg-cream p-4 disabled:opacity-70 sm:p-7">
             <legend className="px-2 text-lg font-extrabold">Yetkazib berish</legend>
             <div>
@@ -409,7 +461,7 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                 <Banknote size={22} className={`shrink-0 ${paymentMethod === "COD" ? "text-cocoa" : "text-bodyText"}`} />
                 <span className="text-sm"><strong className="block">Qabul qilganda to‘lash</strong><span className="mt-0.5 block text-bodyText">Kitobni tekshirgandan keyin naqd yoki karta orqali</span></span>
               </label>
-              {providers.map((provider) => (
+              {(authed ? providers : ADVERTISED_PROVIDERS).map((provider) => (
                 <label key={provider} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === provider ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
                   <input type="radio" name="paymentMethod" className="sr-only" checked={paymentMethod === provider} onChange={() => setPaymentMethod(provider)} />
                   <CreditCard size={22} className={`shrink-0 ${paymentMethod === provider ? "text-cocoa" : "text-bodyText"}`} />
@@ -455,7 +507,7 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                   <li key={change.bookId}>{change.title}: <s>{formatPrice(change.cartPrice)}</s> → <strong>{formatPrice(change.currentPrice)}</strong></li>
                 ))}
               </ul>
-              <button type="button" onClick={() => void submit(true)} disabled={busy} className="button-primary mt-3 h-10 w-full px-4 text-sm">Yangi narxlarga roziman — davom etish</button>
+              <button type="button" onClick={() => void handleSubmit(true)} disabled={busy} className="button-primary mt-3 h-10 w-full px-4 text-sm">Yangi narxlarga roziman — davom etish</button>
             </div>
           )}
           {formNotice && <p className="mt-4 flex items-start gap-2 rounded-xl bg-warningSoft p-3 text-sm font-medium text-warning" role="status"><AlertCircle size={17} className="mt-0.5 shrink-0" />{formNotice}</p>}
