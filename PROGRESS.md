@@ -110,6 +110,36 @@ katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) v
 | `GET /uploads/*` media-proksi | rasm URL'lari absolyut keladi (CDN) | o'chirilgan; `next.config.ts` remotePatterns |
 | IndexedDB oflayn-navbat | olib tashlandi — retry o'rnini `idempotencyKey` bosadi | — |
 
+## Deploy
+
+`main` ga push → GitHub Actions: tekshiruv → Docker image GHCR'ga → SSH orqali serverda
+konteynerni almashtirish. Serverda repo yo'q: faqat `kitobgo-market` nomli konteyner
+(`127.0.0.1:3000`), oldida host nginx (`/etc/nginx/sites-available/kitobgo-site.conf`).
+
+nginx'da atigi ikkita statik istisno qolgan — `/account/delete` va `/style.css`
+(`/var/www/kitobgo` dan). Qolgan hamma narsa Next.js konteyneriga proxy qilinadi.
+
+> **2026-08-12 dan beri deploy bosqichi yiqilyapti:** `dial tcp <server>:22: i/o timeout`.
+> 22-port O'zbekiston IP'sidan ochiq, GitHub runner'idan (Azure IP) esa yopiq — ya'ni
+> IP bo'yicha cheklov (`ufw` yoki provayder firewall'i, server tiklangandan keyin paydo
+> bo'lgan). Tuzatilmaguncha chiqarish qo'lda:
+>
+> ```
+> echo "<classic PAT, read:packages>" | docker login ghcr.io -u <user> --password-stdin
+> docker pull ghcr.io/<owner>/kitobgo-market:latest
+> docker rm -f kitobgo-market
+> docker run -d --name kitobgo-market --restart unless-stopped \
+>   -p 127.0.0.1:3000:3000 -e KITOBGO_API_URL=https://api.kitobgo.com \
+>   ghcr.io/<owner>/kitobgo-market:latest
+> ```
+>
+> GHCR **classic** token talab qiladi (`read:packages`); fine-grained token bilan
+> `docker login` "Succeeded" deydi-yu, `pull` da "denied" beradi — chalg'itadi.
+
+Workflow'da SSH porti ataylab `port: 22` deb yozilgan, secret'dan o'qilmaydi: `SERVER_PORT`
+secret qiymati oxirida `\n` bo'lgani uchun drone-ssh uni int'ga aylantira olmay, SSH'gacha
+yetmasdan yiqilardi.
+
 ## Lokal ishga tushirish
 
 ```
