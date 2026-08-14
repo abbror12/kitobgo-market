@@ -5,7 +5,7 @@ import { StoreShell } from "@/components/layout/StoreShell";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { authors } from "@/data/authors";
 
-export const metadata: Metadata = { title: "Mualliflar — Kitob.go", description: "Sevimli yozuvchi va olimlaringiz asarlarini toping." };
+export const metadata: Metadata = { title: "Mualliflar — Kitob.go", description: "Sevimli yozuvchi va olimlaringiz asarlarini toping.", alternates: { canonical: "/authors" } };
 
 export default async function AuthorsPage({ searchParams }: { searchParams: Promise<{ q?: string }> }) {
   const params = await searchParams;

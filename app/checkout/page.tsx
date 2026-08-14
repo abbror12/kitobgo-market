@@ -5,7 +5,7 @@ import { StoreShell } from "@/components/layout/StoreShell";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { getBookDetail, getRegions } from "@/lib/store-api";
 
-export const metadata: Metadata = { title: "Buyurtmani rasmiylashtirish — Kitob.go" };
+export const metadata: Metadata = { title: "Buyurtmani rasmiylashtirish — Kitob.go", robots: { index: false } };
 
 // items=slug:miqdor,slug:miqdor (savatdan) yoki book=slug&quantity=n (to'g'ridan-to'g'ri).
 export default async function CheckoutPage({ searchParams }: { searchParams: Promise<{ book?: string; quantity?: string; items?: string }> }) {

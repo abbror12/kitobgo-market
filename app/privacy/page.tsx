@@ -12,6 +12,7 @@ import { LegalPage, LegalSection, LegalSubheading, LegalTable } from "@/componen
 export const metadata: Metadata = {
   title: "Maxfiylik siyosati — KitobGo",
   description: "KitobGo ilovasi va sayti qanday shaxsiy ma'lumot yig'ishi, ular kimga berilishi va qancha saqlanishi.",
+  alternates: { canonical: "/privacy" },
 };
 
 const TH = "bg-navSurface px-3 py-2.5 text-xs font-bold uppercase tracking-wide text-ink";

@@ -6,10 +6,43 @@ import { BookCard } from "@/components/product/BookCard";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { flattenCategoryTree, getBooks, getCategoryTree } from "@/lib/store-api";
 
-export const metadata: Metadata = { title: "Kitoblar katalogi — Kitob.go", description: "Saralangan original kitoblarni kategoriya, narx va muallif bo‘yicha toping." };
-
 type CatalogParams = { q?: string; category?: string; sort?: string; max?: string; stock?: string; discount?: string; page?: string };
 type SearchParams = Promise<CatalogParams>;
+
+// Kanonik manzil filtrlarni yig'ib tashlaydi, kategoriyani esa SAQLAYDI: `?sort=`, `?page=`,
+// `?max=` — bir ro'yxatning turli ko'rinishi, kategoriya sahifasi esa o'zicha alohida
+// (sitemap ham aynan shu manzillarni beradi, ikkovi bir-biriga zid bo'lmasligi kerak).
+export async function generateMetadata({ searchParams }: { searchParams: SearchParams }): Promise<Metadata> {
+  const params = await searchParams;
+  const query = params.q?.trim();
+  // Qidiruv natijasi indekslanmaydi: `?q=` cheksiz variant beradi va hammasi
+  // bir xil katalogning kesimi — Google uchun "yupqa" sahifalar to'plami.
+  if (query) {
+    return {
+      title: `“${query}” bo‘yicha qidiruv — Kitob.go`,
+      robots: { index: false },
+      alternates: { canonical: "/catalog" },
+    };
+  }
+
+  const categoryId = /^\d+$/.test(params.category ?? "") ? Number(params.category) : undefined;
+  if (categoryId !== undefined) {
+    const name = flattenCategoryTree(await getCategoryTree().catch(() => [])).find((item) => item.id === categoryId)?.name;
+    if (name) {
+      return {
+        title: `${name} — Kitob.go`,
+        description: `${name} bo‘limidagi original kitoblar: narx, muallif va nashriyot bo‘yicha tanlang.`,
+        alternates: { canonical: `/catalog?category=${categoryId}` },
+      };
+    }
+  }
+
+  return {
+    title: "Kitoblar katalogi — Kitob.go",
+    description: "Saralangan original kitoblarni kategoriya, narx va muallif bo‘yicha toping.",
+    alternates: { canonical: "/catalog" },
+  };
+}
 
 function catalogHref(params: CatalogParams, page: number) {
   const query = new URLSearchParams();

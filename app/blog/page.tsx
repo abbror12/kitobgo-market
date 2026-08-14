@@ -5,7 +5,7 @@ import { StoreShell } from "@/components/layout/StoreShell";
 import { PageIntro } from "@/components/shared/PageIntro";
 import { posts } from "@/data/blog";
 
-export const metadata: Metadata = { title: "Blog — Kitob.go", description: "Mutolaa, kitob tanlash va oilaviy kutubxona haqida foydali maqolalar." };
+export const metadata: Metadata = { title: "Blog — Kitob.go", description: "Mutolaa, kitob tanlash va oilaviy kutubxona haqida foydali maqolalar.", alternates: { canonical: "/blog" } };
 
 export default function BlogPage() {
   const [featured, ...rest] = posts;

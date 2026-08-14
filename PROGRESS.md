@@ -211,6 +211,43 @@ o'sha `lib/otp.ts` dan oladi.
 `PAID` bo'lguncha 3 soniyada pollaydi (~2 daqiqa), `checkoutUrl` sessionStorage'da
 (`kg:pay:{orderNumber}`) turadi — "To'lovni davom ettirish" tugmasi shundan.
 
+## Qidiruv tizimlari uchun (SEO)
+
+Manzil bitta joyda: [lib/site.ts](lib/site.ts) — `SITE_URL` (`NEXT_PUBLIC_SITE_URL` yoki
+`https://kitobgo.com`), `SITE_NAME` va `PRIVATE_PATHS`. `robots.ts` ham, sahifalardagi
+`robots: { index: false }` ham shu ro'yxatga tayanadi.
+
+| Nima | Qayerda | Izoh |
+|---|---|---|
+| `/robots.txt` | [app/robots.ts](app/robots.ts) | Shaxsiy yo'llar va `/api/*` yopilgan, sitemap ko'rsatilgan |
+| `/sitemap.xml` | [app/sitemap.ts](app/sitemap.ts) | Statik sahifalar + blog + kategoriyalar + **hamma kitob**; soatiga yangilanadi |
+| Kanonik manzil | har sahifada `alternates.canonical` | Layout'da **ataylab yo'q** — u meros bo'lib butun saytga tarqalardi |
+| Strukturali ma'lumot | [lib/seo.ts](lib/seo.ts) + [JsonLd](components/seo/JsonLd.tsx) | `Organization`+`WebSite` (layout), `Product`+`Book` va `BreadcrumbList` (kitob), `BreadcrumbList` (blog) |
+| Ulashish rasmi | kitob sahifasida `openGraph.images` | Telegramda umumiy rasm emas, o'sha kitob muqovasi chiqadi |
+
+**Sitemap.** Kitoblar `getBooks` orqali 100 tadan olinadi (API.md §2 dagi chegara), 50
+sahifadan keyin to'xtaydi (5000 kitob) va bu `console.warn` bilan aytiladi — bundan oshsa
+sitemap'ni indeksga bo'lish kerak. Backend javob bermasa oqim uziladi va sitemap **qisman**
+qaytadi: butunlay yiqilgandan ko'ra shunisi yaxshi.
+
+**Katalog kanoniklari.** `?sort=`, `?page=`, `?max=` — bitta ro'yxatning ko'rinishi, hammasi
+yig'ilib tashlanadi. `?category=` esa **saqlanadi**: kategoriya o'z sahifasi va sitemap ham
+aynan shu manzilni beradi (ikkovi bir-biriga zid bo'lmasligi shart). `?q=` — `noindex`:
+cheksiz variant beradi va har biri "yupqa" sahifa.
+
+**Ikkita tuzoq:**
+
+1. **Sahifa `openGraph` bersa, Next layout'dagisini butunlay almashtiradi** (chuqur
+   birlashtirmaydi). Shuning uchun kitob va blog sahifalarida `siteName`, `locale`, `type`
+   qayta yoziladi — aks holda ular yo'qoladi.
+2. **Bo'sh ma'lumot yozilmaydi.** `aggregateRating` faqat `reviews > 0` bo'lganda, `isbn`
+   faqat haqiqiy 10/13 xonali bo'lganda qo'shiladi; `detailToBook` qo'yadigan "—" va
+   "ko'rsatilmagan" kabi matnlar filtrlanadi. Nol reyting yoki soxta maydon Google uchun
+   qoidabuzarlik va butun rich result'ni bekor qiladi.
+
+> `Organization` ichida telefon **ataylab yo'q**: footerda `+998 71 200 00 00`, huquqiy
+> hujjatlarda `+998 77 448 80 80` turibdi. Qaysi biri haqiqiy ekani aniqlangach qo'shiladi.
+
 ## Endpoint xaritasi (eski → yangi)
 
 | Eski (o'chirilgan) | Yangi (API.md) | Qayerda |

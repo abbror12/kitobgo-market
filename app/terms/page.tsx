@@ -8,6 +8,7 @@ import { LegalPage, LegalSection } from "@/components/legal/LegalPage";
 export const metadata: Metadata = {
   title: "Foydalanish shartlari — KitobGo",
   description: "KitobGo onlayn kitob do'koni bilan xaridor o'rtasidagi ommaviy oferta: buyurtma, to'lov, yetkazib berish, qaytarish.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

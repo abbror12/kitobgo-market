@@ -6,15 +6,37 @@ import { StoreShell } from "@/components/layout/StoreShell";
 import { ProductActions } from "@/components/product/ProductActions";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductSection } from "@/components/product/ProductSection";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Breadcrumbs } from "@/components/shared/Breadcrumbs";
 import { getBookBySlug } from "@/data/books";
 import { formatPrice } from "@/lib/format";
+import { bookJsonLd, breadcrumbJsonLd, metaDescription } from "@/lib/seo";
+import { SITE_NAME } from "@/lib/site";
 import { getBookDetail, getBooks } from "@/lib/store-api";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const book = await getBookDetail(slug).catch(() => getBookBySlug(slug));
-  return book ? { title: `${book.title} — Kitob.go`, description: book.description } : {};
+  if (!book) return {};
+  const title = `${book.title} — Kitob.go`;
+  const description = metaDescription(book.description);
+  return {
+    title,
+    description,
+    alternates: { canonical: `/books/${book.slug}` },
+    // Havola Telegramda tashlanganda umumiy sayt rasmi emas, aynan shu kitob muqovasi chiqsin.
+    // `siteName`/`locale`/`type` shu yerda takrorlanadi: sahifa o'z openGraph'ini berganda
+    // Next layout'dagisini butunlay almashtiradi, ya'ni ular meros bo'lib o'tmaydi.
+    openGraph: {
+      type: "website",
+      siteName: SITE_NAME,
+      locale: "uz_UZ",
+      title,
+      description,
+      url: `/books/${book.slug}`,
+      images: [{ url: book.image, alt: book.title }],
+    },
+  };
 }
 
 export default async function BookPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -31,6 +53,13 @@ export default async function BookPage({ params }: { params: Promise<{ slug: str
 
   return (
     <StoreShell>
+      <JsonLd data={bookJsonLd(book)} />
+      <JsonLd data={breadcrumbJsonLd([
+        { name: "Bosh sahifa", path: "/" },
+        { name: "Katalog", path: "/catalog" },
+        ...(book.category ? [{ name: categoryName, path: `/catalog?category=${book.category}` }] : []),
+        { name: book.title },
+      ])} />
       <div className="container-page py-3 sm:py-8"><Breadcrumbs items={[{ label: "Katalog", href: "/catalog" }, { label: categoryName, href: `/catalog?category=${book.category}` }, { label: book.title }]} /></div>
       <section className="container-page pb-7 sm:pb-12">
         <div className="grid gap-4 rounded-[18px] border border-line bg-cream p-3 shadow-soft sm:gap-8 sm:rounded-[24px] sm:p-7 lg:grid-cols-[.88fr_1.12fr] lg:gap-12 lg:p-10">

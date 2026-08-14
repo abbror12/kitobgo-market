@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { FAQAccordion } from "@/components/home/FAQAccordion";
 import { HeroSection } from "@/components/home/HeroSection";
 import { SpecialCollections, TestimonialsSection, VideoReviews } from "@/components/home/AdditionalSections";
@@ -10,6 +11,10 @@ import { books as fallbackBooks } from "@/data/books";
 import { getBooks } from "@/lib/store-api";
 
 export const dynamic = "force-dynamic";
+
+// Sarlavha va tavsif layout'dan meros — bosh sahifa uchun ular aynan to'g'ri.
+// Bu yerda faqat kanonik manzil beriladi.
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
   // Backend'da "sotuvlar soni" bo'yicha sort yo'q — eng ko'p baholanganlar (ratingCount)

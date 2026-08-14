@@ -7,6 +7,7 @@ import { PageIntro } from "@/components/shared/PageIntro";
 export const metadata: Metadata = {
   title: "Aloqa — Kitob.go",
   description: "Kitob.go bilan telefon, Telegram yoki murojaat formasi orqali bog‘laning.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

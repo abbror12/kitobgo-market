@@ -4,7 +4,7 @@ import Link from "next/link";
 import { LoginPanel } from "@/components/auth/LoginPanel";
 import { StoreShell } from "@/components/layout/StoreShell";
 
-export const metadata: Metadata = { title: "Kirish — Kitob.go" };
+export const metadata: Metadata = { title: "Kirish — Kitob.go", robots: { index: false } };
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<{ next?: string }> }) {
   const params = await searchParams;
