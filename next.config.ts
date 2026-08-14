@@ -12,16 +12,6 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "*.kitobgo.com" },
     ],
   },
-  // Eski xatlardagi havolalar (`/verify-email?token=…`, `/reset-password?token=…`) uchun.
-  // Backend 2026-08-13 dan kod yuboradi va `one_time_tokens` jadvalini tashladi — ya'ni
-  // bu havolalar allaqachon o'lik. Pochtasida eski xat qolganlar 404 emas, kirish sahifasini
-  // ko'rsin. Bir-ikki haftadan keyin bu ikki qatorni olib tashlash mumkin.
-  async redirects() {
-    return [
-      { source: "/verify-email", destination: "/login", permanent: false },
-      { source: "/reset-password", destination: "/login", permanent: false },
-    ];
-  },
 };
 
 export default nextConfig;

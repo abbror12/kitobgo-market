@@ -148,10 +148,9 @@ Ikkita tuzoq (MIGRATION_EMAIL_CODES.md §4):
 2. **Kod o'z oqimiga bog'langan**: tasdiqlash kodini `reset-password` ga yuborsangiz
    `401 OTP_EXPIRED` keladi, teskarisi ham shunday.
 
-> Eski `/verify-email?token=…` va `/reset-password?token=…` uchun
-> [next.config.ts](next.config.ts) da vaqtinchalik redirect bor (→ `/login`): backend
-> `one_time_tokens` jadvalini tashlagan, ya'ni pochtada qolgan eski havolalar o'lik.
-> Bir-ikki haftadan keyin olib tashlash mumkin.
+> Eski `/verify-email?token=…` va `/reset-password?token=…` manzillari endi yo'q (404) va
+> redirect ataylab qo'yilmagan: backend `one_time_tokens` jadvalini tashlagan, ya'ni pochtada
+> qolgan eski havolalar baribir o'lik edi.
 
 Checkout'ning kod qadami — [CheckoutCodeStep](components/checkout/CheckoutCodeStep.tsx) —
 o'z chizmasini (orqaga qaytish, summa, buyurtma joylash holati) saqlaydi, lekin xato tilini
