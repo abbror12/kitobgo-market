@@ -118,9 +118,10 @@ Ataylab qoldirilgan ikkita "takror": logotip + "Bosh sahifa" (odatiy naqsh) va b
 
 ## Oqimlar
 
-**Kirish** — telefon + SMS kod (API.md §4.1), sayt uchun asosiy usul. Email+parol tab
-qo'shimcha (ilovada email bilan ro'yxatdan o'tganlar uchun). Yangi hisob saytda faqat OTP
-orqali ochiladi — saytda ro'yxatdan o'tish formasi yo'q.
+**Kirish** — telefon + SMS kod (API.md §4.1), sayt uchun asosiy usul: noma'lum raqam kod
+tasdiqlangan zahoti hisobga aylanadi, ya'ni bu yo'lda ro'yxatdan o'tish qadami yo'q.
+Email+parol — ikkinchi yo'l: kirish, **ro'yxatdan o'tish** va parol tiklash, hammasi
+o'sha panelning ichida.
 
 **Hamma kod ekranlari bitta komponent**: [components/auth/CodeEntry.tsx](components/auth/CodeEntry.tsx).
 `codeLength` / `expiresInSeconds` / `resendAfterSeconds` **serverdan** o'qiladi va hech qayerda
@@ -134,6 +135,7 @@ ichidagi qadamlar, alohida sahifa yo'q:
 
 | Qadam | Chaqiruv | Natija |
 |---|---|---|
+| "Ro'yxatdan o'tish" | `POST /auth/register {email, password, fullName}` | `201 CodeSent` → kod ekrani. Hisob `PENDING_VERIFICATION`, cookie hali yo'q |
 | Kirish `403 EMAIL_NOT_VERIFIED` bersa | `POST /auth/resend-verification {email}` | `202 CodeSent` → kod ekrani |
 | Kodni kiritish | `POST /auth/verify-email {email, code}` | **`200 TokenResponse`** — cookie o'rnatiladi, alohida login qadami YO'Q |
 | "Parolni unutdingizmi?" | `POST /auth/forgot-password {email}` | `202 CodeSent` → kod + yangi parol ekrani |
@@ -147,6 +149,12 @@ Ikkita tuzoq (MIGRATION_EMAIL_CODES.md §4):
    `OTP_RESEND_TOO_SOON` **yo'q** — taymer `resendAfterSeconds` dan yuritiladi.
 2. **Kod o'z oqimiga bog'langan**: tasdiqlash kodini `reset-password` ga yuborsangiz
    `401 OTP_EXPIRED` keladi, teskarisi ham shunday.
+
+Ro'yxatdan o'tish formasi haqida: **telefon maydoni yo'q** (raqam faqat §4.1 orqali
+o'rnatiladi), parol qoidasi backend DTO'si bilan bir xil (8–72, harf + raqam), ism 2–150.
+Shu uchtasi mijozda oldindan tekshiriladi — bekorga so'rov ketmasin va matn uzbekcha bo'lsin.
+Backenddan `400 VALIDATION_FAILED` kelsa, `errors` massivi to'g'ridan-to'g'ri maydonlarga
+joylanadi (API.md §2). `409 EMAIL_ALREADY_REGISTERED` → "kirishga o'ting".
 
 > Eski `/verify-email?token=…` va `/reset-password?token=…` manzillari endi yo'q (404) va
 > redirect ataylab qo'yilmagan: backend `one_time_tokens` jadvalini tashlagan, ya'ni pochtada
