@@ -1,18 +1,16 @@
 "use client";
 
-import { BookOpen, Heart, Home, ShoppingCart, UserRound } from "lucide-react";
+import { BookOpen, Heart, Home, UserRound } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CartBadge } from "../cart/CartBadge";
 
-// Tartib ilovadagi bilan bir xil (lib/ui/nav/tabs.dart dagi AppTab):
-// bosh sahifa → katalog → sevimlilar → savat → profil.
+// Savat bu yerda ataylab yo'q: mobil yuqori panelda (MobileHeader) savat ikonkasi
+// hisoblagichi bilan turibdi, ikkalasi bir ekranda takrorlanib qolardi.
 // "Profil" kirilmagan foydalanuvchini /profile → /login zanjiri orqali kirishga olib boradi.
 const items = [
   { label: "Bosh sahifa", href: "/", icon: Home },
   { label: "Katalog", href: "/catalog", icon: BookOpen },
   { label: "Sevimlilar", href: "/favorites", icon: Heart },
-  { label: "Savatcha", href: "/cart", icon: ShoppingCart },
   { label: "Profil", href: "/profile", icon: UserRound },
 ];
 
@@ -21,7 +19,7 @@ export function MobileBottomNavigation() {
   return (
     // Ilovadagi panel: navSurface yuza, tepasida bitta line chizig'i, soyasiz.
     <nav aria-label="Mobil pastki navigatsiya" className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-navSurface px-1 pb-[max(5px,env(safe-area-inset-bottom))] pt-1 md:hidden">
-      <div className="mx-auto grid max-w-md grid-cols-5">
+      <div className="mx-auto grid max-w-md grid-cols-4">
         {items.map(({ label, href, icon: Icon }) => {
           const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
           return (
@@ -33,7 +31,6 @@ export function MobileBottomNavigation() {
             >
               <Icon size={19} strokeWidth={active ? 2.4 : 1.8} className={active ? "text-cocoa" : "text-muted"} aria-hidden="true" />
               <span>{label}</span>
-              {label === "Savatcha" && <CartBadge className="absolute right-[22%] top-0 grid min-h-4 min-w-4 place-items-center rounded-full border border-navSurface bg-cocoa px-1 text-[9px] font-bold text-cream" />}
             </Link>
           );
         })}
