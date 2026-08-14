@@ -35,7 +35,7 @@ export async function Footer() {
         <div className="col-span-2 sm:col-span-1">
           <h3 className="font-bold text-ink">Aloqa va ijtimoiy tarmoqlar</h3>
           <div className="mt-4 space-y-3 text-[14px] text-bodyText">
-            <a href="tel:+998712000000" className="flex items-center gap-2 hover:text-cocoa"><Phone size={17} aria-hidden="true" /> +998 71 200 00 00</a>
+            <a href="tel:+998774488080" className="flex items-center gap-2 hover:text-cocoa"><Phone size={17} aria-hidden="true" /> +998 77 448 80 80</a>
             <a href="https://t.me/kitobgouz" className="flex items-center gap-2 hover:text-cocoa"><Send size={17} aria-hidden="true" /> @kitobgouz</a>
             <span className="flex items-center gap-2"><Clock3 size={17} aria-hidden="true" /> Har kuni, 09:00–21:00</span>
             <div className="flex gap-2 pt-2">

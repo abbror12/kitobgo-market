@@ -42,6 +42,19 @@ const siteJsonLd = {
       url: SITE_URL,
       logo: `${SITE_URL}/icon.png`,
       sameAs: ["https://t.me/kitobgouz", "https://www.instagram.com/kitob.go"],
+      // Raqam E.164 ko'rinishida — Google shu shaklni kutadi. Sahifada ko'rinadigan
+      // raqam (footer, /contact, huquqiy hujjatlar) aynan shu bo'lishi shart:
+      // strukturali ma'lumot sahifadagi matnga zid bo'lsa, u e'tiborga olinmaydi.
+      telephone: "+998774488080",
+      email: "info@kitobgo.com",
+      contactPoint: [{
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        telephone: "+998774488080",
+        email: "support@kitobgo.com",
+        areaServed: "UZ",
+        availableLanguage: ["uz", "ru"],
+      }],
     },
     {
       "@type": "WebSite",

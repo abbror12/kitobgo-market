@@ -245,8 +245,11 @@ cheksiz variant beradi va har biri "yupqa" sahifa.
    "ko'rsatilmagan" kabi matnlar filtrlanadi. Nol reyting yoki soxta maydon Google uchun
    qoidabuzarlik va butun rich result'ni bekor qiladi.
 
-> `Organization` ichida telefon **ataylab yo'q**: footerda `+998 71 200 00 00`, huquqiy
-> hujjatlarda `+998 77 448 80 80` turibdi. Qaysi biri haqiqiy ekani aniqlangach qo'shiladi.
+> **Aloqa raqami butun saytda bitta: `+998 77 448 80 80`.** Footerda `+998 71 200 00 00`
+> qolib ketgan edi (shablondan) — tuzatildi. `Organization` dagi raqam E.164 shaklida
+> (`+998774488080`) va sahifadagi matnga mos: strukturali ma'lumot ko'rinadigan matnga
+> zid bo'lsa, Google uni e'tiborga olmaydi. Raqam o'zgarsa — footer, `/contact`,
+> `/terms`, `/privacy` va `app/layout.tsx` dagi `Organization`, hammasi birga o'zgaradi.
 
 ## Endpoint xaritasi (eski → yangi)
 
