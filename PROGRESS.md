@@ -60,6 +60,23 @@ katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) v
    va `data/*.ts` dagi `color` maydonlari) ham iliq ohangda — sovuq pastel qo'shilsa
    ko'zga tashlanadi.
 
+### Logotip
+
+[components/layout/Logo.tsx](components/layout/Logo.tsx) → `public/images/logo.png`
+(384×200, shaffof fon). Manba `C:\Users\USER\Desktop\logo.PNG` (500×500, **oq** fonli):
+oq fon chekkadan flood fill bilan olib tashlangan — harflar ichidagi oq saqlanib qolgan —
+va chetlari kesilgan. Xuddi shu manbadan `app/icon.png` (favicon, 512) va
+`app/apple-icon.png` (180, oq fonli — Apple shaffoflikni qora qiladi) chiqarilgan;
+Next ularni fayl nomiga qarab o'zi ulaydi, `metadata.icons` yozilmagan.
+
+O'lchamlar: shapkada 52px balandlik (100px kenglik), mobil shapkada 40px (77px),
+footerda 52px. Yozuv rasm ichida, shuning uchun yonida matn takrorlanmaydi — nomni `alt`
+beradi.
+
+> **Logotipdagi to'q ko'k `#111D7A` — palitrada yo'q va ataylab shunday.** Bu brend belgisi,
+> sayt ranglariga bo'yalmaydi. Krem (`navSurface`) va oq yuzalarda turadi; to'q fonga
+> qo'yish kerak bo'lsa, alohida (oq) variant kerak — hozir bunday joy yo'q.
+
 ### Navigatsiya qoidasi: bitta havola — bitta joy
 
 Sayt "chrome"i (TopBar, Header, MainNavigation, MobileHeader, MobileBottomNavigation) beshta

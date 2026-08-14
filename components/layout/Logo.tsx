@@ -1,16 +1,21 @@
-import { BookOpenCheck } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 
+// Brend belgisi: `public/images/logo.png` — `C:\Users\USER\Desktop\logo.PNG` dan olingan,
+// oq foni shaffofga aylantirilgan va chetlari kesilgan (384x200). Shu sabab u krem
+// (`navSurface`) yuzada ham, oq sahifada ham fonsiz turadi.
+// Yozuv rasm ichida bo'lgani uchun matn takrorlanmaydi — nomni `alt` beradi.
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (
-    <Link href="/" className="group flex shrink-0 items-center gap-2" aria-label="Kitob.go bosh sahifa">
-      <span className="grid size-10 place-items-center rounded-xl bg-sand text-cocoa transition-colors group-hover:bg-sand">
-        <BookOpenCheck size={25} strokeWidth={1.8} aria-hidden="true" />
-      </span>
-      <span>
-        <span className="block text-xl font-extrabold leading-none tracking-[-0.04em] text-ink">Kitob<span className="text-cocoa">.go</span></span>
-        {!compact && <span className="mt-1 hidden text-[10px] font-medium text-bodyText xl:block">Ilm bilan yuksalish sari</span>}
-      </span>
+    <Link href="/" className="flex shrink-0 items-center" aria-label="Kitob.go bosh sahifa">
+      <Image
+        src="/images/logo.png"
+        alt="Kitob.go — onlayn kitob do‘kon"
+        width={384}
+        height={200}
+        priority
+        className={compact ? "h-10 w-auto" : "h-[52px] w-auto"}
+      />
     </Link>
   );
 }
