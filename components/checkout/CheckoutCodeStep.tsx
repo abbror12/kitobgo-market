@@ -9,13 +9,8 @@
 import { ArrowLeft, LoaderCircle, MessageSquare, RotateCw } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
+import { describeOtpError, type CodeSent } from "@/lib/otp";
 import { formatSeconds, useCountdown } from "@/lib/use-countdown";
-
-export interface CodeSent {
-  expiresInSeconds: number;
-  codeLength: number;
-  resendAfterSeconds: number;
-}
 
 export function CheckoutCodeStep({
   phone,
@@ -59,23 +54,12 @@ export function CheckoutCodeStep({
       });
       onVerified({ newAccount: result.newAccount === true });
     } catch (err) {
-      setCode("");
-      if (err instanceof ClientApiError) {
-        // Kod o'lgan holatlar — yangisini so'rash kerak, eskisini terishdan foyda yo'q.
-        if (err.code === "OTP_EXPIRED" || err.code === "OTP_TOO_MANY_ATTEMPTS") {
-          setExpiresAt(null);
-          setError("Kod eskirdi yoki bekor bo‘ldi. Yangi kod so‘rang.");
-        } else if (err.code === "OTP_INVALID") {
-          setError("Kod noto‘g‘ri. Qayta tering.");
-          inputRef.current?.focus();
-        } else if (err.code === "ACCOUNT_BLOCKED") {
-          setError("Akkauntingiz vaqtincha bloklangan. Qo‘llab-quvvatlash bilan bog‘laning.");
-        } else {
-          setError(err.message);
-        }
-      } else {
-        setError("Tekshirib bo‘lmadi. Qayta urinib ko‘ring.");
-      }
+      // Xato tili SMS va email oqimlari uchun bitta joyda: lib/otp.ts.
+      const view = describeOtpError(err);
+      setError(view.message);
+      if (view.clearCode) setCode("");
+      if (view.dead) setExpiresAt(null);
+      else inputRef.current?.focus();
     } finally {
       verifyingRef.current = false;
       setBusy(false);

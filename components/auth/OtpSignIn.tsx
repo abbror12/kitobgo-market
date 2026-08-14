@@ -1,71 +1,45 @@
 "use client";
 
 // Telefon + SMS kod orqali kirish (API.md §4.1).
-// Kod ekrani serverdan kelgan CodeSent qiymatlaridan boshqariladi:
-// codeLength, expiresInSeconds, resendAfterSeconds — hech biri hard-code qilinmaydi.
-import { LoaderCircle, Phone, RotateCw } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+// Kod ekrani — umumiy [CodeEntry](./CodeEntry.tsx): katakchalar soni ham, taymerlar ham
+// serverdan kelgan CodeSent dan boshqariladi, bu yerda hech qanday raqam yozilmagan.
+import { LoaderCircle, Phone } from "lucide-react";
+import { useState } from "react";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
-import { formatSeconds, useCountdown } from "@/lib/use-countdown";
-
-interface CodeSent {
-  expiresInSeconds: number;
-  codeLength: number;
-  resendAfterSeconds: number;
-}
+import type { CodeSent } from "@/lib/otp";
+import { CodeEntry } from "./CodeEntry";
 
 export interface OtpSuccess {
   newAccount: boolean;
 }
 
 export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: OtpSuccess) => void; compact?: boolean }) {
-  const [step, setStep] = useState<"phone" | "code">("phone");
   const [phone, setPhone] = useState("+998 ");
-  const [code, setCode] = useState("");
   const [meta, setMeta] = useState<CodeSent | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
-  const [expiresAt, setExpiresAt] = useState<number | null>(null);
-  const [resendAt, setResendAt] = useState<number | null>(null);
-  const codeInputRef = useRef<HTMLInputElement>(null);
-  const verifyingRef = useRef(false);
 
-  const expiresIn = useCountdown(expiresAt);
-  const resendIn = useCountdown(resendAt);
+  async function requestCode(): Promise<CodeSent> {
+    return apiFetch<CodeSent>("/api/auth/otp/request", {
+      method: "POST",
+      body: JSON.stringify({ phone: phone.trim() }),
+    });
+  }
 
-  useEffect(() => {
-    if (step === "code") codeInputRef.current?.focus();
-  }, [step]);
-
-  async function requestCode(asResend = false) {
+  async function sendFirstCode() {
     if (busy) return;
     setBusy(true);
     setError("");
-    setNotice("");
     try {
-      const sent = await apiFetch<CodeSent>("/api/auth/otp/request", {
-        method: "POST",
-        body: JSON.stringify({ phone: phone.trim() }),
-      });
-      setMeta(sent);
-      setCode("");
-      setStep("code");
-      setExpiresAt(Date.now() + sent.expiresInSeconds * 1000);
-      setResendAt(Date.now() + sent.resendAfterSeconds * 1000);
-      if (asResend) setNotice("Yangi kod yuborildi.");
+      setMeta(await requestCode());
     } catch (err) {
-      if (err instanceof ClientApiError) {
-        const retryAfter = typeof err.problem.retryAfterSeconds === "number" ? err.problem.retryAfterSeconds : null;
-        if (err.code === "OTP_RESEND_TOO_SOON" && retryAfter) {
-          setResendAt(Date.now() + retryAfter * 1000);
-          setStep("code");
-          setError(err.message);
-        } else if (err.code === "SMS_DELIVERY_FAILED") {
-          setError("SMS yuborilmadi — aloqada uzilish. Qayta urinib ko‘ring.");
-        } else {
-          setError(err.message);
-        }
+      if (err instanceof ClientApiError && err.code === "SMS_DELIVERY_FAILED") {
+        // Bu holatda cooldown qo'yilmaydi — darhol qayta urinishga ruxsat beramiz.
+        setError("SMS yuborilmadi — aloqada uzilish. Qayta urinib ko‘ring.");
+      } else if (err instanceof ClientApiError) {
+        // OTP_RESEND_TOO_SOON ham shu yerga tushadi: kod allaqachon yo'lda, lekin `codeLength`
+        // bizda yo'q — kod ekranini taxmin bilan chizmaymiz, backend detail'ini ko'rsatamiz.
+        setError(err.message);
       } else {
         setError("Kod yuborilmadi. Qayta urinib ko‘ring.");
       }
@@ -74,45 +48,12 @@ export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: Ot
     }
   }
 
-  async function verify(value: string) {
-    if (verifyingRef.current) return;
-    verifyingRef.current = true;
-    setBusy(true);
-    setError("");
-    try {
-      const result = await apiFetch<{ authenticated: boolean; newAccount: boolean }>("/api/auth/otp/verify", {
-        method: "POST",
-        body: JSON.stringify({ phone: phone.trim(), code: value }),
-      });
-      onSuccess({ newAccount: result.newAccount });
-    } catch (err) {
-      setCode("");
-      if (err instanceof ClientApiError) {
-        // OTP_EXPIRED / OTP_TOO_MANY_ATTEMPTS — kod o'lgan; yangisini so'rashga qaytamiz.
-        if (err.code === "OTP_EXPIRED" || err.code === "OTP_TOO_MANY_ATTEMPTS") {
-          setStep("phone");
-          setError("Kod eskirdi yoki bekor bo‘ldi. Yangi kod so‘rang.");
-        } else if (err.code === "OTP_INVALID") {
-          setError("Kod noto‘g‘ri. Qayta tering.");
-          codeInputRef.current?.focus();
-        } else if (err.code === "ACCOUNT_BLOCKED") {
-          setError("Akkauntingiz vaqtincha bloklangan. Qo‘llab-quvvatlash bilan bog‘laning.");
-        } else {
-          setError(err.message);
-        }
-      } else {
-        setError("Tekshirib bo‘lmadi. Qayta urinib ko‘ring.");
-      }
-    } finally {
-      verifyingRef.current = false;
-      setBusy(false);
-    }
-  }
-
-  function onCodeChange(raw: string) {
-    const digits = raw.replace(/\D/g, "").slice(0, meta?.codeLength ?? 6);
-    setCode(digits);
-    if (meta && digits.length === meta.codeLength && !busy) void verify(digits);
+  async function verify(code: string) {
+    const result = await apiFetch<{ authenticated: boolean; newAccount: boolean }>("/api/auth/otp/verify", {
+      method: "POST",
+      body: JSON.stringify({ phone: phone.trim(), code }),
+    });
+    onSuccess({ newAccount: result.newAccount === true });
   }
 
   const heading = compact ? "" : "Telefon raqam orqali kirish";
@@ -120,10 +61,32 @@ export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: Ot
   return (
     <div>
       {heading && <h2 className="font-serif text-2xl font-semibold sm:text-3xl">{heading}</h2>}
-      {step === "phone" ? (
+      {meta ? (
+        <div className={compact ? "" : "mt-5"}>
+          <CodeEntry
+            meta={meta}
+            inputId="otp-code"
+            submitLabel="Kirish"
+            description={
+              <>
+                <strong className="text-ink">{phone.trim()}</strong> raqamiga {meta.codeLength} xonali kod yubordik.
+                <button
+                  type="button"
+                  className="ml-2 font-bold text-cocoa"
+                  onClick={() => { setMeta(null); setError(""); }}
+                >
+                  O‘zgartirish
+                </button>
+              </>
+            }
+            onSubmit={verify}
+            onResend={requestCode}
+          />
+        </div>
+      ) : (
         <form
           className={compact ? "" : "mt-5"}
-          onSubmit={(event) => { event.preventDefault(); void requestCode(); }}
+          onSubmit={(event) => { event.preventDefault(); void sendFirstCode(); }}
         >
           <p className="text-sm leading-6 text-bodyText">Tasdiqlash kodi SMS orqali yuboriladi.</p>
           <label htmlFor="otp-phone" className="mt-4 block text-sm font-bold">Telefon raqam</label>
@@ -144,49 +107,6 @@ export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: Ot
           {error && <p className="mt-3 text-sm font-medium text-danger" role="alert">{error}</p>}
           <button type="submit" disabled={busy} className="button-primary mt-4 h-12 w-full px-5 disabled:cursor-not-allowed disabled:opacity-60">
             {busy ? <><LoaderCircle size={18} className="animate-spin" /> Yuborilmoqda…</> : "Kod olish"}
-          </button>
-        </form>
-      ) : (
-        <form
-          className={compact ? "" : "mt-5"}
-          onSubmit={(event) => { event.preventDefault(); if (meta && code.length === meta.codeLength) void verify(code); }}
-        >
-          <p className="text-sm leading-6 text-bodyText">
-            <strong className="text-ink">{phone.trim()}</strong> raqamiga {meta?.codeLength ?? 4} xonali kod yubordik.
-            <button type="button" className="ml-2 font-bold text-cocoa" onClick={() => { setStep("phone"); setError(""); setNotice(""); }}>O‘zgartirish</button>
-          </p>
-          <label htmlFor="otp-code" className="mt-4 block text-sm font-bold">SMS kod</label>
-          <input
-            id="otp-code"
-            ref={codeInputRef}
-            type="text"
-            inputMode="numeric"
-            autoComplete="one-time-code"
-            value={code}
-            onChange={(event) => onCodeChange(event.target.value)}
-            placeholder={"•".repeat(meta?.codeLength ?? 4)}
-            className="mt-2 h-[52px] w-full rounded-xl border border-line px-4 text-center text-xl font-extrabold tracking-[.5em] outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
-          />
-          <div className="mt-2 flex items-center justify-between text-xs text-bodyText">
-            <span>{expiresIn > 0 ? `Kod amal qilish muddati: ${formatSeconds(expiresIn)}` : "Kod muddati tugadi — yangisini so‘rang."}</span>
-          </div>
-          {error && <p className="mt-3 text-sm font-medium text-danger" role="alert">{error}</p>}
-          {notice && <p className="mt-3 text-sm font-medium text-cocoa" role="status">{notice}</p>}
-          <button
-            type="submit"
-            disabled={busy || !meta || code.length !== meta.codeLength}
-            className="button-primary mt-4 h-12 w-full px-5 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {busy ? <><LoaderCircle size={18} className="animate-spin" /> Tekshirilmoqda…</> : "Kirish"}
-          </button>
-          <button
-            type="button"
-            onClick={() => void requestCode(true)}
-            disabled={busy || resendIn > 0}
-            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 text-sm font-bold text-cocoa disabled:cursor-not-allowed disabled:text-bodyText"
-          >
-            <RotateCw size={15} aria-hidden="true" />
-            {resendIn > 0 ? `Qayta yuborish (${formatSeconds(resendIn)})` : "Kodni qayta yuborish"}
           </button>
         </form>
       )}

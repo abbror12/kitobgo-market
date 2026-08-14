@@ -17,8 +17,9 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { CheckoutCodeStep, type CodeSent } from "@/components/checkout/CheckoutCodeStep";
+import { CheckoutCodeStep } from "@/components/checkout/CheckoutCodeStep";
 import { apiFetch, ClientApiError } from "@/lib/client-api";
+import type { CodeSent } from "@/lib/otp";
 import { clearCart, notifyAuthChanged, readCart, writeCart } from "@/lib/client-store";
 import { formatPrice, isExternalImage } from "@/lib/format";
 import type {

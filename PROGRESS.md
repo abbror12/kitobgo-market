@@ -9,6 +9,11 @@ shartnoma **faqat** `docs/API.md` (o'sha repoda).
 >
 > 2026-08-11: sayt mobil ilova brendiga qayta bo'yaldi — to'q yashil + oltin (Inter)
 > o'rniga iliq krem + terrakota (Lora serif). Pastdagi "Dizayn tizimi" bo'limiga qarang.
+>
+> 2026-08-14: emailni tasdiqlash va parolni tiklash **havoladan kodga** o'tdi (backend
+> `319b042`, `docs/MIGRATION_EMAIL_CODES.md`). `/verify-email` va `/reset-password`
+> sahifalari va ularning komponentlari **o'chirildi** — ikkala oqim ham kirish panelining
+> ichida. Pastdagi "Kirish" bo'limiga qarang.
 
 ## Dizayn tizimi
 
@@ -106,9 +111,44 @@ Ataylab qoldirilgan ikkita "takror": logotip + "Bosh sahifa" (odatiy naqsh) va b
 
 ## Oqimlar
 
-**Kirish** — telefon + SMS kod (API.md §4.1), sayt uchun asosiy usul. `codeLength` /
-`expiresInSeconds` / `resendAfterSeconds` serverdan o'qiladi. Email+parol tab qo'shimcha
-(ilovada email bilan ro'yxatdan o'tganlar uchun). Yangi hisob saytda faqat OTP orqali ochiladi.
+**Kirish** — telefon + SMS kod (API.md §4.1), sayt uchun asosiy usul. Email+parol tab
+qo'shimcha (ilovada email bilan ro'yxatdan o'tganlar uchun). Yangi hisob saytda faqat OTP
+orqali ochiladi — saytda ro'yxatdan o'tish formasi yo'q.
+
+**Hamma kod ekranlari bitta komponent**: [components/auth/CodeEntry.tsx](components/auth/CodeEntry.tsx).
+`codeLength` / `expiresInSeconds` / `resendAfterSeconds` **serverdan** o'qiladi va hech qayerda
+qattiq yozilmagan — shu tufayli aynan bir komponent SMS (4 xona / 2 daqiqa) va email
+(6 xona / 10 daqiqa) uchun ishlaydi. Xato tili ham bitta joyda: [lib/otp.ts](lib/otp.ts)
+`describeOtpError` (`OTP_INVALID` → qayta tering; `OTP_EXPIRED` va `OTP_TOO_MANY_ATTEMPTS` →
+kod o'ldi, yangisini so'rang; `ACCOUNT_BLOCKED` → qo'llab-quvvatlash).
+
+Email oqimlari (API.md §4.2, 2026-08-14 dan **havola emas, kod**) — hammasi kirish panelining
+ichidagi qadamlar, alohida sahifa yo'q:
+
+| Qadam | Chaqiruv | Natija |
+|---|---|---|
+| Kirish `403 EMAIL_NOT_VERIFIED` bersa | `POST /auth/resend-verification {email}` | `202 CodeSent` → kod ekrani |
+| Kodni kiritish | `POST /auth/verify-email {email, code}` | **`200 TokenResponse`** — cookie o'rnatiladi, alohida login qadami YO'Q |
+| "Parolni unutdingizmi?" | `POST /auth/forgot-password {email}` | `202 CodeSent` → kod + yangi parol ekrani |
+| Yangi parolni saqlash | `POST /auth/reset-password {email, code, newPassword}` | `204` — token BERILMAYDI, hamma qurilmadan chiqariladi, kirish ekraniga qaytariladi |
+
+Ikkita tuzoq (MIGRATION_EMAIL_CODES.md §4):
+
+1. `resend-verification` va `forgot-password` **doim `202`** qaytaradi — manzil ro'yxatda
+   bo'lmasa ham, cooldown ichida ham. Bu javob hech qachon "manzil topilmadi" deb talqin
+   qilinmaydi va sayt matnlari ham hisob bor-yo'qligini oshkor qilmaydi. Bu ikkisida
+   `OTP_RESEND_TOO_SOON` **yo'q** — taymer `resendAfterSeconds` dan yuritiladi.
+2. **Kod o'z oqimiga bog'langan**: tasdiqlash kodini `reset-password` ga yuborsangiz
+   `401 OTP_EXPIRED` keladi, teskarisi ham shunday.
+
+> Eski `/verify-email?token=…` va `/reset-password?token=…` uchun
+> [next.config.ts](next.config.ts) da vaqtinchalik redirect bor (→ `/login`): backend
+> `one_time_tokens` jadvalini tashlagan, ya'ni pochtada qolgan eski havolalar o'lik.
+> Bir-ikki haftadan keyin olib tashlash mumkin.
+
+Checkout'ning kod qadami — [CheckoutCodeStep](components/checkout/CheckoutCodeStep.tsx) —
+o'z chizmasini (orqaga qaytish, summa, buyurtma joylash holati) saqlaydi, lekin xato tilini
+o'sha `lib/otp.ts` dan oladi.
 
 **Checkout** — [app/api/checkout/route.ts](app/api/checkout/route.ts) kompozit:
 
