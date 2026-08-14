@@ -55,6 +55,37 @@ katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) v
    va `data/*.ts` dagi `color` maydonlari) ham iliq ohangda — sovuq pastel qo'shilsa
    ko'zga tashlanadi.
 
+### Navigatsiya qoidasi: bitta havola — bitta joy
+
+Sayt "chrome"i (TopBar, Header, MainNavigation, MobileHeader, MobileBottomNavigation) beshta
+alohida komponent, lekin ekranda birga turadi. Shuning uchun **bir yo'nalish bir ekranda
+faqat bitta joyda** bo'ladi — mijoz "savat qaysi biri?" deb o'ylab qolmasin.
+
+| Yo'nalish | Mobil (<768px) | Desktop (≥768px) |
+|---|---|---|
+| Bosh sahifa | pastki panel | MainNavigation (+ logotip) |
+| Katalog | pastki panel | logotip yonidagi "Katalog" tugmasi |
+| Savatcha | pastki panel (hisoblagich shu yerda) | Header ikonkasi (hisoblagich shu yerda) |
+| Profil / Kirish | pastki panel | Header, eng o'ngda (`AccountLink`) |
+| Sevimlilar | yuqori panel, yurakcha | Header ikonkasi |
+| Kategoriyalar, Mualliflar, Yangi kelganlar, Blog, Biz haqimizda, Aloqa | burger menyu | MainNavigation |
+| Telegram, Instagram | footer | TopBar + footer |
+
+Shundan kelib chiqadigan "yo'q"lar (har birining yonida kod izohi bor, ataylab olib
+tashlangan — qaytarib qo'shmang):
+
+- `MobileHeader` da savat yo'q, `MobileBottomNavigation` da sevimlilar yo'q.
+- Burger menyuda Bosh sahifa / Katalog / Shaxsiy kabinet yo'q — menyu ochilganda pastki
+  panel ko'rinib turadi, ikkalasi bir ekranda takrorlanardi.
+- `MainNavigation` da "Katalog" yo'q — tepada, 50px narida katta "Katalog" tugmasi bor.
+- Header'da "Yordam" yo'q — u ham `/contact` ga borardi, MainNavigation'dagi "Aloqa" bilan
+  bitta ekranda turardi.
+- TopBar'da Blog / Biz haqimizda / Aloqa yo'q — o'sha uchtasi to'g'ridan-to'g'ri pastdagi
+  MainNavigation'da.
+
+Ataylab qoldirilgan ikkita "takror": logotip + "Bosh sahifa" (odatiy naqsh) va breadcrumb
+(u navigatsiya emas, joylashuvni ko'rsatadi).
+
 ## Arxitektura
 
 - **Ochiq katalog** (kitoblar, kategoriyalar, hududlar, kotirovkalar) — server komponentlardan

@@ -10,11 +10,11 @@ export function TopBar() {
           <span className="inline-flex items-center gap-1.5"><CircleDollarSign size={15} aria-hidden="true" /> To‘lov mahsulot qabul qilingandan keyin</span>
           <span className="hidden items-center gap-1.5 xl:inline-flex"><BadgeCheck size={15} aria-hidden="true" /> Din ishlari qo‘mitasi ruxsatiga ega kitoblar</span>
         </div>
-        <nav aria-label="Yordamchi navigatsiya" className="flex items-center gap-5 text-cream/85">
+        {/* Blog / Biz haqimizda / Aloqa bu yerda ataylab yo'q — ular xuddi shu ekranda,
+            pastdagi asosiy navigatsiyada turibdi. Bu qatorda faqat ijtimoiy tarmoqlar. */}
+        <nav aria-label="Ijtimoiy tarmoqlar" className="flex items-center gap-5 text-cream/85">
           <Link href="https://t.me/kitobgouz">Telegram</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/about">Biz haqimizda</Link>
-          <Link href="/contact">Aloqa</Link>
+          <Link href="https://www.instagram.com/kitob.go">Instagram</Link>
         </nav>
       </div>
     </div>

@@ -1,13 +1,11 @@
-import { Heart, Menu, ShoppingCart, X } from "lucide-react";
+import { Heart, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { Logo } from "./Logo";
 import { SearchBar } from "./SearchBar";
-import { CartBadge } from "../cart/CartBadge";
 
+// Menyu — "qolgan hammasi" ro'yxati. Bosh sahifa / Katalog / Savatcha / Profil bu yerda yo'q:
+// ular pastki panelda turibdi va menyu ochilganda ham ko'rinib turadi — takror bo'lardi.
 const mobileLinks = [
-  { label: "Bosh sahifa", href: "/" },
-  { label: "Shaxsiy kabinet", href: "/profile" },
-  { label: "Katalog", href: "/catalog" },
   { label: "Kategoriyalar", href: "/catalog#kategoriyalar" },
   { label: "Mualliflar", href: "/authors" },
   { label: "Yangi kelganlar", href: "/catalog?sort=newest" },
@@ -34,13 +32,9 @@ export function MobileHeader() {
           </nav>
         </details>
         <Logo compact />
-        <div className="flex items-center gap-1">
-          <Link href="/favorites" className="grid size-10 place-items-center rounded-xl" aria-label="Sevimlilar"><Heart size={19} aria-hidden="true" /></Link>
-          <Link href="/cart" className="relative grid size-10 place-items-center rounded-xl" aria-label="Savatcha">
-            <ShoppingCart size={20} aria-hidden="true" />
-            <CartBadge className="absolute right-0.5 top-0.5 grid min-h-4 min-w-4 place-items-center rounded-full bg-cocoa px-1 text-[9px] font-bold text-cream" />
-          </Link>
-        </div>
+        {/* Savat bu yerda ataylab yo'q: mobil pastki panelda (MobileBottomNavigation) savat
+            hisoblagichi bilan turibdi — ikkalasi bir ekranda takrorlanib qolardi. */}
+        <Link href="/favorites" className="grid size-10 place-items-center rounded-xl" aria-label="Sevimlilar"><Heart size={19} aria-hidden="true" /></Link>
       </div>
       <SearchBar mobile />
     </div>

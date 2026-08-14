@@ -3,9 +3,10 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+// "Katalog" bu yerda ataylab yo'q: tepada, logotip yonida katta "Katalog" tugmasi turibdi —
+// ikkovi bir ekranda, bir-biridan 50px narida takrorlanib turardi.
 const links = [
   { label: "Bosh sahifa", href: "/" },
-  { label: "Katalog", href: "/catalog" },
   { label: "Kategoriyalar", href: "/catalog#kategoriyalar" },
   { label: "Mualliflar", href: "/authors" },
   { label: "Yangi kelganlar", href: "/catalog?sort=newest" },

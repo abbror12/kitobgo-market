@@ -1,13 +1,14 @@
-import { Heart, Menu, MessageCircle, ShoppingCart } from "lucide-react";
+import { Heart, Menu, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { AccountLink } from "./AccountLink";
 import { Logo } from "./Logo";
 import { SearchBar } from "./SearchBar";
 import { CartBadge } from "../cart/CartBadge";
 
+// "Yordam" bu yerda ataylab yo'q: u ham /contact ga borardi, pastdagi navigatsiyadagi
+// "Aloqa" bilan bir ekranda takrorlanib turardi.
 const actions = [
   { label: "Sevimlilar", href: "/favorites", icon: Heart },
-  { label: "Yordam", href: "/contact", icon: MessageCircle },
 ];
 
 export function Header() {
