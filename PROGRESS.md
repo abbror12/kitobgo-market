@@ -119,10 +119,12 @@ konteynerni almashtirish. Serverda repo yo'q: faqat `kitobgo-market` nomli konte
 nginx'da atigi ikkita statik istisno qolgan — `/account/delete` va `/style.css`
 (`/var/www/kitobgo` dan). Qolgan hamma narsa Next.js konteyneriga proxy qilinadi.
 
-> **2026-08-12 dan beri deploy bosqichi yiqilyapti:** `dial tcp <server>:22: i/o timeout`.
-> 22-port O'zbekiston IP'sidan ochiq, GitHub runner'idan (Azure IP) esa yopiq — ya'ni
-> IP bo'yicha cheklov (`ufw` yoki provayder firewall'i, server tiklangandan keyin paydo
-> bo'lgan). Tuzatilmaguncha chiqarish qo'lda:
+> **Deploy bosqichi vaqtincha yiqilishi mumkin:** `dial tcp <server>:22: i/o timeout`.
+> 2026-08-12 da shunday bo'ldi — 22-port O'zbekiston IP'sidan ochiq, GitHub runner'idan
+> (Azure IP) esa javobsiz. Server ichida sabab yo'q edi (`ufw` 22-portni hammaga ochgan,
+> fail2ban o'rnatilmagan, iptables INPUT'da faqat ufw zanjirlari) — ya'ni paketlar
+> provayder tarmog'ida tashlangan. Bir necha soatdan keyin o'zi tiklandi, hech narsa
+> o'zgartirilmagan. Takrorlansa — kutish yoki qo'lda chiqarish:
 >
 > ```
 > echo "<classic PAT, read:packages>" | docker login ghcr.io -u <user> --password-stdin
