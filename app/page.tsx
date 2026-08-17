@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { FAQAccordion } from "@/components/home/FAQAccordion";
 import { HeroSection } from "@/components/home/HeroSection";
-import { SpecialCollections, TestimonialsSection, VideoReviews } from "@/components/home/AdditionalSections";
+import { SpecialCollections, TestimonialsSection } from "@/components/home/AdditionalSections";
 import { StatisticsBanner } from "@/components/home/StatisticsBanner";
 import { TelegramCTA } from "@/components/home/TelegramCTA";
 import { TrustBenefits } from "@/components/home/TrustBenefits";
@@ -35,7 +35,6 @@ export default async function HomePage() {
         <StatisticsBanner />
         <ProductSection id="yangi-kelganlar" title="Yangi kelganlar" subtitle="Kutubxonamizga yaqinda qo‘shilgan kitoblar" books={newBooks} />
         <SpecialCollections />
-        <VideoReviews />
         <TestimonialsSection />
         <FAQAccordion />
         <TelegramCTA />

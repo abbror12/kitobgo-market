@@ -1,4 +1,4 @@
-import { BadgeCheck, Check, CirclePlay, CreditCard, ShoppingBag, Truck } from "lucide-react";
+import { BadgeCheck, Check, CreditCard, ShoppingBag, Truck } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { formatPrice, isExternalImage } from "@/lib/format";
@@ -27,7 +27,6 @@ export function HeroSection({ book }: { book: Book }) {
             </div>
             <div className="mt-3 flex flex-col gap-2.5 sm:mt-5 sm:flex-row">
               <Link href={`/books/${book.slug}`} className="button-primary h-10 px-2 text-[12px] sm:h-12 sm:w-fit sm:px-6 sm:text-base"><ShoppingBag size={16} aria-hidden="true" /> Xarid qilish</Link>
-              <Link href="#video-sharhlar" className="button-secondary hidden h-12 px-6 sm:inline-flex"><CirclePlay size={19} aria-hidden="true" /> Video sharh</Link>
             </div>
           </div>
           <div className="relative min-h-[180px] sm:min-h-full">
