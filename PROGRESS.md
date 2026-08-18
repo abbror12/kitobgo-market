@@ -193,6 +193,48 @@ Checkout'ning kod qadami — [CheckoutCodeStep](components/checkout/CheckoutCode
 o'z chizmasini (orqaga qaytish, summa, buyurtma joylash holati) saqlaydi, lekin xato tilini
 o'sha `lib/otp.ts` dan oladi.
 
+**Google bilan kirish** (API.md §4.1a) — telefon va email yonidagi uchinchi yo‘l:
+
+```
+Brauzer: Google Identity Services  →  ID token
+   ↓
+POST /api/auth/oauth/google { idToken }   (sayt ichki route’i)
+   ↓  backend: POST /auth/oauth/google  →  200 TokenResponse
+   ↓  tokenlar httpOnly cookie’ga yoziladi — brauzerga berilmaydi
+```
+
+Hisob qanday topiladi (backend hal qiladi): bog‘langan identifikator → Google tasdiqlagan
+email bilan mavjud hisob (unga bog‘lanadi) → yo‘q bo‘lsa yangi hisob, `newAccount: true`,
+parolsiz. Ya’ni bir odam telefon bilan ochgan hisobiga keyin Google bilan ham kira oladi,
+agar email bir xil bo‘lsa.
+
+**Client id — eng muhim nuqta.** [app/login/page.tsx](app/login/page.tsx) uni server tomonda
+`GOOGLE_OAUTH_CLIENT_ID` dan o‘qib panelga uzatadi. Uch shart:
+
+1. Qiymat **backenddagi `GOOGLE_OAUTH_CLIENT_ID` bilan aynan bir xil** bo‘lishi shart —
+   backend token auditoriyasini o‘sha client id bilan tekshiradi. Bu Google Cloud Console’dagi
+   **Web** client id (Android’niki emas).
+2. **`NEXT_PUBLIC_` emas**: shunda qiymat build paytida kodga singib qolmaydi va konteynerga
+   ish vaqtida beriladi (`docker run -e GOOGLE_OAUTH_CLIENT_ID=...`). Deploy workflow uni
+   `secrets.GOOGLE_OAUTH_CLIENT_ID` dan oladi — secret qo‘yilmasa qiymat bo‘sh keladi va
+   deploy shundan yiqilmaydi.
+3. Google Cloud Console’da o‘sha client id uchun **Authorized JavaScript origins** ro‘yxatida
+   `https://kitobgo.com` (va lokal ish uchun `http://localhost:3000`) turishi kerak. Aks holda
+   tugma chiziladi-yu, bosilganda `[GSI_LOGGER] The given origin is not allowed` beradi.
+
+Client id bo‘sh bo‘lsa panel Google blokini **umuman chizmaydi** (ajratgichi bilan birga) va
+`accounts.google.com/gsi/client` skripti ham yuklanmaydi — ishlamaydigan tugma turgandan
+ko‘ra yo‘qligi yaxshi.
+
+Tugmani Google o‘zi chizadi ([GoogleSignIn](components/auth/GoogleSignIn.tsx) da `renderButton`,
+`locale: "uz"` — yozuvi “Google orqali kirish” bo‘lib chiqadi). Kengligi konteynerdan o‘lchab
+beriladi, chunki GIS foizni qabul qilmaydi (Google chegarasi 400px). One Tap ataylab yoqilmagan:
+u FedCM sozlamalarini talab qiladi va kirish sahifasida keraksiz.
+
+Xatolar: `503 OAUTH_PROVIDER_DISABLED` (serverda client id yo‘q), `401 OAUTH_TOKEN_INVALID`,
+`403 ACCOUNT_BLOCKED` — uchalasi ham uzbekcha matnga o‘giriladi; backend bu endpointda `detail`
+ni inglizcha qaytaradi, shuning uchun `code` bo‘yicha shoxlash shart.
+
 **Checkout** — [app/api/checkout/route.ts](app/api/checkout/route.ts) kompozit:
 
 1. `DELETE /cart` + har pozitsiya `POST /cart/items` — server savati saytdagi savat bilan

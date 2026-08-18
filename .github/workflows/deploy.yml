@@ -58,6 +58,10 @@ jobs:
           IMAGE: ghcr.io/${{ github.repository }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_USER: ${{ github.actor }}
+          # Google web client id (backenddagi GOOGLE_OAUTH_CLIENT_ID bilan AYNAN bir xil).
+          # Secret qo‘yilmagan bo‘lsa qiymat bo‘sh keladi va sayt Google tugmasini
+          # umuman ko‘rsatmaydi — deploy shundan yiqilmaydi.
+          GOOGLE_OAUTH_CLIENT_ID: ${{ secrets.GOOGLE_OAUTH_CLIENT_ID }}
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
@@ -66,7 +70,7 @@ jobs:
           # shu yerda aniq yozilgan: SERVER_PORT secret'idagi qiymat oxiridagi \n belgisi
           # drone-ssh'ni "could not parse as int" bilan yiqitgan edi.
           port: 22
-          envs: IMAGE,GH_TOKEN,GH_USER
+          envs: IMAGE,GH_TOKEN,GH_USER,GOOGLE_OAUTH_CLIENT_ID
           script: |
             set -e
             echo "$GH_TOKEN" | docker login ghcr.io -u "$GH_USER" --password-stdin
@@ -77,5 +81,6 @@ jobs:
               --restart unless-stopped \
               -p 127.0.0.1:3000:3000 \
               -e KITOBGO_API_URL=https://api.kitobgo.com \
+              -e GOOGLE_OAUTH_CLIENT_ID="$GOOGLE_OAUTH_CLIENT_ID" \
               "$IMAGE:latest"
             docker image prune -f

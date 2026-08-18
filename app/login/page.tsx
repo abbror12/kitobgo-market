@@ -10,6 +10,12 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   const params = await searchParams;
   // Ochiq redirectdan saqlanish: faqat sayt ichidagi yo'llarga qaytamiz.
   const next = params.next?.startsWith("/") && !params.next.startsWith("//") ? params.next : "/profile";
+  // Google web client id — NEXT_PUBLIC_ EMAS: u build paytida kodga singib qolmasin,
+  // konteynerga ish vaqtida berilsin (docker run -e GOOGLE_CLIENT_ID=...). Bo‘sh bo‘lsa
+  // panel Google tugmasini umuman chizmaydi.
+  // Nomi backenddagi bilan bir xil (`GOOGLE_OAUTH_CLIENT_ID`) — qiymat ham AYNAN bir xil
+  // bo‘lishi shart: backend token auditoriyasini o‘sha client id bilan tekshiradi.
+  const googleClientId = process.env.GOOGLE_OAUTH_CLIENT_ID ?? process.env.GOOGLE_CLIENT_ID ?? "";
 
   return (
     <StoreShell>
@@ -29,7 +35,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           <div className="p-7 sm:p-10 lg:p-12">
             <span className="eyebrow">Akkaunt</span>
             <h2 className="font-serif mb-6 mt-3 text-2xl font-semibold sm:text-3xl">Kirish</h2>
-            <LoginPanel next={next} />
+            <LoginPanel next={next} googleClientId={googleClientId} />
             <div className="mt-6 flex items-start gap-2 rounded-xl bg-navSurface p-4 text-xs leading-5 text-bodyText">
               <LockKeyhole size={16} className="mt-0.5 shrink-0 text-cocoa" /> Davom etish orqali maxfiylik siyosati va foydalanish shartlariga rozilik bildirasiz.
             </div>
