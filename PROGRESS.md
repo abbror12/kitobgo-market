@@ -363,8 +363,10 @@ Prod katalogi hozircha bo'sh (`totalElements: 0`) — bosh sahifa bunday holatda
 6. **Savat almashtirish semantikasi** — sayt checkoutda server savatini butunlay qayta yozadi;
    bir akkaunt Android app bilan baravar ishlatilsa, appdagi savat checkout paytida o'chadi.
    Cross-device savat kerak bo'lsa, merge siyosatini backend belgilashi kerak.
-7. **Google/Apple web sign-in** — §4.1a oqimlari native uchun; webda kerak bo'lsa web client id
-   va redirect oqimi kelishilishi kerak. Saytga qo'shilmagan.
+7. **Apple web sign-in** — §4.1a dagi Apple oqimi native (iOS) va Android deep link uchun;
+   webda kerak bo’lsa Service ID va redirect manzili kelishilishi kerak. Saytga qo’shilmagan.
+   **Google esa qo’shilgan va jonli saytda ishlaydi** (2026-08-18, foydalanuvchi tekshirdi) —
+   yuqoridagi “Google bilan kirish” bo’limiga qarang.
 
 ## Keyingi qadamlar (sayt tomonida, backend tayyor)
 
