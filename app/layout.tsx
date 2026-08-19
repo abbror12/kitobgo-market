@@ -22,6 +22,9 @@ export const metadata: Metadata = {
   title: "Kitob.go — O‘zbekistondagi onlayn kitob do‘koni",
   description: "Qur’oni Karim, hadis, tafsir, tarix va boshqa kitoblarni bepul yetkazib berish hamda qabul qilgandan keyin to‘lash imkoniyati bilan xarid qiling.",
   keywords: ["kitob", "onlayn kitob do‘koni", "Qur’oni Karim", "hadis", "tafsir", "O‘zbekiston"],
+  // Google Search Console egalik tasdiqlovi (2026-08-19). Bu qator o'chirilsa,
+  // Console'dagi egalik ham bir muddatdan keyin bekor bo'ladi — olib tashlamang.
+  verification: { google: "U7fsE4dytxgfos7lEadEzGx28z1VV1OxUNFUDpjBq-M" },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
