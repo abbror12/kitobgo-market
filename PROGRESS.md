@@ -94,10 +94,15 @@ katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) v
 `app/apple-icon.png` (180, oq fonli — Apple shaffoflikni qora qiladi) chiqarilgan;
 Next ularni fayl nomiga qarab o'zi ulaydi, `metadata.icons` yozilmagan.
 
-Qo'shimcha fayllar: `app/favicon.ico` (16/32/48, PNG-embedded ICO — Google va eski
-kraulerlar /favicon.ico ni to'g'ridan-to'g'ri so'raydi, 404 bo'lsa qidiruvda belgi
-chiqmaydi) va `app/opengraph-image.png` (1200×630, oq fonda navy logotip — ulashish
-kartochkasi). Ikkalasi ham icon.png/logo.png dan skript bilan chiqariladi.
+Favicon — soddalashtirilgan belgi, to'liq logotip EMAS: 16 px da to'liq logotip
+o'qib bo'lmas dog'ga aylanardi (Google keshida shunday ko'ringan). Shuning uchun
+`app/icon.png` (512) va `app/favicon.ico` (16/32/48, PNG-embedded ICO) — navy
+kvadrat ustida oq "K"; `app/apple-icon.png` (180) — xuddi shu, lekin burchaksiz to'liq
+kvadrat (iOS o'zi maskalaydi, shaffof burchak qora bo'lib qolardi). /favicon.ico
+mavjudligi shart: Google krauleri uni to'g'ridan-to'g'ri so'raydi, 404 bo'lsa
+qidiruvda belgi chiqmaydi. JSON-LD `Organization.logo` esa to'liq yozuvli belgiga
+(`/images/logo.png`) ko'rsatadi. `app/opengraph-image.png` (1200×630) — oq fonda
+to'liq navy logotip (ulashish kartochkasi).
 
 O'lchamlar: shapkada 52px balandlik (100px kenglik), mobil shapkada 40px (77px),
 footerda 52px. Yozuv rasm ichida, shuning uchun yonida matn takrorlanmaydi — nomni `alt`

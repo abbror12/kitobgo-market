@@ -40,7 +40,9 @@ const siteJsonLd = {
       "@id": `${SITE_URL}/#organization`,
       name: SITE_NAME,
       url: SITE_URL,
-      logo: `${SITE_URL}/icon.png`,
+      // To'liq logotip (yozuvli), ikonka EMAS: /icon.png endi soddalashtirilgan "K"
+      // belgisi (favicon), Organization.logo esa taniladigan to'liq belgini kutadi.
+      logo: `${SITE_URL}/images/logo.png`,
       sameAs: ["https://t.me/kitobgouz", "https://www.instagram.com/kitob.go"],
       // Raqam E.164 ko'rinishida — Google shu shaklni kutadi. Sahifada ko'rinadigan
       // raqam (footer, /contact, huquqiy hujjatlar) aynan shu bo'lishi shart:
