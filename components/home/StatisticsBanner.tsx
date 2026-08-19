@@ -10,10 +10,10 @@ const stats = [
 export function StatisticsBanner() {
   return (
     <section className="container-page py-3 sm:py-8" aria-label="Kitob.go raqamlarda">
-      <div className="grid grid-cols-2 overflow-hidden rounded-2xl bg-gradient-to-r from-ink to-brand text-cream lg:grid-cols-4">
+      <div className="grid grid-cols-2 overflow-hidden rounded-2xl bg-brand text-cream lg:grid-cols-4">
         {stats.map(({ value, label, icon: Icon }) => (
-          <div key={label} className="flex items-center gap-2 border-cream/15 p-3 even:border-l lg:border-l lg:first:border-l-0 lg:p-7">
-            <Icon size={22} strokeWidth={1.6} className="shrink-0 text-gold sm:size-[27px]" aria-hidden="true" />
+          <div key={label} className="flex items-center gap-2 border-cream/20 p-3 even:border-l lg:border-l lg:first:border-l-0 lg:p-7">
+            <Icon size={22} strokeWidth={1.6} className="shrink-0 text-cream/90 sm:size-[27px]" aria-hidden="true" />
             <span><strong className="block text-[15px] font-extrabold sm:text-xl">{value}</strong><span className="block text-[10px] leading-3.5 text-cream/75 sm:text-[13px]">{label}</span></span>
           </div>
         ))}

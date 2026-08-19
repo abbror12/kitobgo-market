@@ -30,7 +30,7 @@ export function HeroSection({ book }: { book: Book }) {
             </div>
           </div>
           <div className="relative min-h-[180px] sm:min-h-full">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(176,138,62,.16),transparent_65%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(39,69,214,.08),transparent_65%)]" />
             <Image src={book.image} alt={`${book.title} kitobi`} fill priority unoptimized={isExternalImage(book.image)} sizes="(max-width: 640px) 45vw, 50vw" className="object-contain p-3 sm:p-8 lg:p-10" />
             <div className="absolute bottom-5 right-5 hidden w-52 space-y-2.5 xl:block">
               <div className="hero-fact"><BadgeCheck size={21} aria-hidden="true" /><span><strong>Rasmiy ruxsat</strong>Din ishlari qo‘mitasi</span></div>

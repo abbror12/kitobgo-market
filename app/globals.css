@@ -4,7 +4,7 @@
 
 /* Palitra manbayi — tailwind.config.ts, u esa ilovaning colors.dart fayliga ergashadi.
    Bu yerdagi xom rgba() qiymatlar Tailwind tokenlari yetmaydigan joylar uchun:
-   soyalar va fokus halqasi. Ular ham logotip palitrasidan (ink #151A33, brand #101D7A). */
+   soyalar va fokus halqasi. Ular ham palitradan (ink #151A33, brand #2745D6). */
 :root {
   --background: #ffffff; /* page */
   --foreground: #151a33; /* ink */
@@ -43,7 +43,7 @@ summary:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible {
-  outline: 3px solid rgba(16, 29, 122, 0.32); /* brand */
+  outline: 3px solid rgba(39, 69, 214, 0.35); /* brand */
   outline-offset: 3px;
 }
 
@@ -64,9 +64,9 @@ textarea::placeholder {
     @apply mx-auto w-full max-w-[1380px] px-4 sm:px-6 lg:px-8;
   }
 
-  /* Asosiy tugma — logotip nishoni kabi to'q navy yuza, krem matn. */
+  /* Asosiy tugma — yorqin brand ko'k, oq matn. To'q navy ataylab ishlatilmaydi. */
   .button-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-inkButton font-bold text-cream shadow-button transition hover:bg-brandDark active:scale-[.98];
+    @apply inline-flex items-center justify-center gap-2 rounded-xl bg-brand font-bold text-cream shadow-button transition hover:bg-brandDark active:scale-[.98];
   }
 
   /* Ikkilamchi tugma — navy urg'u cream yuzada. */
@@ -103,8 +103,8 @@ textarea::placeholder {
     @apply inline-flex shrink-0 items-center gap-1 text-[13px] font-bold text-brand transition hover:gap-2 hover:text-brandDark sm:text-[14px];
   }
 
-  /* Kartochka: cream yuza oq sahifada. Keng ekranda kontrast nozik bo'lgani uchun
-     chegara + soya bilan ajratiladi (ilova soyasiz, web'da bu kerak). */
+  /* Kartochka: oq yuza oq sahifada — shuning uchun har doim
+     chegara + yengil soya bilan ajratiladi (asaxiy uslubidagi oq kartochka). */
   .book-card {
     @apply relative flex min-w-0 flex-col rounded-2xl border border-line bg-cream p-2.5 shadow-soft transition duration-300 hover:-translate-y-1 hover:border-brand/30 hover:shadow-card sm:p-3;
   }
@@ -146,8 +146,8 @@ textarea::placeholder {
 
 .faq-item[open] .faq-plus {
   transform: rotate(45deg);
-  background: #101d7a; /* brand */
-  color: #fffdf6; /* cream */
+  background: #2745d6; /* brand */
+  color: #ffffff; /* cream */
 }
 
 .faq-plus {

@@ -45,13 +45,13 @@ export default function ContactPage() {
               note="Hamkorlik va takliflar uchun"
             />
 
-            <div className="rounded-2xl bg-inkButton p-4 text-cream sm:p-6">
-              <MapPin className="text-gold" />
+            <div className="rounded-2xl border border-line bg-sand p-4 sm:p-6">
+              <MapPin className="text-brand" />
               <h2 className="font-serif mt-5 font-semibold">Ofisimiz</h2>
-              <p className="mt-2 text-sm leading-6 text-cream/70">
+              <p className="mt-2 text-sm leading-6 text-bodyText">
                 Toshkent shahri, Shayxontohur tumani, Navoiy ko‘chasi, 18-uy
               </p>
-              <p className="mt-4 flex items-center gap-2 text-xs text-cream/65">
+              <p className="mt-4 flex items-center gap-2 text-xs text-bodyText">
                 <Clock3 size={15} /> Dushanba–Shanba, 09:00–19:00
               </p>
             </div>

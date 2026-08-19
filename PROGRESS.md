@@ -15,17 +15,25 @@ shartnoma **faqat** `docs/API.md` (o'sha repoda).
 > sahifalari va ularning komponentlari **o'chirildi** — ikkala oqim ham kirish panelining
 > ichida. Pastdagi "Kirish" bo'limiga qarang.
 >
-> 2026-08-19: **veb palitrasi logotipga o'tkazildi** — terrakota (#A34A24) o'rniga
-> logotipdagi navy (#101D7A). Iliq qog'oz yuzalar (cream/sand/bej chiziqlar) o'z joyida;
-> o'zgargani — urg'u va to'q yuzalar. `cocoa`/`cocoaDark` tokenlari `brand`/`brandDark`
-> deb qayta nomlandi. Shu sababli **veb endi ilova palitrasidan ajralgan**.
+> 2026-08-19: **veb palitrasi logotipga o'tkazildi**, ikki bosqichda. Avval terrakota
+> (#A34A24) logotip navy'siga (#101D7A) almashtirildi, iliq bej qog'oz esa qoldirilgan
+> edi — foydalanuvchi buni rad etdi: «sariqqa yaqin rang ko'k bilan kelishmayapti, to'q
+> ko'k bo'g'ib tashlaydi, asaxiydan ilhomlan». Shu bahoga ko'ra ikkinchi bosqichda sayt
+> yengil marketplace ko'rinishiga o'tdi: oq/och-sovuq fonlar, katta to'q panellar yo'q,
+> ko'k faqat urg'uda va u logotip ohangining yorqin toni (#2745D6). `cocoa`/`cocoaDark`
+> tokenlari `brand`/`brandDark` deb qayta nomlandi, `inkButton` olib tashlandi.
+> Shu sababli **veb endi ilova palitrasidan ajralgan**.
 
 ## Dizayn tizimi
 
-**Yagona manba — logotip:** `C:\Users\USER\Desktop\logo.PNG` dagi navy `#101D7A`.
-Yondashuv: **qog'oz iliq, brend sovuq** — `cream`/`sand`/`navSurface` va bej chiziqlar
-o'zgarmadi, faqat urg'u va to'q yuzalar navy'ga o'tdi. Iliq qog'oz + navy siyoh, ya'ni
-klassik premium kitob do'koni ohangi.
+**Brend manbayi — logotip** (`C:\Users\USER\Desktop\logo.PNG`, navy `#101D7A`), lekin
+to'q navy **faqat logotipning o'zida**. Yo'nalish — asaxiy uslubidagi yengil marketplace:
+oq sahifa, oq kartochka, och sovuq-kulrang to'ldirishlar, ko'k esa kam va faqat urg'uda
+(havola, narx, tugma, faol tab) — logotip ohangining yorqin toni `#2745D6` bilan.
+Katta to'q ko'k yuzalar ataylab yo'q («bo'g'ib tashlaydi»), iliq bej ham yo'q («sariqqa
+yaqin rang ko'k bilan kelishmaydi»). Shu ikkinchi sababdan **qoida: `gold` sariq faqat
+reyting yulduzlari va badge uchun — uni ko'k yuza yoniga qo'ymang** (StatisticsBanner
+ikonkalari shuning uchun oq).
 
 > **Veb endi ilova palitrasidan ajralgan** (2026-08-19). Ilova hali terrakotada
 > (`D:\Project\kitobgo-flutter\lib\ui\theme\colors.dart`), veb esa navy'da. Tuzilma — token
@@ -46,8 +54,8 @@ Palitra [tailwind.config.ts](tailwind.config.ts) da: `page` `cream` `sand` `navS
 |---|---|
 | Sahifa foni | `page` (oq) |
 | Kartochka, input, panel | `cream` |
-| Sticky header, to'liq kenglikdagi tasmalar | `navSurface` + `border-y border-line` |
-| Asosiy tugma | `bg-inkButton text-cream`, hover `bg-brandDark`; `inkButton` = `brand` = logotip navy |
+| Sticky header, to'liq kenglikdagi tasmalar | `navSurface` (och sovuq-kulrang) + `border-y border-line` |
+| Asosiy tugma | `bg-brand text-cream`, hover `bg-brandDark` (yorqin ko'k, to'q navy emas) |
 | Ikkilamchi tugma, havola, narx, faol tab | `brand` (hover `brandDark`) |
 | Yumshoq to'ldirish: ikonka disklari, tanlangan pill | `sand` |
 | Buyurtma status badge'lari | `status_colors.dart` mantiqiga mos: hal bo'lgan → `successSoft/success`, yo'ldagi → `warningSoft/brandDark`, to'xtagan → `dangerSoft/danger`, neytral → `sand/bodyText` |
@@ -61,22 +69,22 @@ katta-harfli yorliqlar uchun `.micro-label` (sans, 11.5px, letter-spacing 1.0) v
 
 1. **`tailwind.config.ts` yolg'iz yetarli emas.** [app/globals.css](app/globals.css) ichida
    xom `rgba()` qiymatlar bor: soyalar (`shadow-soft/card` — ink #151A33, `shadow-button` —
-   brand #101D7A asosida), fokus halqasi (`outline: rgba(16,29,122,.32)` — brand) va
+   brand #2745D6 asosida), fokus halqasi (`outline: rgba(39,69,214,.35)` — brand) va
    `.faq-item[open] .faq-plus` foni. Uchta komponentda ham qattiq yozilgan qiymat bor:
    [StoreShell](components/layout/StoreShell.tsx) (sticky header soyasi),
    [BookCardActions](components/product/BookCardActions.tsx) (savat tugmasi soyasi) va
-   [HeroSection](components/home/HeroSection.tsx) (oltin radial fon — ataylab oltin).
+   [HeroSection](components/home/HeroSection.tsx) (yumshoq ko'k radial fon).
    Palitra o'zgarsa bularni ham yangilang.
 2. **`muted` (#82879B) cream fonda 3.50:1 — WCAG AA dan past.** Ilovada bu ataylab, faqat
    bezak uchun. Webda u **faqat placeholder** rangi sifatida ishlatiladi (globals.css dagi
    `::placeholder`); mijoz o'qishi kerak bo'lgan har qanday matn — `bodyText` (7.39:1).
-3. **Oq page ustidagi cream kartochka kontrasti nozik** (1.02:1) — keng desktop ekranda
-   ko'rinmay qoladi. Shuning uchun kartochkalar `border-line` + `shadow-soft` bilan,
-   to'liq kenglikdagi tasmalar esa `navSurface` + `border-y` bilan ajratiladi.
-   Tokenlar o'zgarmagan, faqat qo'llanishi web uchun moslashtirilgan.
+3. **Kartochka yuzasi (`cream`) endi sof oq** — page bilan farqi yo'q, shuning uchun
+   kartochkalar **har doim** `border-line` + `shadow-soft` bilan, to'liq kenglikdagi
+   tasmalar esa `navSurface` + `border-y` bilan ajratiladi (asaxiy uslubidagi oq
+   kartochka). `cream` nomi tarixiy — qiymatni alohida oq deb o'zgartirmang, token bitta.
 4. **Muqova ortidagi pastel fonlar** ([lib/store-api.ts](lib/store-api.ts) `colors` massivi
-   va `data/*.ts` dagi `color` maydonlari) ham iliq ohangda — sovuq pastel qo'shilsa
-   ko'zga tashlanadi.
+   va `data/*.ts` dagi `color` maydonlari) endi sovuq och tuslarda (#E8EEFA atrofida) —
+   iliq bej pastel qo'shilsa ko'zga tashlanadi.
 
 ### Logotip
 
@@ -101,9 +109,10 @@ tiklanadi):
    kontent tomonda esa oq ↔ brend rangi orasidagi aralashmaga aylantirilgan. Shu tufayli
    silliqlangan chetlar saqlanib qolgan, "arra tish" chiqmagan.
 
-> **Belgi manbadagi asl navy rangida** (`#101D7A`) — 2026-08-19 dan. Ilgari u saytning
-> terrakotasiga bo'yalgan edi; endi munosabat teskari — **sayt logotipga ergashadi**.
-> Ya'ni bu yerdan boshlang: belgi brend manbayi, palitra esa undan chiqadi. Uchala fayl
+> **Belgi manbadagi asl navy rangida** (`#101D7A`) — 2026-08-19 dan. Sayt palitrasi undan
+> chiqadi, lekin **teng emas**: `brand` tokeni logotip ohangining yorqin toni (#2745D6),
+> chunki to'q navy interfeys elementi sifatida og'ir. Logotipni qayta bo'yash KERAK EMAS
+> — u to'q holicha oq/och fonlarda turadi. Uchala fayl
 > (`public/images/logo.png`, `app/icon.png`, `app/apple-icon.png`) bir xil rangda bo'lishi
 > shart — ular eski nusxadan qayta bo'yash bilan olingan (har piksel oq ↔ brend
 > aralashmasi sifatida qaralib, aralashuv darajasi ko'k kanaldan yechilgan).

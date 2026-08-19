@@ -75,7 +75,7 @@ const siteJsonLd = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#FBF7EC", // navSurface — sticky header bilan bir xil
+  themeColor: "#F6F8FB", // navSurface — sticky header bilan bir xil
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

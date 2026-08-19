@@ -4,9 +4,9 @@ import { testimonials } from "@/data/home";
 import { TestimonialCard } from "./TestimonialCard";
 
 const collections = [
-  { title: "Oila kutubxonasi", text: "Har bir xonadon uchun saralangan 8 kitob", icon: BookHeart, color: "bg-[#EFE7D3]" },
-  { title: "Ilm sari ilk qadam", text: "Yangi o‘quvchilar uchun sodda to‘plam", icon: Layers3, color: "bg-[#F4EDDC]" },
-  { title: "Sovg‘a to‘plami", text: "Yaqinlaringiz uchun didli va mazmunli tanlov", icon: Gift, color: "bg-[#F3E0D2]" },
+  { title: "Oila kutubxonasi", text: "Har bir xonadon uchun saralangan 8 kitob", icon: BookHeart, color: "bg-[#E8EEFA]" },
+  { title: "Ilm sari ilk qadam", text: "Yangi o‘quvchilar uchun sodda to‘plam", icon: Layers3, color: "bg-[#EEF2F7]" },
+  { title: "Sovg‘a to‘plami", text: "Yaqinlaringiz uchun didli va mazmunli tanlov", icon: Gift, color: "bg-[#E7F2EE]" },
 ];
 
 export function SpecialCollections() {
@@ -31,7 +31,7 @@ export function SpecialCollections() {
 
 export function TestimonialsSection() {
   return (
-    <section id="about" className="section-space bg-successSoft/40">
+    <section id="about" className="section-space bg-sand/40">
       <div className="container-page">
         <div className="mx-auto max-w-2xl text-center"><span className="eyebrow">Ishonchli xizmat</span><h2 className="font-serif mt-2 text-[22px] font-semibold tracking-tight text-ink sm:mt-3 sm:text-4xl">Xaridorlarimiz fikri</h2><p className="mt-2 text-[13px] text-bodyText sm:mt-3 sm:text-base">Kitob.go orqali xarid qilgan insonlarning samimiy taassurotlari.</p></div>
         <div className="mobile-rail mt-5 sm:mt-8 md:grid md:grid-cols-3 md:gap-4">{testimonials.map((testimonial) => <TestimonialCard key={testimonial.id} testimonial={testimonial} />)}</div>

@@ -21,15 +21,15 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
     <StoreShell>
       <section className="container-page py-10 sm:py-16">
         <div className="mx-auto grid max-w-5xl overflow-hidden rounded-[28px] border border-line bg-cream shadow-soft lg:grid-cols-[.9fr_1.1fr]">
-          <div className="relative overflow-hidden bg-inkButton p-7 text-cream sm:p-10 lg:p-12">
-            <div className="absolute -bottom-24 -right-24 size-72 rounded-full border-[48px] border-cream/10" />
-            <span className="grid size-12 place-items-center rounded-2xl bg-cream/10 text-gold"><ShieldCheck size={24} /></span>
+          <div className="relative overflow-hidden border-b border-line bg-sand p-7 lg:border-b-0 lg:border-r sm:p-10 lg:p-12">
+            <div className="absolute -bottom-24 -right-24 size-72 rounded-full border-[48px] border-brand/10" />
+            <span className="grid size-12 place-items-center rounded-2xl bg-brand/10 text-brand"><ShieldCheck size={24} /></span>
             <h1 className="font-serif mt-8 text-3xl font-semibold tracking-tight sm:text-4xl">Shaxsiy kabinetingizga xush kelibsiz</h1>
-            <p className="mt-4 max-w-md leading-7 text-cream/70">Buyurtmalarni kuzating, sevimli kitoblaringizni saqlang va keyingi xaridni yanada tez amalga oshiring.</p>
-            <ul className="mt-8 space-y-4 text-sm text-cream/85">
-              <li className="flex items-center gap-3"><span className="grid size-7 place-items-center rounded-full bg-cream/10">✓</span> Buyurtmalar tarixi va holati</li>
-              <li className="flex items-center gap-3"><span className="grid size-7 place-items-center rounded-full bg-cream/10">✓</span> SMS orqali tezkor kirish</li>
-              <li className="flex items-center gap-3"><span className="grid size-7 place-items-center rounded-full bg-cream/10">✓</span> Xavfsiz to‘lov va yetkazish</li>
+            <p className="mt-4 max-w-md leading-7 text-bodyText">Buyurtmalarni kuzating, sevimli kitoblaringizni saqlang va keyingi xaridni yanada tez amalga oshiring.</p>
+            <ul className="mt-8 space-y-4 text-sm text-bodyText">
+              <li className="flex items-center gap-3"><span className="grid size-7 place-items-center rounded-full bg-brand/10 font-bold text-brand">✓</span> Buyurtmalar tarixi va holati</li>
+              <li className="flex items-center gap-3"><span className="grid size-7 place-items-center rounded-full bg-brand/10 font-bold text-brand">✓</span> SMS orqali tezkor kirish</li>
+              <li className="flex items-center gap-3"><span className="grid size-7 place-items-center rounded-full bg-brand/10 font-bold text-brand">✓</span> Xavfsiz to‘lov va yetkazish</li>
             </ul>
           </div>
           <div className="p-7 sm:p-10 lg:p-12">

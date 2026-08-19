@@ -264,9 +264,9 @@ async function kgPublicFetch<T>(path: string, init?: RequestInit & { next?: { re
 
 // ---------- DTO → Book moslash ----------
 
-// Muqova ortidagi pastel fonlar — iliq palitradan (sand #EFE7D3 atrofida).
-// Kitobning o'z rasmi yuklanmaguncha ko'rinadi, shuning uchun sovuq ohang bo'lmasligi kerak.
-const colors = ["#F4EDDC", "#F3EBDD", "#F5EADB", "#F2E7D6", "#F6EFE0", "#EFE7D3"];
+// Muqova ortidagi pastel fonlar — iliq palitradan (sand #EAF0F9 atrofida).
+// Kitobning o'z rasmi yuklanmaguncha ko'rinadi; palitra sovuq bo'lgani uchun ular ham sovuq.
+const colors = ["#E8EEFA", "#EDF2F9", "#E6EEF9", "#EBF1FA", "#F1F5FB", "#EAF0F9"];
 const FALLBACK_COVER = "/images/quran-premium.png";
 
 const LANGUAGE_LABELS: Record<BookLanguage, string> = {
