@@ -56,7 +56,8 @@ Palitra [tailwind.config.ts](tailwind.config.ts) da: `page` `cream` `sand` `navS
 | Kartochka, input, panel | `cream` |
 | Sticky header, to'liq kenglikdagi tasmalar | `navSurface` (och sovuq-kulrang) + `border-y border-line` |
 | Asosiy tugma | `bg-brand text-cream`, hover `bg-brandDark` (yorqin ko'k, to'q navy emas) |
-| Ikkilamchi tugma, havola, narx, faol tab | `brand` (hover `brandDark`) |
+| Ikkilamchi tugma, havola, faol tab | `brand` (hover `brandDark`) |
+| Narx | sahifada `brand`; kartochkada `ink` (zich to'rda ko'k faqat CTA'da), eski narx `bodyText` ustidan chizilgan + `−N%` chip `dangerSoft/danger` |
 | Yumshoq to'ldirish: ikonka disklari, tanlangan pill | `sand` |
 | Buyurtma status badge'lari | `status_colors.dart` mantiqiga mos: hal bo'lgan → `successSoft/success`, yo'ldagi → `warningSoft/brandDark`, to'xtagan → `dangerSoft/danger`, neytral → `sand/bodyText` |
 

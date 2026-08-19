@@ -1,3 +1,7 @@
+// Backend muallifsiz kitobda bo‘sh massiv qaytaradi; bu plomba matn mapping'da
+// (lib/store-api.ts) qo‘yiladi. Kartochka uni yashirish uchun shu konstantaga solishtiradi.
+export const AUTHOR_UNKNOWN = "Muallif ko‘rsatilmagan";
+
 export interface Book {
   id: string;
   slug: string;

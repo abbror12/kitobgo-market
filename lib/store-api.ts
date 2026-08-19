@@ -2,7 +2,7 @@
 // Shartnoma: D:\Project\kitob-app-backend\docs\API.md
 // Bu modul faqat server komponentlar va route handler'larda chaqiriladi —
 // brauzerdan to'g'ridan-to'g'ri api.kitobgo.com ga murojaat qilinmaydi.
-import type { Book } from "@/types/book";
+import { AUTHOR_UNKNOWN, type Book } from "@/types/book";
 
 export const API_ORIGIN = (process.env.KITOBGO_API_URL ?? "https://api.kitobgo.com").replace(/\/$/, "");
 export const API_BASE_URL = `${API_ORIGIN}/api/v1`;
@@ -302,7 +302,7 @@ export function summaryToBook(dto: BookSummaryDto): Book {
     color: pickColor(dto.id, dto.title),
     category: "",
     categoryName: dto.categoryName,
-    author: dto.authors.join(", ") || "Muallif ko‘rsatilmagan",
+    author: dto.authors.join(", ") || AUTHOR_UNKNOWN,
     publisher: "",
     publishedYear: 0,
     pages: 0,
@@ -333,7 +333,7 @@ export function detailToBook(dto: BookDetailDto): Book {
     category: dto.category ? String(dto.category.id) : "",
     categoryName: dto.category?.name,
     categories: dto.category ? [{ id: String(dto.category.id), name: dto.category.name }] : [],
-    author: dto.authors.map((author) => author.fullName).join(", ") || "Muallif ko‘rsatilmagan",
+    author: dto.authors.map((author) => author.fullName).join(", ") || AUTHOR_UNKNOWN,
     publisher: dto.publisher?.name ?? "Nashriyot ma’lumoti kiritilmagan",
     publishedYear: dto.publicationYear ?? 0,
     pages: dto.pageCount ?? 0,
