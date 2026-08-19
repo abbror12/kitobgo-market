@@ -37,9 +37,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
             <h2 className="font-serif mb-6 mt-3 text-2xl font-semibold sm:text-3xl">Kirish</h2>
             <LoginPanel next={next} googleClientId={googleClientId} />
             <div className="mt-6 flex items-start gap-2 rounded-xl bg-navSurface p-4 text-xs leading-5 text-bodyText">
-              <LockKeyhole size={16} className="mt-0.5 shrink-0 text-cocoa" /> Davom etish orqali maxfiylik siyosati va foydalanish shartlariga rozilik bildirasiz.
+              <LockKeyhole size={16} className="mt-0.5 shrink-0 text-brand" /> Davom etish orqali maxfiylik siyosati va foydalanish shartlariga rozilik bildirasiz.
             </div>
-            <p className="mt-7 text-center text-sm text-bodyText">Yordam kerakmi? <Link href="/contact" className="font-bold text-cocoa">Biz bilan bog‘laning</Link></p>
+            <p className="mt-7 text-center text-sm text-bodyText">Yordam kerakmi? <Link href="/contact" className="font-bold text-brand">Biz bilan bog‘laning</Link></p>
           </div>
         </div>
       </section>

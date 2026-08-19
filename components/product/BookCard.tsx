@@ -28,7 +28,7 @@ export function BookCard({ book }: { book: Book }) {
         {/* Kitob nomi va narx — serif (ilovadagi KitobText.bookTitle / price). */}
         <h3 className="line-clamp-2 font-serif text-[14px] font-semibold leading-[18px] text-ink sm:text-base sm:leading-5">{book.title}</h3>
         <p className="mt-1 hidden line-clamp-2 min-h-9 text-[12px] leading-[18px] text-bodyText sm:block sm:text-[13px]">{book.description}</p>
-        <p className="mt-1.5 font-serif text-[15px] font-semibold text-cocoa sm:mt-2 sm:text-[17px]">{formatPrice(book.price)}</p>
+        <p className="mt-1.5 font-serif text-[15px] font-semibold text-brand sm:mt-2 sm:text-[17px]">{formatPrice(book.price)}</p>
         <div className="mt-1.5 flex items-center gap-1 text-[10px] text-bodyText sm:mt-2 sm:text-[11px]">
           <Star size={14} className={book.rating ? "fill-gold text-gold" : "text-line"} aria-hidden="true" />
           <span className="font-semibold text-ink">{book.rating || "Yangi"}</span>

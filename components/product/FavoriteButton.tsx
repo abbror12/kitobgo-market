@@ -20,8 +20,8 @@ export function FavoriteButton({ book }: { book: Book }) {
   }
 
   return (
-    <button type="button" onClick={toggle} className={`absolute right-2.5 top-2.5 z-20 grid size-9 place-items-center rounded-full border bg-cream/95 shadow-sm transition ${favorite ? "border-cocoa text-cocoa" : "border-line text-ink hover:border-cocoa hover:text-cocoa"}`} aria-label={favorite ? `${book.title} kitobini sevimlilardan olib tashlash` : `${book.title} kitobini sevimlilarga qo‘shish`}>
-      <Heart size={17} className={favorite ? "fill-cocoa" : ""} aria-hidden="true" />
+    <button type="button" onClick={toggle} className={`absolute right-2.5 top-2.5 z-20 grid size-9 place-items-center rounded-full border bg-cream/95 shadow-sm transition ${favorite ? "border-brand text-brand" : "border-line text-ink hover:border-brand hover:text-brand"}`} aria-label={favorite ? `${book.title} kitobini sevimlilardan olib tashlash` : `${book.title} kitobini sevimlilarga qo‘shish`}>
+      <Heart size={17} className={favorite ? "fill-brand" : ""} aria-hidden="true" />
     </button>
   );
 }

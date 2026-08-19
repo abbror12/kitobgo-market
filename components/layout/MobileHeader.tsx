@@ -25,7 +25,7 @@ export function MobileHeader() {
           </summary>
           <nav aria-label="Mobil navigatsiya" className="absolute left-0 top-[46px] z-50 w-[min(82vw,320px)] rounded-2xl border border-line bg-cream p-2 shadow-card">
             {mobileLinks.map(({ label, href }) => (
-              <Link key={label} href={href} className="block rounded-xl px-3 py-2.5 text-sm font-medium text-ink hover:bg-sand hover:text-cocoa">
+              <Link key={label} href={href} className="block rounded-xl px-3 py-2.5 text-sm font-medium text-ink hover:bg-sand hover:text-brand">
                 {label}
               </Link>
             ))}

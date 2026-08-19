@@ -147,7 +147,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
 
       <div className="mx-auto mt-7 max-w-md space-y-2 text-left">
         <div className="flex items-center gap-3 rounded-2xl bg-successSoft/40 p-4">
-          <PackageCheck className="shrink-0 text-cocoa" />
+          <PackageCheck className="shrink-0 text-brand" />
           <span>
             <strong className="block text-sm">Buyurtma raqami: {order.orderNumber}</strong>
             <small className="text-bodyText">{order.items.reduce((sum, item) => sum + item.quantity, 0)} ta kitob · Jami {formatPrice(order.grandTotal)}{order.deliveryFee > 0 ? ` (yetkazish ${formatPrice(order.deliveryFee)})` : ""}</small>
@@ -180,7 +180,7 @@ function SuccessShell({ icon, eyebrow, title, children }: { icon: React.ReactNod
   return (
     <section className="container-page py-16 sm:py-24">
       <div className="mx-auto max-w-2xl rounded-[28px] border border-line bg-cream p-7 text-center shadow-soft sm:p-12">
-        <span className="mx-auto grid size-20 place-items-center rounded-full bg-cocoa text-cream">{icon}</span>
+        <span className="mx-auto grid size-20 place-items-center rounded-full bg-brand text-cream">{icon}</span>
         <span className="eyebrow mt-6 inline-block">{eyebrow}</span>
         <h1 className="font-serif mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">{title}</h1>
         {children}

@@ -30,7 +30,7 @@ export function Header() {
           <Link href="/cart" className="header-action relative" aria-label="Savatcha">
             <span className="relative">
               <ShoppingCart size={23} aria-hidden="true" />
-              <CartBadge className="absolute -right-2 -top-2 grid min-h-4 min-w-4 place-items-center rounded-full bg-cocoa px-1 text-[10px] font-bold text-cream" />
+              <CartBadge className="absolute -right-2 -top-2 grid min-h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[10px] font-bold text-cream" />
             </span>
             <span>Savatcha</span>
           </Link>

@@ -380,7 +380,7 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                 value={regionId}
                 onChange={(event) => setRegionId(event.target.value ? Number(event.target.value) : "")}
                 required
-                className="mt-2 h-12 w-full rounded-xl border border-line bg-cream px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
+                className="mt-2 h-12 w-full rounded-xl border border-line bg-cream px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10"
               >
                 <option value="" disabled>Hududingizni tanlang</option>
                 {regions.map((region) => <option key={region.id} value={region.id}>{region.nameUz}</option>)}
@@ -401,16 +401,16 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
                       const { title, icon: Icon } = METHOD_LABELS[quote.method];
                       const active = method === quote.method;
                       return (
-                        <label key={quote.method} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-3.5 transition ${active ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
+                        <label key={quote.method} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-3.5 transition ${active ? "border-brand bg-sand/50" : "border-line bg-cream hover:border-brand/40"}`}>
                           <input type="radio" name="deliveryMethod" className="sr-only" checked={active} onChange={() => setMethod(quote.method)} />
-                          <Icon size={21} className={`mt-0.5 shrink-0 ${active ? "text-cocoa" : "text-bodyText"}`} />
+                          <Icon size={21} className={`mt-0.5 shrink-0 ${active ? "text-brand" : "text-bodyText"}`} />
                           <span className="min-w-0 text-sm">
                             <strong className="block">{title}</strong>
                             <span className="mt-0.5 block text-bodyText">
                               {quote.free ? "Bepul" : formatPrice(quote.fee)} · {quote.minDays === quote.maxDays ? `${quote.minDays} kun` : `${quote.minDays}–${quote.maxDays} kun`}
                             </span>
                             {!quote.free && quote.amountUntilFree !== undefined && (
-                              <span className="mt-1 block text-xs font-medium text-cocoa">Yana {formatPrice(quote.amountUntilFree)} xarid qilsangiz — bepul</span>
+                              <span className="mt-1 block text-xs font-medium text-brand">Yana {formatPrice(quote.amountUntilFree)} xarid qilsangiz — bepul</span>
                             )}
                           </span>
                         </label>
@@ -424,48 +424,48 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
             <div className="mt-5 grid gap-4 sm:grid-cols-2">
               <div>
                 <label className="text-sm font-bold" htmlFor="recipientName">Qabul qiluvchi ismi</label>
-                <input id="recipientName" value={recipientName} onChange={(event) => setRecipientName(event.target.value)} required placeholder="Ismingiz" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                <input id="recipientName" value={recipientName} onChange={(event) => setRecipientName(event.target.value)} required placeholder="Ismingiz" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
                 {fieldErrors.recipientName && <p className="mt-1.5 text-xs font-medium text-danger">{fieldErrors.recipientName}</p>}
               </div>
               <div>
                 <label className="text-sm font-bold" htmlFor="recipientPhone">Telefon raqam</label>
-                <input id="recipientPhone" type="tel" value={recipientPhone} onChange={(event) => setRecipientPhone(event.target.value)} required placeholder="+998 90 123 45 67" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                <input id="recipientPhone" type="tel" value={recipientPhone} onChange={(event) => setRecipientPhone(event.target.value)} required placeholder="+998 90 123 45 67" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
                 {fieldErrors.recipientPhone && <p className="mt-1.5 text-xs font-medium text-danger">{fieldErrors.recipientPhone}</p>}
               </div>
               {method !== "PICKUP" && (
                 <>
                   <div>
                     <label className="text-sm font-bold" htmlFor="district">Tuman <span className="font-normal text-bodyText">(ixtiyoriy)</span></label>
-                    <input id="district" value={district} onChange={(event) => setDistrict(event.target.value)} placeholder="Chilonzor tumani" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                    <input id="district" value={district} onChange={(event) => setDistrict(event.target.value)} placeholder="Chilonzor tumani" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
                   </div>
                   <div>
                     <label className="text-sm font-bold" htmlFor="addressLine">Manzil <span className="font-normal text-bodyText">(ixtiyoriy)</span></label>
-                    <input id="addressLine" value={addressLine} onChange={(event) => setAddressLine(event.target.value)} placeholder="Ko‘cha, uy, xonadon" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                    <input id="addressLine" value={addressLine} onChange={(event) => setAddressLine(event.target.value)} placeholder="Ko‘cha, uy, xonadon" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
                   </div>
                 </>
               )}
               <div className="sm:col-span-2">
                 <label className="text-sm font-bold" htmlFor="note">Izoh <span className="font-normal text-bodyText">(ixtiyoriy)</span></label>
-                <input id="note" value={note} onChange={(event) => setNote(event.target.value)} placeholder="Masalan: ertalab yetkazing" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-cocoa focus:ring-4 focus:ring-cocoa/10" />
+                <input id="note" value={note} onChange={(event) => setNote(event.target.value)} placeholder="Masalan: ertalab yetkazing" className="mt-2 h-12 w-full rounded-xl border border-line px-4 text-sm outline-none focus:border-brand focus:ring-4 focus:ring-brand/10" />
               </div>
             </div>
             {method === "COURIER" && (
-              <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-bodyText"><MapPin size={15} className="mt-0.5 shrink-0 text-cocoa" /> Manzilni yozmasangiz ham bo‘ladi — kuryer aniq manzilni telefon orqali kelishib oladi.</p>
+              <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-bodyText"><MapPin size={15} className="mt-0.5 shrink-0 text-brand" /> Manzilni yozmasangiz ham bo‘ladi — kuryer aniq manzilni telefon orqali kelishib oladi.</p>
             )}
           </fieldset>
 
           <fieldset disabled={busy} className="rounded-2xl border border-line bg-cream p-4 disabled:opacity-70 sm:p-7">
             <legend className="px-2 text-lg font-extrabold">To‘lov usuli</legend>
             <div className="grid gap-2">
-              <label className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === "COD" ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
+              <label className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === "COD" ? "border-brand bg-sand/50" : "border-line bg-cream hover:border-brand/40"}`}>
                 <input type="radio" name="paymentMethod" className="sr-only" checked={paymentMethod === "COD"} onChange={() => setPaymentMethod("COD")} />
-                <Banknote size={22} className={`shrink-0 ${paymentMethod === "COD" ? "text-cocoa" : "text-bodyText"}`} />
+                <Banknote size={22} className={`shrink-0 ${paymentMethod === "COD" ? "text-brand" : "text-bodyText"}`} />
                 <span className="text-sm"><strong className="block">Qabul qilganda to‘lash</strong><span className="mt-0.5 block text-bodyText">Kitobni tekshirgandan keyin naqd yoki karta orqali</span></span>
               </label>
               {(authed ? providers : ADVERTISED_PROVIDERS).map((provider) => (
-                <label key={provider} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === provider ? "border-cocoa bg-sand/50" : "border-line bg-cream hover:border-cocoa/40"}`}>
+                <label key={provider} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === provider ? "border-brand bg-sand/50" : "border-line bg-cream hover:border-brand/40"}`}>
                   <input type="radio" name="paymentMethod" className="sr-only" checked={paymentMethod === provider} onChange={() => setPaymentMethod(provider)} />
-                  <CreditCard size={22} className={`shrink-0 ${paymentMethod === provider ? "text-cocoa" : "text-bodyText"}`} />
+                  <CreditCard size={22} className={`shrink-0 ${paymentMethod === provider ? "text-brand" : "text-bodyText"}`} />
                   <span className="text-sm"><strong className="block">{provider === "CLICK" ? "Click" : "Payme"} orqali onlayn to‘lash</strong><span className="mt-0.5 block text-bodyText">To‘lov sahifasiga yo‘naltiramiz; buyurtma to‘lovdan so‘ng tasdiqlanadi</span></span>
                 </label>
               ))}
@@ -493,11 +493,11 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
             <div className="flex justify-between"><dt className="text-bodyText">Mahsulotlar</dt><dd>{formatPrice(itemsTotal)}</dd></div>
             <div className="flex justify-between">
               <dt className="text-bodyText">Yetkazish</dt>
-              <dd className={deliveryFee === 0 ? "font-bold text-cocoa" : "font-semibold"}>
+              <dd className={deliveryFee === 0 ? "font-bold text-brand" : "font-semibold"}>
                 {deliveryFee === null ? "Hudud tanlang" : deliveryFee === 0 ? "Bepul" : formatPrice(deliveryFee)}
               </dd>
             </div>
-            <div className="flex items-end justify-between border-t border-line pt-4"><dt className="font-bold">Jami</dt><dd className="font-serif text-2xl font-semibold text-cocoa">{formatPrice(grandTotal)}</dd></div>
+            <div className="flex items-end justify-between border-t border-line pt-4"><dt className="font-bold">Jami</dt><dd className="font-serif text-2xl font-semibold text-brand">{formatPrice(grandTotal)}</dd></div>
           </dl>
 
           {priceChanges && priceChanges.length > 0 && (
@@ -523,8 +523,8 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
               ? <><LoaderCircle size={18} className="animate-spin" /> Yuborilmoqda…</>
               : paymentMethod === "COD" ? "Buyurtmani tasdiqlash" : "To‘lovga o‘tish"}
           </button>
-          <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-bodyText"><LockKeyhole size={15} className="mt-0.5 shrink-0 text-cocoa" /> Ma’lumotlaringiz xavfsiz saqlanadi va faqat buyurtmani bajarish uchun ishlatiladi.</p>
-          <div className="mt-5 grid grid-cols-2 gap-2"><span className="flex items-center gap-1.5 text-[11px] text-bodyText"><Truck size={15} className="text-cocoa" /> Tez yetkazish</span><span className="flex items-center gap-1.5 text-[11px] text-bodyText"><CheckCircle2 size={15} className="text-cocoa" /> Sifat kafolati</span></div>
+          <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-bodyText"><LockKeyhole size={15} className="mt-0.5 shrink-0 text-brand" /> Ma’lumotlaringiz xavfsiz saqlanadi va faqat buyurtmani bajarish uchun ishlatiladi.</p>
+          <div className="mt-5 grid grid-cols-2 gap-2"><span className="flex items-center gap-1.5 text-[11px] text-bodyText"><Truck size={15} className="text-brand" /> Tez yetkazish</span><span className="flex items-center gap-1.5 text-[11px] text-bodyText"><CheckCircle2 size={15} className="text-brand" /> Sifat kafolati</span></div>
         </aside>
       </form>
     </section>

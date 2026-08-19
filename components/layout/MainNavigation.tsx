@@ -24,7 +24,7 @@ export function MainNavigation() {
           const isCatalogShortcut = link.href.startsWith("/catalog?") || link.href.startsWith("/catalog#");
           const active = link.href === "/" ? pathname === "/" : !isCatalogShortcut && pathname.startsWith(link.href);
           return (
-            <Link key={link.label} href={link.href} className={`relative flex h-full items-center transition hover:text-cocoa ${active ? "text-cocoa after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-cocoa" : "text-ink"}`}>
+            <Link key={link.label} href={link.href} className={`relative flex h-full items-center transition hover:text-brand ${active ? "text-brand after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:bg-brand" : "text-ink"}`}>
               {link.label}
             </Link>
           );

@@ -26,14 +26,14 @@ export function LoginPanel({ next, googleClientId = "" }: { next: string; google
         <button
           type="button"
           onClick={() => setTab("phone")}
-          className={`h-10 flex-1 rounded-lg transition ${tab === "phone" ? "bg-cream text-cocoa shadow-sm" : "text-bodyText"}`}
+          className={`h-10 flex-1 rounded-lg transition ${tab === "phone" ? "bg-cream text-brand shadow-sm" : "text-bodyText"}`}
         >
           Telefon
         </button>
         <button
           type="button"
           onClick={() => setTab("email")}
-          className={`h-10 flex-1 rounded-lg transition ${tab === "email" ? "bg-cream text-cocoa shadow-sm" : "text-bodyText"}`}
+          className={`h-10 flex-1 rounded-lg transition ${tab === "email" ? "bg-cream text-brand shadow-sm" : "text-bodyText"}`}
         >
           Email
         </button>

@@ -17,9 +17,9 @@ export function SpecialCollections() {
         <div className="mobile-rail mt-4 sm:mt-6 md:grid md:grid-cols-3 md:gap-4">
           {collections.map(({ title, text, icon: Icon, color }) => (
             <Link key={title} href="/catalog" className={`group relative min-h-40 overflow-hidden rounded-2xl p-4 sm:min-h-52 sm:p-7 ${color}`}>
-              <span className="grid size-10 place-items-center rounded-xl bg-cream text-cocoa shadow-sm sm:size-12"><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></span>
+              <span className="grid size-10 place-items-center rounded-xl bg-cream text-brand shadow-sm sm:size-12"><Icon size={21} strokeWidth={1.7} aria-hidden="true" /></span>
               <h3 className="mt-4 text-lg font-extrabold text-ink sm:mt-7 sm:text-xl">{title}</h3><p className="mt-1.5 max-w-[82%] text-[13px] leading-5 text-bodyText sm:mt-2 sm:max-w-[75%] sm:text-[14px] sm:leading-6">{text}</p>
-              <ArrowRight className="absolute bottom-7 right-7 text-cocoa transition group-hover:translate-x-1" size={22} aria-hidden="true" />
+              <ArrowRight className="absolute bottom-7 right-7 text-brand transition group-hover:translate-x-1" size={22} aria-hidden="true" />
               <div className="absolute -right-12 -top-12 size-40 rounded-full border-[28px] border-line" />
             </Link>
           ))}

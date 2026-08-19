@@ -9,7 +9,7 @@ export function FAQAccordion() {
           {faqItems.map((item, index) => (
             <details key={item.id} className="faq-item group" open={index === 0}>
               <summary className="flex cursor-pointer list-none items-center justify-between gap-3 py-3.5 text-[14px] font-bold text-ink sm:py-5 sm:text-[17px]">
-                {item.question}<span className="faq-plus grid size-7 shrink-0 place-items-center rounded-full bg-sand text-lg font-normal text-cocoa sm:size-8 sm:text-xl">+</span>
+                {item.question}<span className="faq-plus grid size-7 shrink-0 place-items-center rounded-full bg-sand text-lg font-normal text-brand sm:size-8 sm:text-xl">+</span>
               </summary>
               <p className="max-w-2xl pb-4 pr-8 text-[13px] leading-5 text-bodyText sm:pb-5 sm:pr-10 sm:text-[15px] sm:leading-7">{item.answer}</p>
             </details>

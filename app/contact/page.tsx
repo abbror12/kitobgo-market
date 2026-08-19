@@ -66,7 +66,7 @@ export default function ContactPage() {
           <div className="relative grid min-h-44 place-items-center overflow-hidden rounded-2xl bg-sand text-center sm:min-h-64">
             <div className="absolute inset-0 opacity-40 [background-image:linear-gradient(#a34a24_1px,transparent_1px),linear-gradient(90deg,#a34a24_1px,transparent_1px)] [background-size:32px_32px]" />
             <div className="relative rounded-2xl bg-cream/95 p-6 shadow-card">
-              <span className="mx-auto grid size-11 place-items-center rounded-full bg-cocoa text-cream">
+              <span className="mx-auto grid size-11 place-items-center rounded-full bg-brand text-cream">
                 <MapPin size={20} />
               </span>
               <strong className="mt-3 block">Kitob.go markaziy ofisi</strong>
@@ -95,9 +95,9 @@ function ContactCard({
   return (
     <a
       href={href}
-      className="group flex items-center gap-3 rounded-2xl border border-line bg-cream p-4 transition hover:border-cocoa/25 hover:shadow-card sm:gap-4 sm:p-5"
+      className="group flex items-center gap-3 rounded-2xl border border-line bg-cream p-4 transition hover:border-brand/25 hover:shadow-card sm:gap-4 sm:p-5"
     >
-      <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-sand text-cocoa transition group-hover:bg-cocoa group-hover:text-cream">
+      <span className="grid size-12 shrink-0 place-items-center rounded-xl bg-sand text-brand transition group-hover:bg-brand group-hover:text-cream">
         <Icon size={22} />
       </span>
       <span>

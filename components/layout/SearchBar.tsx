@@ -125,11 +125,11 @@ export function SearchBar({ mobile = false }: { mobile?: boolean }) {
           aria-controls={isOpen ? listboxId : undefined}
           aria-expanded={isOpen}
           aria-activedescendant={activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined}
-          className={`${mobile ? "h-10 pl-3 pr-10 text-[13px]" : "h-12 pl-4 pr-12 text-[15px]"} w-full rounded-xl border border-line bg-cream text-ink outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10`}
+          className={`${mobile ? "h-10 pl-3 pr-10 text-[13px]" : "h-12 pl-4 pr-12 text-[15px]"} w-full rounded-xl border border-line bg-cream text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10`}
         />
-        <button type="submit" aria-label="Qidirish" className={`absolute grid place-items-center rounded-lg text-ink transition hover:bg-sand hover:text-cocoa ${mobile ? "right-1 top-1 size-8" : "right-1.5 top-1.5 size-9"}`}>
+        <button type="submit" aria-label="Qidirish" className={`absolute grid place-items-center rounded-lg text-ink transition hover:bg-sand hover:text-brand ${mobile ? "right-1 top-1 size-8" : "right-1.5 top-1.5 size-9"}`}>
           {isLoading
-            ? <LoaderCircle size={19} className="animate-spin text-cocoa" aria-hidden="true" />
+            ? <LoaderCircle size={19} className="animate-spin text-brand" aria-hidden="true" />
             : <Search size={19} aria-hidden="true" />}
         </button>
       </form>
@@ -163,7 +163,7 @@ export function SearchBar({ mobile = false }: { mobile?: boolean }) {
                   <span className="mt-0.5 block truncate text-xs text-bodyText">
                     {result.author}{result.categoryName ? ` · ${result.categoryName}` : ""}
                   </span>
-                  <span className="mt-1 block font-serif text-sm font-semibold text-cocoa">{formatPrice(result.price)}</span>
+                  <span className="mt-1 block font-serif text-sm font-semibold text-brand">{formatPrice(result.price)}</span>
                 </span>
               </Link>
             ))}
@@ -180,7 +180,7 @@ export function SearchBar({ mobile = false }: { mobile?: boolean }) {
             <Link
               href={`/catalog?q=${encodeURIComponent(trimmedQuery)}`}
               onClick={() => setIsFocused(false)}
-              className="flex h-11 items-center justify-center border-t border-line bg-navSurface text-sm font-bold text-cocoa transition hover:bg-sand"
+              className="flex h-11 items-center justify-center border-t border-line bg-navSurface text-sm font-bold text-brand transition hover:bg-sand"
             >
               Barcha natijalarni ko‘rish
             </Link>

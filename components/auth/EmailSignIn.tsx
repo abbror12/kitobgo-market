@@ -37,7 +37,7 @@ function fieldErrorsOf(error: unknown): Record<string, string> {
   return map;
 }
 
-const fieldClass = "mt-2 h-[52px] w-full rounded-xl border border-line px-4 outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10";
+const fieldClass = "mt-2 h-[52px] w-full rounded-xl border border-line px-4 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10";
 
 export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
   const [step, setStep] = useState<Step>("password");
@@ -203,7 +203,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
             Spam papkasini ham tekshiring.
             <button
               type="button"
-              className="ml-2 font-bold text-cocoa"
+              className="ml-2 font-bold text-brand"
               onClick={() => { setMeta(null); setError(""); setStep(verifyFrom); }}
             >
               Boshqa manzil
@@ -227,7 +227,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
           <>
             Agar <strong className="text-ink">{email.trim()}</strong> ro‘yxatdan o‘tgan bo‘lsa, unga {meta.codeLength} xonali
             kod yubordik. Spam papkasini ham tekshiring.
-            <button type="button" className="ml-2 font-bold text-cocoa" onClick={() => backToPassword()}>Bekor qilish</button>
+            <button type="button" className="ml-2 font-bold text-brand" onClick={() => backToPassword()}>Bekor qilish</button>
           </>
         }
         onSubmit={resetPassword}
@@ -314,7 +314,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
           {busy ? <><LoaderCircle size={18} className="animate-spin" /> Yuborilmoqda…</> : "Ro‘yxatdan o‘tish"}
         </button>
         <p className="mt-3 text-center text-sm text-bodyText">
-          Hisobingiz bormi? <button type="button" onClick={() => backToPassword()} className="font-bold text-cocoa">Kirish</button>
+          Hisobingiz bormi? <button type="button" onClick={() => backToPassword()} className="font-bold text-brand">Kirish</button>
         </p>
       </form>
     );
@@ -342,7 +342,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
         <button type="submit" disabled={busy} className="button-primary mt-4 h-12 w-full px-5 disabled:cursor-not-allowed disabled:opacity-60">
           {busy ? <><LoaderCircle size={18} className="animate-spin" /> Yuborilmoqda…</> : "Kod yuborish"}
         </button>
-        <button type="button" onClick={() => backToPassword()} className="mt-3 w-full text-sm font-bold text-cocoa">
+        <button type="button" onClick={() => backToPassword()} className="mt-3 w-full text-sm font-bold text-brand">
           Kirishga qaytish
         </button>
       </form>
@@ -352,7 +352,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
   return (
     <form onSubmit={(event) => { event.preventDefault(); void signIn(); }}>
       <p className="text-sm leading-6 text-bodyText">Email va parolingiz bilan kiring — ilovadagi hisob ham shu yerda ishlaydi.</p>
-      {notice && <p className="mt-3 rounded-xl bg-sand/60 p-3 text-sm font-medium text-cocoa" role="status">{notice}</p>}
+      {notice && <p className="mt-3 rounded-xl bg-sand/60 p-3 text-sm font-medium text-brand" role="status">{notice}</p>}
       <label htmlFor="login-email" className="mt-4 block text-sm font-bold">Email</label>
       <div className="relative">
         <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-bodyText" aria-hidden="true" />
@@ -384,7 +384,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
           type="button"
           onClick={() => void sendCode(requestVerificationCode, "verify")}
           disabled={busy}
-          className="mt-2 text-sm font-bold text-cocoa disabled:text-bodyText"
+          className="mt-2 text-sm font-bold text-brand disabled:text-bodyText"
         >
           Tasdiqlash kodini yuborish
         </button>
@@ -393,7 +393,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
         {busy ? <><LoaderCircle size={18} className="animate-spin" /> Tekshirilmoqda…</> : "Kirish"}
       </button>
       <p className="mt-3 text-center text-sm text-bodyText">
-        <button type="button" onClick={() => { setStep("forgot"); setError(""); setNotice(""); }} className="font-bold text-cocoa">
+        <button type="button" onClick={() => { setStep("forgot"); setError(""); setNotice(""); }} className="font-bold text-brand">
           Parolni unutdingizmi?
         </button>
       </p>
@@ -402,7 +402,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
         <button
           type="button"
           onClick={() => { setStep("register"); setError(""); setNotice(""); setFieldErrors({}); setUnverified(false); }}
-          className="font-bold text-cocoa"
+          className="font-bold text-brand"
         >
           Ro‘yxatdan o‘tish
         </button>

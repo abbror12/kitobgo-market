@@ -72,7 +72,7 @@ export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: Ot
                 <strong className="text-ink">{phone.trim()}</strong> raqamiga {meta.codeLength} xonali kod yubordik.
                 <button
                   type="button"
-                  className="ml-2 font-bold text-cocoa"
+                  className="ml-2 font-bold text-brand"
                   onClick={() => { setMeta(null); setError(""); }}
                 >
                   O‘zgartirish
@@ -101,7 +101,7 @@ export function OtpSignIn({ onSuccess, compact = false }: { onSuccess: (info: Ot
               value={phone}
               onChange={(event) => setPhone(event.target.value)}
               placeholder="+998 90 123 45 67"
-              className="h-[52px] w-full rounded-xl border border-line py-3.5 pl-11 pr-4 outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10"
+              className="h-[52px] w-full rounded-xl border border-line py-3.5 pl-11 pr-4 outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10"
             />
           </div>
           {error && <p className="mt-3 text-sm font-medium text-danger" role="alert">{error}</p>}

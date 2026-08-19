@@ -107,12 +107,12 @@ export function CheckoutCodeStep({
           type="button"
           onClick={onBack}
           disabled={locked}
-          className="inline-flex items-center gap-1.5 text-sm font-bold text-cocoa transition hover:text-cocoaDark disabled:cursor-not-allowed disabled:text-muted"
+          className="inline-flex items-center gap-1.5 text-sm font-bold text-brand transition hover:text-brandDark disabled:cursor-not-allowed disabled:text-muted"
         >
           <ArrowLeft size={16} aria-hidden="true" /> Buyurtma ma’lumotlariga qaytish
         </button>
 
-        <span className="mt-6 grid size-14 place-items-center rounded-2xl bg-sand text-cocoa">
+        <span className="mt-6 grid size-14 place-items-center rounded-2xl bg-sand text-brand">
           <MessageSquare size={26} aria-hidden="true" />
         </span>
         <h2 className="mt-4 font-serif text-2xl font-semibold text-ink sm:text-3xl">Buyurtmani tasdiqlang</h2>
@@ -122,7 +122,7 @@ export function CheckoutCodeStep({
         </p>
         <p className="mt-4 flex items-center justify-between rounded-xl border border-line bg-page px-4 py-3 text-sm">
           <span className="text-bodyText">To‘lanadigan summa</span>
-          <strong className="font-serif text-lg font-semibold text-cocoa">{total}</strong>
+          <strong className="font-serif text-lg font-semibold text-brand">{total}</strong>
         </p>
 
         <form
@@ -140,14 +140,14 @@ export function CheckoutCodeStep({
             disabled={locked}
             onChange={(event) => onCodeChange(event.target.value)}
             placeholder={"•".repeat(meta.codeLength)}
-            className="mt-2 h-[56px] w-full rounded-xl border border-field bg-page px-4 text-center text-2xl font-extrabold tracking-[.5em] text-ink outline-none transition focus:border-cocoa focus:ring-4 focus:ring-cocoa/10 disabled:opacity-60"
+            className="mt-2 h-[56px] w-full rounded-xl border border-field bg-page px-4 text-center text-2xl font-extrabold tracking-[.5em] text-ink outline-none transition focus:border-brand focus:ring-4 focus:ring-brand/10 disabled:opacity-60"
           />
           <p className="mt-2 text-xs text-bodyText">
             {expiresIn > 0 ? `Kod amal qilish muddati: ${formatSeconds(expiresIn)}` : "Kod muddati tugadi — yangisini so‘rang."}
           </p>
 
           {error && <p className="mt-3 rounded-xl bg-dangerSoft p-3 text-sm font-medium text-danger" role="alert">{error}</p>}
-          {notice && !error && <p className="mt-3 text-sm font-medium text-cocoa" role="status">{notice}</p>}
+          {notice && !error && <p className="mt-3 text-sm font-medium text-brand" role="status">{notice}</p>}
 
           <button
             type="submit"
@@ -165,7 +165,7 @@ export function CheckoutCodeStep({
             type="button"
             onClick={() => void resend()}
             disabled={locked || resendIn > 0}
-            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 text-sm font-bold text-cocoa transition hover:text-cocoaDark disabled:cursor-not-allowed disabled:text-muted"
+            className="mt-3 inline-flex w-full items-center justify-center gap-1.5 text-sm font-bold text-brand transition hover:text-brandDark disabled:cursor-not-allowed disabled:text-muted"
           >
             <RotateCw size={15} aria-hidden="true" />
             {resendIn > 0 ? `Qayta yuborish (${formatSeconds(resendIn)})` : "Kodni qayta yuborish"}

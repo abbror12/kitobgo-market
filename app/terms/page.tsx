@@ -21,14 +21,14 @@ export default function TermsPage() {
       <LegalSection title="1. Umumiy qoidalar">
         <p>1.1. Ushbu shartlar “KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950 (keyingi o‘rinlarda — “Sotuvchi”, STIR 626762785, manzil Toshkent sh., Olmozor, Qamarniso ko‘chasi) va KitobGo ilovasidan foydalanuvchi jismoniy shaxs (keyingi o‘rinlarda — “Xaridor”) o‘rtasidagi munosabatni tartibga soladi.</p>
         <p>1.2. Ilovadan foydalanish, ro‘yxatdan o‘tish yoki buyurtma berish ushbu shartlarga to‘liq rozilik bildirish hisoblanadi. Rozi bo‘lmasangiz, ilovadan foydalanmang.</p>
-        <p>1.3. Maxfiylik siyosati ushbu shartlarning ajralmas qismidir: <Link href="/privacy" className="font-semibold text-cocoa hover:underline">kitobgo.com/privacy</Link></p>
+        <p>1.3. Maxfiylik siyosati ushbu shartlarning ajralmas qismidir: <Link href="/privacy" className="font-semibold text-brand hover:underline">kitobgo.com/privacy</Link></p>
       </LegalSection>
 
       <LegalSection title="2. Hisob">
         <p>2.1. Buyurtma berish uchun telefon raqami (SMS kod), elektron pochta yoki Google/Apple hisobi orqali kirish talab qilinadi. Katalogni ko‘rish uchun hisob shart emas.</p>
         <p>2.2. Xaridor kiritgan ma’lumotlarning to‘g‘riligi uchun javobgardir. Noto‘g‘ri telefon yoki manzil tufayli yetkazib berilmagan buyurtma uchun Sotuvchi javob bermaydi.</p>
         <p>2.3. Hisobga kirish uchun kelgan SMS kodni yoki parolni boshqalarga bermang. Hisobingizdan qilingan harakatlar sizning harakatingiz hisoblanadi.</p>
-        <p>2.4. Xaridor istalgan vaqtda hisobini o‘chirishi mumkin (<Link href="/privacy" className="font-semibold text-cocoa hover:underline">Maxfiylik siyosati</Link>, 6-band).</p>
+        <p>2.4. Xaridor istalgan vaqtda hisobini o‘chirishi mumkin (<Link href="/privacy" className="font-semibold text-brand hover:underline">Maxfiylik siyosati</Link>, 6-band).</p>
       </LegalSection>
 
       <LegalSection title="3. Tovar va narx">
@@ -83,7 +83,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <LegalSection title="10. Nizolarni hal qilish">
-        <p>10.1. Nizolar avval muzokara yo‘li bilan hal qilinadi. Murojaat: <a href="mailto:support@kitobgo.com" className="font-semibold text-cocoa hover:underline">support@kitobgo.com</a>, javob muddati 2 ish kuni.</p>
+        <p>10.1. Nizolar avval muzokara yo‘li bilan hal qilinadi. Murojaat: <a href="mailto:support@kitobgo.com" className="font-semibold text-brand hover:underline">support@kitobgo.com</a>, javob muddati 2 ish kuni.</p>
         <p>10.2. Kelishuvga erishilmasa, nizo O‘zbekiston Respublikasi qonunchiligiga muvofiq “Toshkent shahar tumanlararo iqtisodiy sudi” da ko‘riladi.</p>
       </LegalSection>
 
@@ -92,13 +92,13 @@ export default function TermsPage() {
       </LegalSection>
 
       <LegalSection title="12. Rekvizitlar">
-        <p>“KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950 · STIR 626762785 · Toshkent sh., Olmozor, Qamarniso ko‘chasi · <a href="tel:+998774488080" className="font-semibold text-cocoa hover:underline">+998 77 448 80 80</a> · <a href="mailto:info@kitobgo.com" className="font-semibold text-cocoa hover:underline">info@kitobgo.com</a></p>
+        <p>“KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950 · STIR 626762785 · Toshkent sh., Olmozor, Qamarniso ko‘chasi · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a> · <a href="mailto:info@kitobgo.com" className="font-semibold text-brand hover:underline">info@kitobgo.com</a></p>
       </LegalSection>
 
       <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-5 text-sm font-semibold">
-        <Link href="/" className="text-cocoa hover:underline">Bosh sahifa</Link>
-        <Link href="/privacy" className="text-cocoa hover:underline">Maxfiylik siyosati</Link>
-        <Link href="/account/delete" className="text-cocoa hover:underline">Hisobni o‘chirish</Link>
+        <Link href="/" className="text-brand hover:underline">Bosh sahifa</Link>
+        <Link href="/privacy" className="text-brand hover:underline">Maxfiylik siyosati</Link>
+        <Link href="/account/delete" className="text-brand hover:underline">Hisobni o‘chirish</Link>
       </nav>
     </LegalPage>
   );

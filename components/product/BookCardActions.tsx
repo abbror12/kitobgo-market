@@ -59,7 +59,7 @@ export function BookCardActions({ book }: { book: Book }) {
         className={`grid size-9 shrink-0 place-items-center rounded-xl transition active:scale-95 sm:size-10 ${
           added
             ? "bg-success text-cream"
-            : "bg-cocoa text-cream shadow-[0_7px_16px_rgba(163,74,36,.22)] hover:bg-cocoaDark"
+            : "bg-brand text-cream shadow-[0_7px_16px_rgba(16,29,122,.22)] hover:bg-brandDark"
         }`}
         aria-label={added ? `${book.title} savatchaga qo‘shildi` : `${book.title} kitobini savatchaga qo‘shish`}
         aria-live="polite"

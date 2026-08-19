@@ -43,11 +43,11 @@ export function ProductActions({ book }: { book: Book }) {
         <button type="button" onClick={addToCart} disabled={!book.inStock} className="button-secondary inline-flex h-11 flex-1 px-5 text-sm disabled:cursor-not-allowed disabled:opacity-50">
           <ShoppingCart size={17} /> Savatchaga qo‘shish
         </button>
-        <button type="button" onClick={toggleFavorite} className={`grid size-12 place-items-center rounded-xl border transition ${favorite ? "border-cocoa bg-sand text-cocoa" : "border-line bg-cream text-ink hover:border-cocoa hover:text-cocoa"}`} aria-label={favorite ? "Sevimlilardan olib tashlash" : "Sevimlilarga qo‘shish"}>
-          <Heart size={20} className={favorite ? "fill-cocoa" : ""} />
+        <button type="button" onClick={toggleFavorite} className={`grid size-12 place-items-center rounded-xl border transition ${favorite ? "border-brand bg-sand text-brand" : "border-line bg-cream text-ink hover:border-brand hover:text-brand"}`} aria-label={favorite ? "Sevimlilardan olib tashlash" : "Sevimlilarga qo‘shish"}>
+          <Heart size={20} className={favorite ? "fill-brand" : ""} />
         </button>
       </div>
-      {added && <p className="mt-2 text-sm font-medium text-cocoa" role="status">{quantity} ta kitob savatchaga qo‘shildi.</p>}
+      {added && <p className="mt-2 text-sm font-medium text-brand" role="status">{quantity} ta kitob savatchaga qo‘shildi.</p>}
     </div>
   );
 }

@@ -4,6 +4,8 @@ import Link from "next/link";
 // Brend belgisi: `public/images/logo.png` — `C:\Users\USER\Desktop\logo.PNG` dan olingan,
 // oq foni shaffofga aylantirilgan va chetlari kesilgan (384x200). Shu sabab u krem
 // (`navSurface`) yuzada ham, oq sahifada ham fonsiz turadi.
+// Rangi — manbadagi asl navy #101D7A, va aynan shu rang saytning `brand` tokeni:
+// palitra logotipga ergashadi, teskarisi emas (PROGRESS.md "Logotip").
 // Yozuv rasm ichida bo'lgani uchun matn takrorlanmaydi — nomni `alt` beradi.
 export function Logo({ compact = false }: { compact?: boolean }) {
   return (

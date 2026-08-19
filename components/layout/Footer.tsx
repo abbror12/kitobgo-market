@@ -28,15 +28,15 @@ export async function Footer() {
           <div key={column.title}>
             <h3 className="font-bold text-ink">{column.title}</h3>
             <ul className="mt-3 space-y-2 text-[13px] text-bodyText sm:mt-4 sm:space-y-3 sm:text-[14px]">
-              {column.links.map((link) => <li key={link.label}><Link href={link.href} className="hover:text-cocoa">{link.label}</Link></li>)}
+              {column.links.map((link) => <li key={link.label}><Link href={link.href} className="hover:text-brand">{link.label}</Link></li>)}
             </ul>
           </div>
         ))}
         <div className="col-span-2 sm:col-span-1">
           <h3 className="font-bold text-ink">Aloqa va ijtimoiy tarmoqlar</h3>
           <div className="mt-4 space-y-3 text-[14px] text-bodyText">
-            <a href="tel:+998774488080" className="flex items-center gap-2 hover:text-cocoa"><Phone size={17} aria-hidden="true" /> +998 77 448 80 80</a>
-            <a href="https://t.me/kitobgouz" className="flex items-center gap-2 hover:text-cocoa"><Send size={17} aria-hidden="true" /> @kitobgouz</a>
+            <a href="tel:+998774488080" className="flex items-center gap-2 hover:text-brand"><Phone size={17} aria-hidden="true" /> +998 77 448 80 80</a>
+            <a href="https://t.me/kitobgouz" className="flex items-center gap-2 hover:text-brand"><Send size={17} aria-hidden="true" /> @kitobgouz</a>
             <span className="flex items-center gap-2"><Clock3 size={17} aria-hidden="true" /> Har kuni, 09:00–21:00</span>
             <div className="flex gap-2 pt-2">
               <a href="https://t.me/kitobgouz" className="social-button" aria-label="Telegram"><Send size={18} /></a>

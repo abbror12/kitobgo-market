@@ -33,7 +33,7 @@ export default function PrivacyPage() {
             <tr><th className={ROW_TH}>Operator (ma’lumot egasi)</th><td className={TD}>“KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950</td></tr>
             <tr><th className={ROW_TH}>STIR / INN</th><td className={TD}>626762785</td></tr>
             <tr><th className={ROW_TH}>Manzil</th><td className={TD}>Toshkent sh., Olmozor, Qamarniso ko‘chasi</td></tr>
-            <tr><th className={ROW_TH}>Aloqa</th><td className={TD}><a href="mailto:support@kitobgo.com" className="font-semibold text-cocoa hover:underline">support@kitobgo.com</a> · <a href="tel:+998774488080" className="font-semibold text-cocoa hover:underline">+998 77 448 80 80</a></td></tr>
+            <tr><th className={ROW_TH}>Aloqa</th><td className={TD}><a href="mailto:support@kitobgo.com" className="font-semibold text-brand hover:underline">support@kitobgo.com</a> · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a></td></tr>
           </tbody>
         </LegalTable>
         <p>Ushbu siyosat KitobGo Android ilovasiga va <strong className="text-ink">kitobgo.com</strong> saytiga taalluqli.</p>
@@ -120,8 +120,8 @@ export default function PrivacyPage() {
         <LegalSubheading>Hisobni qanday o‘chirasiz</LegalSubheading>
         <ol className="mt-3 list-decimal space-y-1.5 pl-5">
           <li>Ilovada: <strong className="text-ink">Profil → Hisobni o‘chirish</strong>.</li>
-          <li>Yoki ilovasiz: <Link href="/account/delete" className="font-semibold text-cocoa hover:underline">kitobgo.com/account/delete</Link> sahifasi orqali.</li>
-          <li>Yoki <a href="mailto:support@kitobgo.com" className="font-semibold text-cocoa hover:underline">support@kitobgo.com</a> ga hisobingiz telefon raqamidan yozib.</li>
+          <li>Yoki ilovasiz: <Link href="/account/delete" className="font-semibold text-brand hover:underline">kitobgo.com/account/delete</Link> sahifasi orqali.</li>
+          <li>Yoki <a href="mailto:support@kitobgo.com" className="font-semibold text-brand hover:underline">support@kitobgo.com</a> ga hisobingiz telefon raqamidan yozib.</li>
         </ol>
         <p className="mt-3">So‘rov 2 ish kunida bajariladi. Buyurtma va to‘lov yozuvlari 5-banddagi muddat davomida saqlanib qoladi — bu qonun talabi, biz undan voz kecha olmaymiz.</p>
       </LegalSection>
@@ -140,13 +140,13 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <LegalSection title="9. Bog‘lanish">
-        <p>Maxfiylik bo‘yicha savollar: <a href="mailto:support@kitobgo.com" className="font-semibold text-cocoa hover:underline">support@kitobgo.com</a> · <a href="tel:+998774488080" className="font-semibold text-cocoa hover:underline">+998 77 448 80 80</a> · Toshkent sh., Olmozor, Qamarniso ko‘chasi</p>
+        <p>Maxfiylik bo‘yicha savollar: <a href="mailto:support@kitobgo.com" className="font-semibold text-brand hover:underline">support@kitobgo.com</a> · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a> · Toshkent sh., Olmozor, Qamarniso ko‘chasi</p>
       </LegalSection>
 
       <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-5 text-sm font-semibold">
-        <Link href="/" className="text-cocoa hover:underline">Bosh sahifa</Link>
-        <Link href="/terms" className="text-cocoa hover:underline">Foydalanish shartlari</Link>
-        <Link href="/account/delete" className="text-cocoa hover:underline">Hisobni o‘chirish</Link>
+        <Link href="/" className="text-brand hover:underline">Bosh sahifa</Link>
+        <Link href="/terms" className="text-brand hover:underline">Foydalanish shartlari</Link>
+        <Link href="/account/delete" className="text-brand hover:underline">Hisobni o‘chirish</Link>
       </nav>
     </LegalPage>
   );

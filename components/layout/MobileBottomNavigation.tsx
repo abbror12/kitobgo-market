@@ -31,8 +31,8 @@ export function MobileBottomNavigation() {
               className={`relative flex min-h-11 flex-col items-center justify-center gap-0.5 rounded-xl text-[9px] tracking-[0.4px] ${active ? "font-semibold text-ink" : "font-normal text-muted"}`}
             >
               <span className="relative">
-                <Icon size={19} strokeWidth={active ? 2.4 : 1.8} className={active ? "text-cocoa" : "text-muted"} aria-hidden="true" />
-                {badge && <CartBadge className="absolute -right-2 -top-1 grid min-h-4 min-w-4 place-items-center rounded-full bg-cocoa px-1 text-[9px] font-bold text-cream" />}
+                <Icon size={19} strokeWidth={active ? 2.4 : 1.8} className={active ? "text-brand" : "text-muted"} aria-hidden="true" />
+                {badge && <CartBadge className="absolute -right-2 -top-1 grid min-h-4 min-w-4 place-items-center rounded-full bg-brand px-1 text-[9px] font-bold text-cream" />}
               </span>
               <span>{label}</span>
             </Link>
