@@ -268,7 +268,8 @@ kirmagan bo'lsa login'ga `next` bilan, chiqish):
 | `/profile` — "Buyurtmalarim" | buyurtmalar ro'yxati, tafsilot, bekor qilish, uchta hisoblagich |
 | `/profile/details` — "Mening ma'lumotlarim" | profil kartasi (ism, ID, email/telefon + tasdiq chiplari, ro'yxatdan o'tgan sana, holat, asosiy manzil), **ism tahriri** ("Profilni tahrirlash" tugmasi), buyurtma/sevimli/manzil kartalari |
 
-Yon paneldagi ism/aloqa bloki `/profile/details` ga havola (asaxiy namunasi). Ism tahriri
+Yon paneldagi ism/aloqa bloki `/profile/details` ga havola (asaxiy namunasi) va ro'yxatda
+alohida "Ma'lumotlarim" bandi **ataylab yo'q** — bitta sahifaga ikkita havola bo'lmasin. Ism tahriri
 ilgari `/profile` ning pastida edi — endi faqat `/profile/details` da. Manzil uchun yangi
 BFF: `GET /api/account/addresses` (faqat o'qish; qo'shish/tahrirlash checkout oqimida,
 alohida manzil boshqaruvi sahifasi yo'q). Ko'rsatiladigan maydonlar faqat backendda bor

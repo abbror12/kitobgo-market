@@ -1,13 +1,14 @@
 "use client";
 
-import { ChevronRight, Heart, LogOut, Package, UserRound } from "lucide-react";
+import { ChevronRight, Heart, LogOut, Package } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ProfileDto } from "@/lib/store-api";
 import { initialsOf } from "./useProfileSession";
 
+// "Ma'lumotlarim" bu ro'yxatda ataylab YO'Q: unga yuqoridagi ism/aloqa bloki olib boradi
+// (bitta sahifa — bitta havola, PROGRESS.md "Navigatsiya qoidasi").
 const NAV = [
-  { href: "/profile/details", label: "Ma’lumotlarim", icon: UserRound },
   { href: "/profile", label: "Buyurtmalarim", icon: Package },
   { href: "/favorites", label: "Sevimlilar", icon: Heart },
 ];
@@ -17,17 +18,18 @@ const NAV = [
 export function ProfileSidebar({ profile, onLogout }: { profile: ProfileDto | null; onLogout: () => void }) {
   const pathname = usePathname();
   const displayName = profile?.fullName ?? "Mijoz";
+  const detailsActive = pathname === "/profile/details";
 
   return (
     <aside className="h-fit rounded-2xl border border-line bg-cream p-3">
       <div className="border-b border-line pb-2">
-        <Link href="/profile/details" className="flex items-center gap-3 rounded-xl p-3 transition hover:bg-sand" aria-label="Mening ma’lumotlarim">
+        <Link href="/profile/details" aria-current={detailsActive ? "page" : undefined} className={`flex items-center gap-3 rounded-xl p-3 transition ${detailsActive ? "bg-sand" : "hover:bg-sand"}`} aria-label="Mening ma’lumotlarim">
           <span className="grid size-11 shrink-0 place-items-center rounded-full bg-brand text-sm font-extrabold text-cream">{initialsOf(displayName)}</span>
           <span className="min-w-0 flex-1">
             <strong className="block truncate text-sm">{displayName}</strong>
             <small className="block truncate text-bodyText">{profile?.phone ?? profile?.email ?? ""}</small>
           </span>
-          <ChevronRight size={16} className="shrink-0 text-bodyText" aria-hidden="true" />
+          <ChevronRight size={16} className={`shrink-0 ${detailsActive ? "text-brand" : "text-bodyText"}`} aria-hidden="true" />
         </Link>
       </div>
       <nav className="mt-2">
