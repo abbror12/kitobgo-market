@@ -113,7 +113,13 @@ export interface ProfileDto {
   id: number;
   phone?: string;
   email?: string;
+  // Ko'rsatish uchun HAR DOIM fullName (u to'liq ism, qismlar ma'lum bo'lsa ham, bo'lmasa ham).
+  // firstName/lastName faqat forma kataklari uchun; ism ikkiga bo'linishidan oldin
+  // yaratilgan hisoblarda ular YO'Q — mijoz tomonida fullName'ni bo'lib olishga urinmang
+  // (API.md §5, "The name is two fields now").
   fullName?: string;
+  firstName?: string;
+  lastName?: string;
   status: "PENDING_VERIFICATION" | "ACTIVE" | "BLOCKED";
   emailVerified: boolean;
   phoneVerified: boolean;

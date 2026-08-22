@@ -43,7 +43,8 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
   const [step, setStep] = useState<Step>("password");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirm, setConfirm] = useState("");
   const [meta, setMeta] = useState<CodeSent | null>(null);
@@ -99,9 +100,12 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
   // ro'yxatdan o'tgandan keyin alohida "kirish" qadami yo'q.
   async function register() {
     if (busy) return;
-    const name = fullName.trim();
+    // API.md §5 "Validation": firstName 2–100 majburiy; lastName 100 gacha, bo'sh = yo'q.
+    const first = firstName.trim();
+    const last = lastName.trim();
     const localIssues: Record<string, string> = {};
-    if (name.length < 2 || name.length > 150) localIssues.fullName = "Ismni to‘liq kiriting (2–150 belgi).";
+    if (first.length < 2 || first.length > 100) localIssues.firstName = "Ismni kiriting (2–100 belgi).";
+    if (last.length > 100) localIssues.lastName = "Familiya 100 belgidan oshmasin.";
     const pwdIssue = passwordIssue(password);
     if (pwdIssue) localIssues.password = pwdIssue;
     if (Object.keys(localIssues).length) {
@@ -117,7 +121,7 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
     try {
       const sent = await apiFetch<CodeSent>("/api/auth/register", {
         method: "POST",
-        body: JSON.stringify({ email: email.trim(), password, fullName: name }),
+        body: JSON.stringify({ email: email.trim(), password, firstName: first, lastName: last }),
       });
       setMeta(sent);
       setVerifyFrom("register");
@@ -264,21 +268,42 @@ export function EmailSignIn({ onSuccess }: { onSuccess: () => void }) {
           uni SMS orqali kirishda o‘rnatasiz.
         </p>
 
-        <label htmlFor="register-name" className="mt-4 block text-sm font-bold">Ism-familiya</label>
-        <div className="relative">
-          <UserRound size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-bodyText" aria-hidden="true" />
-          <input
-            id="register-name"
-            type="text"
-            autoComplete="name"
-            required
-            value={fullName}
-            onChange={(event) => setFullName(event.target.value)}
-            placeholder="Ali Valiyev"
-            className={`${fieldClass} pl-11`}
-          />
+        {/* Ism va familiya alohida (API.md §4.2) — familiya ixtiyoriy. Mavjud ismni
+            mijoz tomonida bo'lish yo'q: o'zbekchada tartib qat'iy emas. */}
+        <div className="mt-4 grid gap-3 sm:grid-cols-2">
+          <div>
+            <label htmlFor="register-first-name" className="block text-sm font-bold">Ism</label>
+            <div className="relative">
+              <UserRound size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-bodyText" aria-hidden="true" />
+              <input
+                id="register-first-name"
+                type="text"
+                autoComplete="given-name"
+                required
+                maxLength={100}
+                value={firstName}
+                onChange={(event) => setFirstName(event.target.value)}
+                placeholder="Ali"
+                className={`${fieldClass} pl-11`}
+              />
+            </div>
+            {fieldErrors.firstName && <p className="mt-1.5 text-sm font-medium text-danger">{fieldErrors.firstName}</p>}
+          </div>
+          <div>
+            <label htmlFor="register-last-name" className="block text-sm font-bold">Familiya <span className="font-medium text-bodyText">(ixtiyoriy)</span></label>
+            <input
+              id="register-last-name"
+              type="text"
+              autoComplete="family-name"
+              maxLength={100}
+              value={lastName}
+              onChange={(event) => setLastName(event.target.value)}
+              placeholder="Valiyev"
+              className={fieldClass}
+            />
+            {fieldErrors.lastName && <p className="mt-1.5 text-sm font-medium text-danger">{fieldErrors.lastName}</p>}
+          </div>
         </div>
-        {fieldErrors.fullName && <p className="mt-1.5 text-sm font-medium text-danger">{fieldErrors.fullName}</p>}
 
         <label htmlFor="register-email" className="mt-4 block text-sm font-bold">Email</label>
         <div className="relative">

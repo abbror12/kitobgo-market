@@ -206,7 +206,7 @@ ichidagi qadamlar, alohida sahifa yo'q:
 
 | Qadam | Chaqiruv | Natija |
 |---|---|---|
-| "Ro'yxatdan o'tish" | `POST /auth/register {email, password, fullName}` | `201 CodeSent` → kod ekrani. Hisob `PENDING_VERIFICATION`, cookie hali yo'q |
+| "Ro'yxatdan o'tish" | `POST /auth/register {email, password, firstName, lastName?}` | `201 CodeSent` → kod ekrani. Hisob `PENDING_VERIFICATION`, cookie hali yo'q |
 | Kirish `403 EMAIL_NOT_VERIFIED` bersa | `POST /auth/resend-verification {email}` | `202 CodeSent` → kod ekrani |
 | Kodni kiritish | `POST /auth/verify-email {email, code}` | **`200 TokenResponse`** — cookie o'rnatiladi, alohida login qadami YO'Q |
 | "Parolni unutdingizmi?" | `POST /auth/forgot-password {email}` | `202 CodeSent` → kod + yangi parol ekrani |
@@ -222,7 +222,9 @@ Ikkita tuzoq (MIGRATION_EMAIL_CODES.md §4):
    `401 OTP_EXPIRED` keladi, teskarisi ham shunday.
 
 Ro'yxatdan o'tish formasi haqida: **telefon maydoni yo'q** (raqam faqat §4.1 orqali
-o'rnatiladi), parol qoidasi backend DTO'si bilan bir xil (8–72, harf + raqam), ism 2–150.
+o'rnatiladi), parol qoidasi backend DTO'si bilan bir xil (8–72, harf + raqam), ism 2–100
+(majburiy) va familiya 100 gacha (ixtiyoriy) — **ikkita alohida katak**, pastdagi "Ism ikkita
+maydon" bo'limiga qarang.
 Shu uchtasi mijozda oldindan tekshiriladi — bekorga so'rov ketmasin va matn uzbekcha bo'lsin.
 Backenddan `400 VALIDATION_FAILED` kelsa, `errors` massivi to'g'ridan-to'g'ri maydonlarga
 joylanadi (API.md §2). `409 EMAIL_ALREADY_REGISTERED` → "kirishga o'ting".
@@ -230,6 +232,30 @@ joylanadi (API.md §2). `409 EMAIL_ALREADY_REGISTERED` → "kirishga o'ting".
 > Eski `/verify-email?token=…` va `/reset-password?token=…` manzillari endi yo'q (404) va
 > redirect ataylab qo'yilmagan: backend `one_time_tokens` jadvalini tashlagan, ya'ni pochtada
 > qolgan eski havolalar baribir o'lik edi.
+
+### Ism ikkita maydon (2026-08-22)
+
+Backend ismni `firstName` + `lastName` ga ajratgan (API.md §4.2 va §5, "The name is two fields
+now"). Sayt endi shu shaklni yuboradi: `POST /auth/register {email, password, firstName,
+lastName?}` va `PUT /account {firstName, lastName?}`. Qoidalar:
+
+- **Ko'rsatishda faqat `fullName`** (displayName, salomlashish, avatar initsiallari) — u har
+  doim to'liq ism. `firstName`/`lastName` faqat forma kataklari uchun.
+- **Mavjud ismni mijozda bo'lib olish YO'Q.** Bo'linishdan oldingi hisoblarda qismlar kelmaydi;
+  o'zbekchada tartib qat'iy emas ("Amanbayev Zafarbek" ham, "Zafarbek Amanbayev" ham odatiy).
+  Profil tahririda bunday hisobda ikkala katak **bo'sh**, tepasida "Hozirgi: …" matni —
+  foydalanuvchi o'zi to'ldiradi ([ProfileContent](components/profile/ProfileContent.tsx)).
+- Validatsiya mijozda ham, backendda ham bir xil: ism 2–100 majburiy, familiya 100 gacha, bo'sh
+  satr = familiya yo'q (katak qanday bo'lsa shunday yuboriladi). `VALIDATION_FAILED` dagi
+  `errors[].field` = `firstName` | `lastName` — "ism umuman yo'q" ham `firstName` ostida.
+- **Eski `{fullName}` shakli bitta joyda ataylab qoldi:** checkout `newAccount` bo'lganda
+  `recipientName` dan `PUT /account {fullName}` yuboradi ([CheckoutForm](components/checkout/CheckoutForm.tsx)).
+  Bitta katakdan kelgan ism uchun bu to'g'ri yo'l; backend qabul qiladi va qismlarni tozalaydi.
+  Shu sababli `app/api/account/route.ts` ikkala shaklni ham qabul qiladi.
+
+Lokal backend (`provider=log`, kod konsolda) bilan to'liq sinalgan: register → kod → account
+javobida uchala maydon; familiya o'chirilsa `fullName` faqat ismga aylanadi; `{fullName}`
+yuborilsa qismlar yo'qoladi va profil tahriri bo'sh kataklar + "Hozirgi" ko'rsatadi.
 
 Checkout'ning kod qadami — [CheckoutCodeStep](components/checkout/CheckoutCodeStep.tsx) —
 o'z chizmasini (orqaga qaytish, summa, buyurtma joylash holati) saqlaydi, lekin xato tilini

@@ -25,3 +25,6 @@ next-env.d.ts
 *.njsproj
 *.sln
 *.sw?
+
+# Lokal muhit o'zgaruvchilari (masalan KITOBGO_API_URL) — repoga kirmasin
+.env*.local

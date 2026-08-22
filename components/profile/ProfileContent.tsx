@@ -35,7 +35,12 @@ export function ProfileContent() {
   const [ordersPage, setOrdersPage] = useState<PageResponse<OrderSummaryDto> | null>(null);
   const [ordersLoading, setOrdersLoading] = useState(false);
   const [favoritesCount, setFavoritesCount] = useState(0);
-  const [nameDraft, setNameDraft] = useState("");
+  // Ism tahriri ikkita katak (API.md §5). Ajratilishdan oldingi hisoblarda firstName yo'q —
+  // unda kataklar BO'SH qoladi, tepada joriy fullName ko'rsatiladi; fullName "Ism" katagiga
+  // avtomatik solinmaydi (ikki so'z birdan ismga kirib ketardi).
+  const [firstDraft, setFirstDraft] = useState("");
+  const [lastDraft, setLastDraft] = useState("");
+  const [nameErrors, setNameErrors] = useState<{ firstName?: string; lastName?: string }>({});
   const [editingName, setEditingName] = useState(false);
   const [nameBusy, setNameBusy] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -53,7 +58,8 @@ export function ProfileContent() {
           return;
         }
         setProfile(session.profile);
-        setNameDraft(session.profile.fullName ?? "");
+        setFirstDraft(session.profile.firstName ?? "");
+        setLastDraft(session.profile.lastName ?? "");
         setChecking(false);
       })
       .catch(() => { if (active) router.replace("/login?next=/profile"); });
@@ -116,16 +122,39 @@ export function ProfileContent() {
     }
   }
 
+  function resetNameDrafts(source: ProfileDto | null) {
+    setFirstDraft(source?.firstName ?? "");
+    setLastDraft(source?.lastName ?? "");
+    setNameErrors({});
+  }
+
   async function saveName() {
-    const fullName = nameDraft.trim();
-    if (!fullName || nameBusy) return;
+    if (nameBusy) return;
+    // API.md §5 "Validation": firstName 2–100 majburiy; lastName 100 gacha, bo'sh = yo'q.
+    const firstName = firstDraft.trim();
+    const lastName = lastDraft.trim();
+    const issues: { firstName?: string; lastName?: string } = {};
+    if (firstName.length < 2 || firstName.length > 100) issues.firstName = "Ismni kiriting (2–100 belgi).";
+    if (lastName.length > 100) issues.lastName = "Familiya 100 belgidan oshmasin.";
+    if (issues.firstName || issues.lastName) { setNameErrors(issues); return; }
     setNameBusy(true);
+    setNameErrors({});
     try {
-      const updated = await apiFetch<ProfileDto>("/api/account", { method: "PUT", body: JSON.stringify({ fullName }) });
+      const updated = await apiFetch<ProfileDto>("/api/account", { method: "PUT", body: JSON.stringify({ firstName, lastName }) });
       setProfile(updated);
+      resetNameDrafts(updated);
       setEditingName(false);
     } catch (err) {
-      setError(err instanceof ClientApiError ? err.message : "Ismni saqlab bo‘lmadi.");
+      // VALIDATION_FAILED errors[] — field nomlari katak nomlari bilan bir xil; "ism umuman
+      // yo'q" ham firstName ostida keladi, maxsus holat yo'q.
+      const fields: { firstName?: string; lastName?: string } = {};
+      if (err instanceof ClientApiError && Array.isArray(err.problem.errors)) {
+        for (const item of err.problem.errors) {
+          if (item?.field === "firstName" || item?.field === "lastName") fields[item.field] ??= item.message;
+        }
+      }
+      setNameErrors(fields);
+      if (!fields.firstName && !fields.lastName) setError(err instanceof ClientApiError ? err.message : "Ismni saqlab bo‘lmadi.");
     } finally {
       setNameBusy(false);
     }
@@ -256,10 +285,26 @@ export function ProfileContent() {
             <div className="min-w-0 flex-1">
               <h2 className="font-serif font-semibold">Shaxsiy ma’lumotlar</h2>
               {editingName ? (
-                <form className="mt-2 flex gap-2" onSubmit={(event) => { event.preventDefault(); void saveName(); }}>
-                  <input value={nameDraft} onChange={(event) => setNameDraft(event.target.value)} placeholder="Ism-familiya" className="h-10 w-full max-w-xs rounded-xl border border-line px-3 text-sm outline-none focus:border-brand" />
-                  <button type="submit" disabled={nameBusy} className="button-primary h-10 px-4 text-sm disabled:opacity-60">{nameBusy ? <LoaderCircle size={15} className="animate-spin" /> : <Check size={15} />}</button>
-                  <button type="button" onClick={() => { setEditingName(false); setNameDraft(profile?.fullName ?? ""); }} className="button-secondary inline-flex h-10 px-3 text-sm"><X size={15} /></button>
+                <form className="mt-2" onSubmit={(event) => { event.preventDefault(); void saveName(); }}>
+                  {!profile?.firstName && profile?.fullName && (
+                    <p className="mb-2 text-sm text-bodyText">Hozirgi: <strong className="text-ink">{profile.fullName}</strong> — ism va familiyani alohida kiriting.</p>
+                  )}
+                  <div className="grid max-w-lg gap-2 sm:grid-cols-2">
+                    <div>
+                      <label htmlFor="profile-first-name" className="sr-only">Ism</label>
+                      <input id="profile-first-name" value={firstDraft} onChange={(event) => setFirstDraft(event.target.value)} autoComplete="given-name" maxLength={100} placeholder="Ism" className={`h-10 w-full rounded-xl border px-3 text-sm outline-none focus:border-brand ${nameErrors.firstName ? "border-danger" : "border-line"}`} />
+                      {nameErrors.firstName && <p className="mt-1 text-xs font-medium text-danger">{nameErrors.firstName}</p>}
+                    </div>
+                    <div>
+                      <label htmlFor="profile-last-name" className="sr-only">Familiya</label>
+                      <input id="profile-last-name" value={lastDraft} onChange={(event) => setLastDraft(event.target.value)} autoComplete="family-name" maxLength={100} placeholder="Familiya (ixtiyoriy)" className={`h-10 w-full rounded-xl border px-3 text-sm outline-none focus:border-brand ${nameErrors.lastName ? "border-danger" : "border-line"}`} />
+                      {nameErrors.lastName && <p className="mt-1 text-xs font-medium text-danger">{nameErrors.lastName}</p>}
+                    </div>
+                  </div>
+                  <div className="mt-2 flex gap-2">
+                    <button type="submit" disabled={nameBusy} className="button-primary h-10 px-4 text-sm disabled:opacity-60">{nameBusy ? <LoaderCircle size={15} className="animate-spin" /> : <><Check size={15} /> Saqlash</>}</button>
+                    <button type="button" onClick={() => { setEditingName(false); resetNameDrafts(profile); }} className="button-secondary inline-flex h-10 px-3 text-sm"><X size={15} /> Bekor</button>
+                  </div>
                 </form>
               ) : (
                 <p className="text-sm text-bodyText">{displayName}{profile?.phone ? ` · ${profile.phone}` : ""}{profile?.email ? ` · ${profile.email}` : ""}</p>
