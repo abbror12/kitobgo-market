@@ -1,9 +1,10 @@
 "use client";
 
-// "Mening ma'lumotlarim": profil kartasi (ism, ID, email, telefon, holat, asosiy manzil),
+// "Mening ma'lumotlarim": profil kartasi (ism, ID, email, telefon, holat, asosiy manzil —
+// tasdiq chiplari ataylab yo'q, foydalanuvchi so'rovi),
 // ism tahriri (ikkita katak — API.md §5) va qisqa hisoblagichlar (buyurtma, sevimli, manzil).
 import {
-  BadgeCheck, Check, Heart, LoaderCircle, Mail, MapPin, Package, Pencil, Phone, X,
+  Check, Heart, LoaderCircle, Mail, MapPin, Package, Pencil, Phone, X,
 } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -22,12 +23,6 @@ const STATUS_LABELS: Record<ProfileDto["status"], string> = {
 
 function addressLine(address: AddressDto): string {
   return [address.regionName, address.district, address.addressLine].filter(Boolean).join(", ");
-}
-
-function VerifiedChip({ verified }: { verified: boolean }) {
-  return verified
-    ? <span className="inline-flex items-center gap-1 rounded-full bg-successSoft px-2 py-0.5 text-[11px] font-bold text-success"><BadgeCheck size={12} aria-hidden="true" /> Tasdiqlangan</span>
-    : <span className="rounded-full bg-warningSoft px-2 py-0.5 text-[11px] font-bold text-warning">Tasdiqlanmagan</span>;
 }
 
 export function ProfileDetailsContent() {
@@ -141,8 +136,8 @@ export function ProfileDetailsContent() {
                   <>
                     <h3 className="truncate text-xl font-extrabold text-ink">{displayName}</h3>
                     <p className="mt-0.5 text-sm text-bodyText">ID: {profile.id}</p>
-                    <p className="mt-4 flex flex-wrap items-center gap-2 text-sm"><Mail size={16} className="text-bodyText" aria-hidden="true" /> {profile.email ?? <span className="text-bodyText">—</span>}{profile.email && <VerifiedChip verified={profile.emailVerified} />}</p>
-                    <p className="mt-2 flex flex-wrap items-center gap-2 text-sm"><Phone size={16} className="text-bodyText" aria-hidden="true" /> {profile.phone ?? <span className="text-bodyText">—</span>}{profile.phone && <VerifiedChip verified={profile.phoneVerified} />}</p>
+                    <p className="mt-4 flex flex-wrap items-center gap-2 text-sm"><Mail size={16} className="text-bodyText" aria-hidden="true" /> {profile.email ?? <span className="text-bodyText">—</span>}</p>
+                    <p className="mt-2 flex flex-wrap items-center gap-2 text-sm"><Phone size={16} className="text-bodyText" aria-hidden="true" /> {profile.phone ?? <span className="text-bodyText">—</span>}</p>
                   </>
                 )}
               </div>

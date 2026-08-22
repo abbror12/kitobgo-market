@@ -266,7 +266,7 @@ kirmagan bo'lsa login'ga `next` bilan, chiqish):
 | Sahifa | Nima bor |
 |---|---|
 | `/profile` — "Buyurtmalarim" | buyurtmalar ro'yxati, tafsilot, bekor qilish, uchta hisoblagich |
-| `/profile/details` — "Mening ma'lumotlarim" | profil kartasi (ism, ID, email/telefon + tasdiq chiplari, ro'yxatdan o'tgan sana, holat, asosiy manzil), **ism tahriri** ("Profilni tahrirlash" tugmasi), buyurtma/sevimli/manzil kartalari |
+| `/profile/details` — "Mening ma'lumotlarim" | profil kartasi (ism, ID, email, telefon, ro'yxatdan o'tgan sana, holat, asosiy manzil), **ism tahriri** ("Profilni tahrirlash" tugmasi), buyurtma/sevimli/manzil kartalari |
 
 Yon paneldagi ism/aloqa bloki `/profile/details` ga havola (asaxiy namunasi) va ro'yxatda
 alohida "Ma'lumotlarim" bandi **ataylab yo'q** — bitta sahifaga ikkita havola bo'lmasin. Ism tahriri
