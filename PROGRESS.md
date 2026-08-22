@@ -244,7 +244,7 @@ lastName?}` va `PUT /account {firstName, lastName?}`. Qoidalar:
 - **Mavjud ismni mijozda bo'lib olish YO'Q.** Bo'linishdan oldingi hisoblarda qismlar kelmaydi;
   o'zbekchada tartib qat'iy emas ("Amanbayev Zafarbek" ham, "Zafarbek Amanbayev" ham odatiy).
   Profil tahririda bunday hisobda ikkala katak **bo'sh**, tepasida "Hozirgi: …" matni —
-  foydalanuvchi o'zi to'ldiradi ([ProfileContent](components/profile/ProfileContent.tsx)).
+  foydalanuvchi o'zi to'ldiradi ([ProfileDetailsContent](components/profile/ProfileDetailsContent.tsx)).
 - Validatsiya mijozda ham, backendda ham bir xil: ism 2–100 majburiy, familiya 100 gacha, bo'sh
   satr = familiya yo'q (katak qanday bo'lsa shunday yuboriladi). `VALIDATION_FAILED` dagi
   `errors[].field` = `firstName` | `lastName` — "ism umuman yo'q" ham `firstName` ostida.
@@ -256,6 +256,23 @@ lastName?}` va `PUT /account {firstName, lastName?}`. Qoidalar:
 Lokal backend (`provider=log`, kod konsolda) bilan to'liq sinalgan: register → kod → account
 javobida uchala maydon; familiya o'chirilsa `fullName` faqat ismga aylanadi; `{fullName}`
 yuborilsa qismlar yo'qoladi va profil tahriri bo'sh kataklar + "Hozirgi" ko'rsatadi.
+
+### Shaxsiy kabinet tuzilmasi (2026-08-22)
+
+Ikki sahifa, bitta yon panel ([ProfileSidebar](components/profile/ProfileSidebar.tsx)) va bitta
+sessiya hook'i ([useProfileSession](components/profile/useProfileSession.ts) — /api/auth/session,
+kirmagan bo'lsa login'ga `next` bilan, chiqish):
+
+| Sahifa | Nima bor |
+|---|---|
+| `/profile` — "Buyurtmalarim" | buyurtmalar ro'yxati, tafsilot, bekor qilish, uchta hisoblagich |
+| `/profile/details` — "Mening ma'lumotlarim" | profil kartasi (ism, ID, email/telefon + tasdiq chiplari, ro'yxatdan o'tgan sana, holat, asosiy manzil), **ism tahriri** ("Profilni tahrirlash" tugmasi), buyurtma/sevimli/manzil kartalari |
+
+Yon paneldagi ism/aloqa bloki `/profile/details` ga havola (asaxiy namunasi). Ism tahriri
+ilgari `/profile` ning pastida edi — endi faqat `/profile/details` da. Manzil uchun yangi
+BFF: `GET /api/account/addresses` (faqat o'qish; qo'shish/tahrirlash checkout oqimida,
+alohida manzil boshqaruvi sahifasi yo'q). Ko'rsatiladigan maydonlar faqat backendda bor
+narsalar — pasport/tug'ilgan kun/balans kabi asaxiy maydonlari ataylab yo'q.
 
 Checkout'ning kod qadami — [CheckoutCodeStep](components/checkout/CheckoutCodeStep.tsx) —
 o'z chizmasini (orqaga qaytish, summa, buyurtma joylash holati) saqlaydi, lekin xato tilini

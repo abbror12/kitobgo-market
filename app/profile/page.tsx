@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: "Shaxsiy kabinet — Kitob.go", robot
 export default function ProfilePage() {
   return (
     <StoreShell>
-      <PageIntro eyebrow="Shaxsiy kabinet" title="Buyurtmalarim" description="Buyurtmalar va shaxsiy ma’lumotlaringizni bir joydan boshqaring." breadcrumbs={[{ label: "Profil" }]} />
+      <PageIntro eyebrow="Shaxsiy kabinet" title="Buyurtmalarim" description="Buyurtmalaringizni kuzating va boshqaring." breadcrumbs={[{ label: "Profil" }]} />
       <section className="container-page py-8 sm:py-12">
         <ProfileContent />
       </section>

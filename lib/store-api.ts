@@ -127,6 +127,19 @@ export interface ProfileDto {
   createdAt: string;
 }
 
+// API.md §5: GET /account/addresses — saqlangan yetkazish manzili, asosiysi ro'yxatda birinchi.
+export interface AddressDto {
+  id: number;
+  regionId: number;
+  regionName: string;
+  district?: string;
+  addressLine?: string;
+  landmark?: string;
+  recipientName: string;
+  recipientPhone: string;
+  isDefault: boolean;
+}
+
 export interface CartLineDto {
   bookId: number;
   slug: string;
