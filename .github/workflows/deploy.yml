@@ -84,3 +84,10 @@ jobs:
               -e GOOGLE_OAUTH_CLIENT_ID="$GOOGLE_OAUTH_CLIENT_ID" \
               "$IMAGE:latest"
             docker image prune -f
+            # VAQTINCHALIK tekshiruv (faqat o'qish): /account/delete hali serverdagi eski
+            # statik fayldan berilmoqda — nginx buni qanday xizmat qilayotganini ko'ramiz,
+            # keyingi commit'da statik fayl olib tashlanadi va bu qatorlar ham o'chadi.
+            echo "--- /var/www/kitobgo ---"
+            ls -laR /var/www/kitobgo 2>/dev/null || echo "papka yo'q"
+            echo "--- nginx konfiguratsiyasi ---"
+            grep -rn -B2 -A6 "kitobgo|account|style.css|try_files|proxy_pass" /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ 2>/dev/null | head -80
