@@ -90,4 +90,4 @@ jobs:
             echo "--- /var/www/kitobgo ---"
             ls -laR /var/www/kitobgo 2>/dev/null || echo "papka yo'q"
             echo "--- nginx konfiguratsiyasi ---"
-            grep -rn -B2 -A6 "kitobgo|account|style.css|try_files|proxy_pass" /etc/nginx/sites-enabled/ /etc/nginx/conf.d/ 2>/dev/null | head -80
+            for f in /etc/nginx/sites-enabled/* /etc/nginx/conf.d/*.conf; do [ -f "$f" ] && echo "== $f ==" && cat "$f"; done | head -140
