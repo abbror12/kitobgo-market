@@ -84,28 +84,3 @@ jobs:
               -e GOOGLE_OAUTH_CLIENT_ID="$GOOGLE_OAUTH_CLIENT_ID" \
               "$IMAGE:latest"
             docker image prune -f
-            # BIR MARTALIK migratsiya (foydalanuvchi ruxsati bilan, 2026-08-24):
-            # /account/delete endi Next sahifasi — nginx'dagi ikkita statik istisno olib
-            # tashlanadi. Himoya: avval zaxira, nginx -t o'tsagina reload, o'tmasa zaxira
-            # joyiga qaytadi va deploy xato bilan to'xtaydi (sayt eski holida qolaveradi).
-            # Muvaffaqiyatdan keyingi commit'da bu blok skriptdan o'chiriladi.
-            CONF=/etc/nginx/sites-enabled/kitobgo-site.conf
-            if grep -q "location = /account/delete" "$CONF"; then
-              cp "$CONF" /root/kitobgo-site.conf.bak
-              sed -i -e '\#location = /account/delete#d' -e '\#location = /style.css#d' \
-                -e '/statik istisno kerak emas/d' \
-                -e '/hisobni o.chirish sahifasi statik qolgan/d' \
-                -e '/sha sahifaning uslubi uchun/d' "$CONF"
-              if nginx -t; then
-                systemctl reload nginx
-                mkdir -p /root/kitobgo-static-arxiv
-                mv /var/www/kitobgo /root/kitobgo-static-arxiv/site
-                echo "MIGRATSIYA BAJARILDI"
-              else
-                cp /root/kitobgo-site.conf.bak "$CONF"
-                echo "nginx -t YIQILDI — konfiguratsiya qaytarildi" >&2
-                exit 1
-              fi
-            else
-              echo "migratsiya allaqachon bajarilgan"
-            fi

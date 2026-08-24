@@ -275,6 +275,22 @@ BFF: `GET /api/account/addresses` (faqat o'qish; qo'shish/tahrirlash checkout oq
 alohida manzil boshqaruvi sahifasi yo'q). Ko'rsatiladigan maydonlar faqat backendda bor
 narsalar — pasport/tug'ilgan kun/balans kabi asaxiy maydonlari ataylab yo'q.
 
+### /account/delete — statikdan Next'ga ko'chdi (2026-08-24)
+
+`kitobgo.com/account/delete` ilgari serverda qo'lda joylangan statik HTML edi
+(`/var/www/kitobgo`, manbasi KitobApp `docs/legal/site`, eski terakota uslub). Endi u
+[app/account/delete/page.tsx](app/account/delete/page.tsx) — LegalPage qobig'ida, matn jonli
+nusxadan aynan ko'chirilgan, sitemap'da bor. **Manzil o'zgarmagan** — u Play Console'dagi
+"hisobni o'chirish" maydonida va ilovaning `core/Legal.kt` faylida turibdi.
+
+Server tomonda (2026-08-24, qo'lda, root bilan): `kitobgo-site.conf` dan ikkita statik
+`location` (`/account/delete`, `/style.css`), keraksiz `root /var/www/kitobgo;` va eskirgan
+izohlar olib tashlandi; eski fayllar `/root/kitobgo-static-arxiv/site` da, konfiguratsiya
+zaxirasi `/root/kitobgo-site.conf.bak` da. Deploy SSH foydalanuvchisi root emas — server
+sozlamalarini deploy skriptidan o'zgartirib bo'lmaydi, shunga qo'lda qilingan.
+Shu bilan sites-enabled'dagi statik davr butunlay yopildi: kitobgo.com'ning HAMMA yo'llari
+Next'dan beriladi.
+
 Checkout'ning kod qadami — [CheckoutCodeStep](components/checkout/CheckoutCodeStep.tsx) —
 o'z chizmasini (orqaga qaytish, summa, buyurtma joylash holati) saqlaydi, lekin xato tilini
 o'sha `lib/otp.ts` dan oladi.
