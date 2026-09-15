@@ -4,6 +4,7 @@ import { LegalPage, LegalSection, LegalSubheading, LegalTable } from "@/componen
 
 // Matn manbayi: D:\Project\KitobApp\docs\legal\maxfiylik-siyosati.md (2026-08-12 tahriri).
 // Hujjat egasi tomonidan to'ldirilgan — qoralama banneri olib tashlangan.
+// 2026-09-15 dagi joylashuv/xarita bandlari (2.1, 2.3, 4) faqat shu sahifada — .md da hali yo'q.
 //
 // 6-banddagi ichki eslatma bloki ("BU BO'LIM HOZIR ILOVADA ISHLAMAYDI —
 // docs/PLAY_RELEASE.md ga qarang") ATAYLAB ko'chirilmadi: u jamoaga yozilgan
@@ -24,7 +25,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Shaxsiy ma’lumotlar"
       title="Maxfiylik siyosati"
-      updated={<>Oxirgi yangilanish: 1.2.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
+      updated={<>Oxirgi yangilanish: 15.9.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
     >
       <LegalSection title="1. Biz kimmiz">
         <p>KitobGo — onlayn kitob do‘koni mobil ilovasi.</p>
@@ -50,6 +51,7 @@ export default function PrivacyPage() {
             <tr><td className={TD}>Elektron pochta va parol</td><td className={TD}>Email orqali ro‘yxatdan o‘tganda</td><td className={TD}>Hisobga kirish, parolni tiklash</td></tr>
             <tr><td className={TD}>Ism-familiya</td><td className={TD}>Ixtiyoriy, profilda</td><td className={TD}>Murojaat qilish, yetkazib berish hujjatlari</td></tr>
             <tr><td className={TD}>Yetkazib berish manzili: hudud, tuman, ko‘cha, mo‘ljal</td><td className={TD}>Buyurtma berishda</td><td className={TD}>Buyurtmani yetkazib berish</td></tr>
+            <tr><td className={TD}>Telefon joylashuvi va xaritadagi yetkazish nuqtasi</td><td className={TD}>Faqat xarita ochilganda yoki «Joylashuvimni ko‘rsatish» bosilganda, ruxsat bersangiz. Fonda kuzatilmaydi</td><td className={TD}>Yetkazish nuqtasini aniqlash. Xaritadagi nuqta buyurtma bilan saqlanadi</td></tr>
             <tr><td className={TD}>Qabul qiluvchining ismi va telefoni</td><td className={TD}>Buyurtma berishda</td><td className={TD}>Kuryer bog‘lanishi uchun</td></tr>
             <tr><td className={TD}>Buyurtmaga izoh</td><td className={TD}>Ixtiyoriy</td><td className={TD}>Yetkazib berishni aniqlashtirish</td></tr>
             <tr><td className={TD}>Sharh: baho, sarlavha, matn</td><td className={TD}>Kitobga sharh yozganda</td><td className={TD}>Sharhni saytda ko‘rsatish</td></tr>
@@ -69,12 +71,10 @@ export default function PrivacyPage() {
 
         <LegalSubheading>2.3. Nima yig‘ilmaydi</LegalSubheading>
         <ul className="mt-3 list-disc space-y-1.5 pl-5">
-          <li>Joylashuv (GPS) — ilovada bunday ruxsat umuman yo‘q.</li>
           <li>Kontaktlar, kamera, mikrofon, fayllar, kalendar — hech biri so‘ralmaydi.</li>
           <li>Reklama identifikatori (AD_ID) — ishlatilmaydi.</li>
           <li>Analitika yoki xatoliklarni kuzatish (Firebase, Crashlytics va h.k.) — hozircha ulanmagan.</li>
         </ul>
-        <p className="mt-3">Ilova telefonda <strong className="text-ink">faqat bitta ruxsat</strong> so‘raydi: internetga ulanish.</p>
       </LegalSection>
 
       <LegalSection title="3. Savat va sevimlilar — telefonning o‘zida">
@@ -86,7 +86,8 @@ export default function PrivacyPage() {
         <LegalTable>
           <thead><tr><th className={TH}>Kim</th><th className={TH}>Nima uzatiladi</th><th className={TH}>Nima uchun</th></tr></thead>
           <tbody>
-            <tr><td className={TD}>Yetkazib berish xizmati / kuryer</td><td className={TD}>Qabul qiluvchining ismi, telefoni, manzili</td><td className={TD}>Buyurtmani yetkazish</td></tr>
+            <tr><td className={TD}>Yetkazib berish xizmati / kuryer</td><td className={TD}>Qabul qiluvchining ismi, telefoni, manzili va xaritadagi yetkazish nuqtasi</td><td className={TD}>Buyurtmani yetkazish</td></tr>
+            <tr><td className={TD}>Yandex (xarita)</td><td className={TD}>Xaritada tanlangan nuqtaning koordinatasi</td><td className={TD}>Nuqtaga mos manzil nomini aniqlash</td></tr>
             <tr><td className={TD}>To‘lov tizimlari (Click, Payme)</td><td className={TD}>Buyurtma raqami va summasi</td><td className={TD}>To‘lovni amalga oshirish. <strong className="text-ink">Karta ma’lumotlari bizga umuman kelmaydi</strong> — ularni to‘lov tizimining o‘z sahifasida kiritasiz</td></tr>
             <tr><td className={TD}>Google (Google orqali kirishni tanlasangiz)</td><td className={TD}>Google hisobingizdagi ism va email</td><td className={TD}>Shaxsni tasdiqlash</td></tr>
             <tr><td className={TD}>Apple (Apple orqali kirishni tanlasangiz)</td><td className={TD}>Apple bergan identifikator va email</td><td className={TD}>Shaxsni tasdiqlash</td></tr>
