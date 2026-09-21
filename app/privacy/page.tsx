@@ -4,7 +4,9 @@ import { LegalPage, LegalSection, LegalSubheading, LegalTable } from "@/componen
 
 // Matn manbayi: D:\Project\KitobApp\docs\legal\maxfiylik-siyosati.md (2026-08-12 tahriri).
 // Hujjat egasi tomonidan to'ldirilgan — qoralama banneri olib tashlangan.
-// 2026-09-15 dagi joylashuv/xarita bandlari (2.1, 2.3, 4) faqat shu sahifada — .md da hali yo'q.
+// 2026-09-15 dagi joylashuv/xarita bandlari (2.1, 2.3, 4) va 2026-09-21 dagi push/Firebase
+// jumlalari (2.2, 2.3) faqat shu sahifada — .md da yo'q. Push matni talabi:
+// kitobgo-flutter/docs/PUSH.md (Apple va Play formasi shu sahifa bilan solishtiriladi).
 //
 // 6-banddagi ichki eslatma bloki ("BU BO'LIM HOZIR ILOVADA ISHLAMAYDI —
 // docs/PLAY_RELEASE.md ga qarang") ATAYLAB ko'chirilmadi: u jamoaga yozilgan
@@ -25,7 +27,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Shaxsiy ma’lumotlar"
       title="Maxfiylik siyosati"
-      updated={<>Oxirgi yangilanish: 15.9.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
+      updated={<>Oxirgi yangilanish: 21.9.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
     >
       <LegalSection title="1. Biz kimmiz">
         <p>KitobGo — onlayn kitob do‘koni mobil ilovasi.</p>
@@ -68,12 +70,13 @@ export default function PrivacyPage() {
             <tr><td className={TD}>Bildirishnomalar va ularning o‘qilgan holati</td><td className={TD}>Buyurtma holati haqida xabar berish</td></tr>
           </tbody>
         </LegalTable>
+        <p>Bildirishnomalar (push) Google Firebase Cloud Messaging orqali yuboriladi. Buning uchun Google qurilmangizga bildirishnoma manzilini (token) beradi. Token hisobingizga bog‘lanmaydi. Yangiliklar va takliflar haqidagi bildirishnomalarni Sozlamalardagi Bildirishnomalar bo‘limida o‘chirishingiz mumkin.</p>
 
         <LegalSubheading>2.3. Nima yig‘ilmaydi</LegalSubheading>
         <ul className="mt-3 list-disc space-y-1.5 pl-5">
           <li>Kontaktlar, kamera, mikrofon, fayllar, kalendar — hech biri so‘ralmaydi.</li>
           <li>Reklama identifikatori (AD_ID) — ishlatilmaydi.</li>
-          <li>Analitika yoki xatoliklarni kuzatish (Firebase, Crashlytics va h.k.) — hozircha ulanmagan.</li>
+          <li>Analitika yoki xatoliklarni kuzatish (Firebase Analytics, Crashlytics va h.k.) ulanmagan.</li>
         </ul>
       </LegalSection>
 
