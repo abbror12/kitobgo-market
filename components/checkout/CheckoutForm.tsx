@@ -460,7 +460,7 @@ export function CheckoutForm({ items, regions, source }: { items: CheckoutItem[]
               <label className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === "COD" ? "border-brand bg-sand/50" : "border-line bg-cream hover:border-brand/40"}`}>
                 <input type="radio" name="paymentMethod" className="sr-only" checked={paymentMethod === "COD"} onChange={() => setPaymentMethod("COD")} />
                 <Banknote size={22} className={`shrink-0 ${paymentMethod === "COD" ? "text-brand" : "text-bodyText"}`} />
-                <span className="text-sm"><strong className="block">Qabul qilganda to‘lash</strong><span className="mt-0.5 block text-bodyText">Kitobni tekshirgandan keyin kuryerga naqd</span></span>
+                <span className="text-sm"><strong className="block">Qabul qilganda to‘lash</strong><span className="mt-0.5 block text-bodyText">Kitobni tekshirgandan keyin naqd yoki karta orqali</span></span>
               </label>
               {(authed ? providers : ADVERTISED_PROVIDERS).map((provider) => (
                 <label key={provider} className={`flex cursor-pointer gap-3 rounded-xl border-2 p-4 transition ${paymentMethod === provider ? "border-brand bg-sand/50" : "border-line bg-cream hover:border-brand/40"}`}>

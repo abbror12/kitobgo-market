@@ -46,7 +46,7 @@ export const faqItems: FAQItem[] = [
   {
     id: "payment",
     question: "To‘lovni qachon amalga oshiraman?",
-    answer: "Naqd to‘lovni tanlasangiz — kitobni qabul qilib, tekshirganingizdan keyin kuryerga to‘laysiz. Click yoki Payme tanlasangiz — buyurtma berishda to‘laysiz; to‘lanmagan onlayn buyurtma 30 daqiqada avtomatik bekor qilinadi.",
+    answer: "Kuryerga to‘lovni tanlasangiz — kitobni qabul qilib, tekshirganingizdan keyin naqd yoki karta orqali to‘laysiz. Click yoki Payme tanlasangiz — buyurtma berishda to‘laysiz; to‘lanmagan onlayn buyurtma 30 daqiqada avtomatik bekor qilinadi.",
   },
   {
     id: "original",

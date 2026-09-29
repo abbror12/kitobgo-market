@@ -6,6 +6,7 @@ import { LegalPage, LegalSection } from "@/components/legal/LegalPage";
 // Hujjat egasi tomonidan to'ldirilgan — qoralama banneri olib tashlangan.
 // Sotuvchi nomi 2026-09-29 da tuzatilgan (“AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT) —
 // .md da hali eski “KitobGo” YaTT turibdi, undan qayta ko'chirilsa xato qaytadi.
+// 4.2 va 4.5 dagi «kuryerga naqd yoki karta» ham 2026-09-29 dan — .md da faqat «naqd».
 
 export const metadata: Metadata = {
   title: "Foydalanish shartlari — KitobGo",
@@ -43,11 +44,11 @@ export default function TermsPage() {
 
       <LegalSection title="4. Buyurtma va to‘lov">
         <p>4.1. Buyurtma quyidagi tartibda rasmiylashtiriladi: savat → manzil va qabul qiluvchi → buyurtmani tasdiqlash → to‘lov usulini tanlash.</p>
-        <p>4.2. To‘lov usullari: Click, Payme, <strong className="text-ink">naqd pul kuryerga</strong>. Mavjud usullar ro‘yxati ilovada ko‘rsatiladi va o‘zgarishi mumkin.</p>
+        <p>4.2. To‘lov usullari: Click, Payme, <strong className="text-ink">kuryerga naqd yoki karta orqali</strong>. Mavjud usullar ro‘yxati ilovada ko‘rsatiladi va o‘zgarishi mumkin.</p>
         <p>4.3. Onlayn to‘lovda karta ma’lumotlari to‘lov tizimining o‘z sahifasida kiritiladi va Sotuvchiga uzatilmaydi.</p>
         {/* 30 daqiqa — backend shartnomasida tasdiqlangan (docs/API.md §6.3). */}
         <p>4.4. <strong className="text-ink">To‘lanmagan buyurtma 30 daqiqa ichida avtomatik bekor qilinadi</strong> va band qilingan kitoblar omborga qaytariladi.</p>
-        <p>4.5. Naqd to‘lov tanlanganda buyurtma darhol ishlovga o‘tadi, to‘lov esa kuryerga yetkazib berish paytida amalga oshiriladi.</p>
+        <p>4.5. Kuryerga to‘lov tanlanganda buyurtma darhol ishlovga o‘tadi, to‘lov esa yetkazib berish paytida kuryerga naqd yoki karta orqali amalga oshiriladi.</p>
       </LegalSection>
 
       <LegalSection title="5. Yetkazib berish">
