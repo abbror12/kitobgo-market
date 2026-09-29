@@ -6,7 +6,7 @@ export function TopBar() {
     <div className="hidden border-b border-line bg-navSurface text-bodyText lg:block">
       <div className="container-page flex h-9 items-center justify-between text-[13px]">
         <div className="flex items-center gap-5">
-          <span className="inline-flex items-center gap-1.5"><Truck size={15} aria-hidden="true" /> Butun O‘zbekiston bo‘ylab bepul yetkazib berish</span>
+          <span className="inline-flex items-center gap-1.5"><Truck size={15} aria-hidden="true" /> Butun O‘zbekiston bo‘ylab yetkazib berish</span>
           <span className="inline-flex items-center gap-1.5"><CircleDollarSign size={15} aria-hidden="true" /> To‘lov mahsulot qabul qilingandan keyin</span>
           <span className="hidden items-center gap-1.5 xl:inline-flex"><BadgeCheck size={15} aria-hidden="true" /> Din ishlari qo‘mitasi ruxsatiga ega kitoblar</span>
         </div>

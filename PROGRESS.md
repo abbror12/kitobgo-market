@@ -355,6 +355,23 @@ ni inglizcha qaytaradi, shuning uchun `code` bo‘yicha shoxlash shart.
 `PAID` bo'lguncha 3 soniyada pollaydi (~2 daqiqa), `checkoutUrl` sessionStorage'da
 (`kg:pay:{orderNumber}`) turadi — "To'lovni davom ettirish" tugmasi shundan.
 
+### Saytdagi va'dalar foydalanish shartlariga mos bo'lishi shart (2026-09-29)
+
+Reklama matnlari (TopBar, hero, afzalliklar, statistika, FAQ, kitob sahifasi, savatcha,
+"Biz haqimizda", meta description) [/terms](app/terms/page.tsx) dan ko'p va'da bermasin:
+
+- **Yetkazib berish bepul EMAS** — narxi hududga bog'liq va checkout'da backend
+  kotirovkasidan keladi. "Bepul" faqat backend aytganda chiqadi (`quote.free`,
+  `deliveryFee === 0`) — hamma uchun "bepul yetkazish" deb yozilmaydi.
+- **Muddat — 2–3 ish kuni** (shartlar 5.2). "1 kun", "1–3 kun" yozilmaydi.
+- **Kuryerga faqat naqd** (shartlar 4.2, 4.5). Click/Payme buyurtma berishda to'lanadi,
+  to'lanmagani 30 daqiqada bekor bo'ladi (4.4). "Qabul qilganda to'lov" — imkoniyat
+  sifatida to'g'ri, lekin "kuryerga karta" yoki "keyin elektron to'lov" deb yozilmaydi.
+- **Qaytarish — 14 kun ichida, ishlatilmagan bo'lsa** (6.2). Uni "kafolat" demaymiz.
+
+Shartlar o'zgarsa (masalan, bepul yetkazish chegarasi e'lon qilinsa), avval `/terms`,
+keyin reklama matnlari.
+
 ## Qidiruv tizimlari uchun (SEO)
 
 Manzil bitta joyda: [lib/site.ts](lib/site.ts) — `SITE_URL` (`NEXT_PUBLIC_SITE_URL` yoki

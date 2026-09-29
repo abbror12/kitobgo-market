@@ -40,13 +40,13 @@ export const testimonials: Testimonial[] = [
 export const faqItems: FAQItem[] = [
   {
     id: "delivery",
-    question: "Yetkazib berish haqiqatan ham bepulmi?",
-    answer: "Ha, buyurtmalar O‘zbekiston bo‘ylab bepul yetkazib beriladi. Manzil va qulay vaqt buyurtma tasdiqlanganda kelishiladi.",
+    question: "Yetkazib berish qancha turadi va necha kunda keladi?",
+    answer: "Yetkazib berish narxi hududga bog‘liq — u buyurtma berishda, hudud tanlanganda ko‘rsatiladi. Buyurtmalar O‘zbekiston bo‘ylab kuryer orqali 2–3 ish kunida yetkaziladi. Manzil va qulay vaqt buyurtma tasdiqlanganda kelishiladi.",
   },
   {
     id: "payment",
     question: "To‘lovni qachon amalga oshiraman?",
-    answer: "Kitobni qabul qilib, holatini tekshirganingizdan keyin naqd yoki mavjud elektron usulda to‘laysiz.",
+    answer: "Naqd to‘lovni tanlasangiz — kitobni qabul qilib, tekshirganingizdan keyin kuryerga to‘laysiz. Click yoki Payme tanlasangiz — buyurtma berishda to‘laysiz; to‘lanmagan onlayn buyurtma 30 daqiqada avtomatik bekor qilinadi.",
   },
   {
     id: "original",

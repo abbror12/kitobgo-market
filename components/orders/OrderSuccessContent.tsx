@@ -141,7 +141,7 @@ export function OrderSuccessContent({ orderNumber, payPending }: { orderNumber: 
         {pendingPayment
           ? "Buyurtma 30 daqiqa davomida siz uchun band qilib turiladi. To‘lov tasdiqlangach tayyorlashni boshlaymiz."
           : codDone
-            ? "Kuryer kitob(lar)ni yetkazganda naqd yoki karta orqali to‘laysiz. Operatorimiz aniq vaqtni kelishish uchun bog‘lanadi."
+            ? "Kuryer kitob(lar)ni yetkazganda naqd to‘laysiz. Operatorimiz aniq vaqtni kelishish uchun bog‘lanadi."
             : "Buyurtma holatini shaxsiy kabinetdan kuzatib borishingiz mumkin."}
       </p>
 

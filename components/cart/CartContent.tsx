@@ -47,10 +47,10 @@ export function CartContent() {
       </div>
       <aside className="h-fit rounded-2xl border border-line bg-cream p-5 shadow-soft lg:sticky lg:top-40 sm:p-6">
         <h2 className="font-serif text-xl font-semibold">Buyurtma hisoboti</h2>
-        <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between"><dt className="text-bodyText">Mahsulotlar ({items.reduce((sum, item) => sum + item.quantity, 0)} ta)</dt><dd className="font-semibold">{formatPrice(subtotal)}</dd></div><div className="flex justify-between"><dt className="text-bodyText">Yetkazib berish</dt><dd className="font-bold text-brand">Bepul</dd></div></dl>
-        <div className="mt-5 flex items-end justify-between border-t border-line pt-5"><span className="font-bold">Jami</span><strong className="font-serif text-2xl font-semibold text-brand">{formatPrice(subtotal)}</strong></div>
+        <dl className="mt-5 space-y-3 text-sm"><div className="flex justify-between"><dt className="text-bodyText">Mahsulotlar ({items.reduce((sum, item) => sum + item.quantity, 0)} ta)</dt><dd className="font-semibold">{formatPrice(subtotal)}</dd></div><div className="flex justify-between"><dt className="text-bodyText">Yetkazib berish</dt><dd className="text-bodyText">Hudud tanlanganda</dd></div></dl>
+        <div className="mt-5 flex items-end justify-between border-t border-line pt-5"><span className="font-bold">Jami <span className="text-xs font-medium text-bodyText">(yetkazishsiz)</span></span><strong className="font-serif text-2xl font-semibold text-brand">{formatPrice(subtotal)}</strong></div>
         <Link href={`/checkout?items=${checkoutItems}`} className="button-primary mt-6 h-12 w-full px-5">Buyurtma berish</Link>
-        <div className="mt-5 space-y-3 text-xs text-bodyText"><p className="flex gap-2"><Truck size={16} className="shrink-0 text-brand" /> O‘zbekiston bo‘ylab bepul yetkaziladi</p><p className="flex gap-2"><ShieldCheck size={16} className="shrink-0 text-brand" /> To‘lov mahsulotni olgandan keyin</p></div>
+        <div className="mt-5 space-y-3 text-xs text-bodyText"><p className="flex gap-2"><Truck size={16} className="shrink-0 text-brand" /> O‘zbekiston bo‘ylab 2–3 ish kunida yetkaziladi</p><p className="flex gap-2"><ShieldCheck size={16} className="shrink-0 text-brand" /> To‘lov mahsulotni olgandan keyin</p></div>
       </aside>
     </div>
   );

@@ -20,7 +20,7 @@ const lora = Lora({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: "Kitob.go — O‘zbekistondagi onlayn kitob do‘koni",
-  description: "Qur’oni Karim, hadis, tafsir, tarix va boshqa kitoblarni bepul yetkazib berish hamda qabul qilgandan keyin to‘lash imkoniyati bilan xarid qiling.",
+  description: "Qur’oni Karim, hadis, tafsir, tarix va boshqa kitoblarni O‘zbekiston bo‘ylab yetkazib berish hamda qabul qilgandan keyin to‘lash imkoniyati bilan xarid qiling.",
   keywords: ["kitob", "onlayn kitob do‘koni", "Qur’oni Karim", "hadis", "tafsir", "O‘zbekiston"],
   // Google Search Console egalik tasdiqlovi (2026-08-19). Bu qator o'chirilsa,
   // Console'dagi egalik ham bir muddatdan keyin bekor bo'ladi — olib tashlamang.

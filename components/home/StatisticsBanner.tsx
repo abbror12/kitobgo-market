@@ -3,7 +3,7 @@ import { BookCopy, Headphones, Smile, Truck } from "lucide-react";
 const stats = [
   { value: "10 000+", label: "Mamnun mijozlar", icon: Smile },
   { value: "500+", label: "Original kitoblar", icon: BookCopy },
-  { value: "1 kun ichida", label: "Yetkazib berish", icon: Truck },
+  { value: "2–3 ish kuni", label: "Yetkazib berish", icon: Truck },
   { value: "24/7", label: "Mijozlarni qo‘llab-quvvatlash", icon: Headphones },
 ];
 

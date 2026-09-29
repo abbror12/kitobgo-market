@@ -1,7 +1,7 @@
 import { BadgeCheck, CalendarCheck, CreditCard, PackageCheck, Truck } from "lucide-react";
 
 const benefits = [
-  { title: "Bepul yetkazib berish", subtitle: "Butun O‘zbekiston bo‘ylab", icon: Truck },
+  { title: "Kuryer orqali yetkazish", subtitle: "Butun O‘zbekiston bo‘ylab", icon: Truck },
   { title: "Qabul qilganda to‘lov", subtitle: "Avval tekshiring, keyin to‘lang", icon: CreditCard },
   { title: "Original nashrlar", subtitle: "Faqat rasmiy hamkorlardan", icon: PackageCheck },
   { title: "Ruxsatga ega", subtitle: "Tekshirilgan diniy adabiyotlar", icon: BadgeCheck },

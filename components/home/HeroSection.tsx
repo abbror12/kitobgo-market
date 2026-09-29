@@ -21,7 +21,7 @@ export function HeroSection({ book }: { book: Book }) {
             <div className="mt-3 sm:mt-6">
               <p className="font-serif text-[20px] font-semibold text-brand sm:text-[26px]">{formatPrice(book.price)}</p>
               <div className="mt-2 hidden flex-wrap gap-4 text-[12px] text-bodyText lg:flex">
-                <span className="inline-flex items-center gap-1.5"><Truck size={16} aria-hidden="true" /> Bepul yetkazib berish</span>
+                <span className="inline-flex items-center gap-1.5"><Truck size={16} aria-hidden="true" /> O‘zbekiston bo‘ylab yetkazish</span>
                 <span className="inline-flex items-center gap-1.5"><CreditCard size={16} aria-hidden="true" /> To‘lov qabul qilgandan keyin</span>
               </div>
             </div>
@@ -34,7 +34,7 @@ export function HeroSection({ book }: { book: Book }) {
             <Image src={book.image} alt={`${book.title} kitobi`} fill priority unoptimized={isExternalImage(book.image)} sizes="(max-width: 640px) 45vw, 50vw" className="object-contain p-3 sm:p-8 lg:p-10" />
             <div className="absolute bottom-5 right-5 hidden w-52 space-y-2.5 xl:block">
               <div className="hero-fact"><BadgeCheck size={21} aria-hidden="true" /><span><strong>Rasmiy ruxsat</strong>Din ishlari qo‘mitasi</span></div>
-              <div className="hero-fact"><Truck size={21} aria-hidden="true" /><span><strong>Bepul yetkazish</strong>Butun O‘zbekiston bo‘ylab</span></div>
+              <div className="hero-fact"><Truck size={21} aria-hidden="true" /><span><strong>2–3 ish kunida yetkazish</strong>Butun O‘zbekiston bo‘ylab</span></div>
             </div>
           </div>
         </div>
