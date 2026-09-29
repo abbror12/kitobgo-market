@@ -41,7 +41,7 @@ export default function PrivacyPage() {
             <tr><th className={ROW_TH}>Aloqa</th><td className={TD}><a href="mailto:support@kitobgo.com" className="font-semibold text-brand hover:underline">support@kitobgo.com</a> · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a></td></tr>
           </tbody>
         </LegalTable>
-        <p>Ushbu siyosat KitobGo Android ilovasiga va <strong className="text-ink">kitobgo.com</strong> saytiga taalluqli.</p>
+        <p>Ushbu siyosat KitobGo Android va iOS ilovalariga va <strong className="text-ink">kitobgo.com</strong> saytiga taalluqli.</p>
       </LegalSection>
 
       <LegalSection title="2. Qanday ma’lumotlarni yig‘amiz">
