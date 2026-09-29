@@ -7,6 +7,8 @@ import { LegalPage, LegalSection, LegalSubheading, LegalTable } from "@/componen
 // 2026-09-15 dagi joylashuv/xarita bandlari (2.1, 2.3, 4) va 2026-09-21 dagi push/Firebase
 // jumlalari (2.2, 2.3) faqat shu sahifada — .md da yo'q. Push matni talabi:
 // kitobgo-flutter/docs/PUSH.md (Apple va Play formasi shu sahifa bilan solishtiriladi).
+// Operator nomi 2026-09-29 da tuzatilgan (“AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT) —
+// .md da hali eski “KitobGo” YaTT turibdi, undan qayta ko'chirilsa xato qaytadi.
 //
 // 6-banddagi ichki eslatma bloki ("BU BO'LIM HOZIR ILOVADA ISHLAMAYDI —
 // docs/PLAY_RELEASE.md ga qarang") ATAYLAB ko'chirilmadi: u jamoaga yozilgan
@@ -27,13 +29,13 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Shaxsiy ma’lumotlar"
       title="Maxfiylik siyosati"
-      updated={<>Oxirgi yangilanish: 21.9.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
+      updated={<>Oxirgi yangilanish: 29.9.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
     >
       <LegalSection title="1. Biz kimmiz">
         <p>KitobGo — onlayn kitob do‘koni mobil ilovasi.</p>
         <LegalTable>
           <tbody>
-            <tr><th className={ROW_TH}>Operator (ma’lumot egasi)</th><td className={TD}>“KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950</td></tr>
+            <tr><th className={ROW_TH}>Operator (ma’lumot egasi)</th><td className={TD}>“AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT ro‘yxatdan o‘tish raqami: 6985950</td></tr>
             <tr><th className={ROW_TH}>STIR / INN</th><td className={TD}>626762785</td></tr>
             <tr><th className={ROW_TH}>Manzil</th><td className={TD}>Toshkent sh., Olmozor, Qamarniso ko‘chasi</td></tr>
             <tr><th className={ROW_TH}>Aloqa</th><td className={TD}><a href="mailto:support@kitobgo.com" className="font-semibold text-brand hover:underline">support@kitobgo.com</a> · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a></td></tr>

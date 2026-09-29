@@ -4,6 +4,8 @@ import { LegalPage, LegalSection } from "@/components/legal/LegalPage";
 
 // Matn manbayi: D:\Project\KitobApp\docs\legal\foydalanish-shartlari.md (2026-08-12 tahriri).
 // Hujjat egasi tomonidan to'ldirilgan — qoralama banneri olib tashlangan.
+// Sotuvchi nomi 2026-09-29 da tuzatilgan (“AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT) —
+// .md da hali eski “KitobGo” YaTT turibdi, undan qayta ko'chirilsa xato qaytadi.
 
 export const metadata: Metadata = {
   title: "Foydalanish shartlari — KitobGo",
@@ -16,10 +18,10 @@ export default function TermsPage() {
     <LegalPage
       eyebrow="Ommaviy oferta"
       title="Foydalanish shartlari"
-      updated={<>Ommaviy oferta · Oxirgi yangilanish: 1.2.2026</>}
+      updated={<>Ommaviy oferta · Oxirgi yangilanish: 29.9.2026</>}
     >
       <LegalSection title="1. Umumiy qoidalar">
-        <p>1.1. Ushbu shartlar “KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950 (keyingi o‘rinlarda — “Sotuvchi”, STIR 626762785, manzil Toshkent sh., Olmozor, Qamarniso ko‘chasi) va KitobGo ilovasidan foydalanuvchi jismoniy shaxs (keyingi o‘rinlarda — “Xaridor”) o‘rtasidagi munosabatni tartibga soladi.</p>
+        <p>1.1. Ushbu shartlar “AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT ro‘yxatdan o‘tish raqami: 6985950 (keyingi o‘rinlarda — “Sotuvchi”, STIR 626762785, manzil Toshkent sh., Olmozor, Qamarniso ko‘chasi) va KitobGo ilovasidan foydalanuvchi jismoniy shaxs (keyingi o‘rinlarda — “Xaridor”) o‘rtasidagi munosabatni tartibga soladi.</p>
         <p>1.2. Ilovadan foydalanish, ro‘yxatdan o‘tish yoki buyurtma berish ushbu shartlarga to‘liq rozilik bildirish hisoblanadi. Rozi bo‘lmasangiz, ilovadan foydalanmang.</p>
         <p>1.3. Maxfiylik siyosati ushbu shartlarning ajralmas qismidir: <Link href="/privacy" className="font-semibold text-brand hover:underline">kitobgo.com/privacy</Link></p>
       </LegalSection>
@@ -92,7 +94,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <LegalSection title="12. Rekvizitlar">
-        <p>“KitobGo” YaTT ro‘yxatdan o‘tish raqami: 6985950 · STIR 626762785 · Toshkent sh., Olmozor, Qamarniso ko‘chasi · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a> · <a href="mailto:info@kitobgo.com" className="font-semibold text-brand hover:underline">info@kitobgo.com</a></p>
+        <p>“AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT ro‘yxatdan o‘tish raqami: 6985950 · STIR 626762785 · Toshkent sh., Olmozor, Qamarniso ko‘chasi · <a href="tel:+998774488080" className="font-semibold text-brand hover:underline">+998 77 448 80 80</a> · <a href="mailto:info@kitobgo.com" className="font-semibold text-brand hover:underline">info@kitobgo.com</a></p>
       </LegalSection>
 
       <nav className="mt-10 flex flex-wrap gap-x-5 gap-y-2 border-t border-line pt-5 text-sm font-semibold">
