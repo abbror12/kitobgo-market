@@ -9,6 +9,8 @@ import { LegalPage, LegalSection, LegalSubheading, LegalTable } from "@/componen
 // kitobgo-flutter/docs/PUSH.md (Apple va Play formasi shu sahifa bilan solishtiriladi).
 // Operator nomi 2026-09-29 da tuzatilgan (“AMANBAYEV JASURBEK OLIMJON O‘G‘LI” YaTT) —
 // .md da hali eski “KitobGo” YaTT turibdi, undan qayta ko'chirilsa xato qaytadi.
+// Push tokenining hisobga bog'lanishi (2.2, 5) 2026-10-06 da ilovaning 2.3.7 reliziga moslab
+// yozildi — manba: kitobgo-flutter/docs/PUSH.md va lib/ui/push/device_registration.dart.
 //
 // 6-banddagi ichki eslatma bloki ("BU BO'LIM HOZIR ILOVADA ISHLAMAYDI —
 // docs/PLAY_RELEASE.md ga qarang") ATAYLAB ko'chirilmadi: u jamoaga yozilgan
@@ -29,7 +31,7 @@ export default function PrivacyPage() {
     <LegalPage
       eyebrow="Shaxsiy ma’lumotlar"
       title="Maxfiylik siyosati"
-      updated={<>Oxirgi yangilanish: 29.9.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
+      updated={<>Oxirgi yangilanish: 6.10.2026 · Amal qilish boshlangan sana: 1.2.2026</>}
     >
       <LegalSection title="1. Biz kimmiz">
         <p>KitobGo — onlayn kitob do‘koni mobil ilovasi.</p>
@@ -69,10 +71,11 @@ export default function PrivacyPage() {
             <tr><td className={TD}>Buyurtmalar tarixi (kitoblar, narx, holat, sana)</td><td className={TD}>Buyurtmani bajarish, buxgalteriya, kafolat</td></tr>
             <tr><td className={TD}>To‘lov holati va to‘lov tizimi identifikatori</td><td className={TD}>To‘lovni tasdiqlash</td></tr>
             <tr><td className={TD}>Sessiya tokenlari (kirish va yangilash tokeni)</td><td className={TD}>Har safar qayta kirmasligingiz uchun</td></tr>
+            <tr><td className={TD}>Qurilmaning bildirishnoma tokeni (hisobga kirgan bo‘lsangiz)</td><td className={TD}>Buyurtma holati haqida push yuborish</td></tr>
             <tr><td className={TD}>Bildirishnomalar va ularning o‘qilgan holati</td><td className={TD}>Buyurtma holati haqida xabar berish</td></tr>
           </tbody>
         </LegalTable>
-        <p>Bildirishnomalar (push) Google Firebase Cloud Messaging orqali yuboriladi. Buning uchun Google qurilmangizga bildirishnoma manzilini (token) beradi. Token hisobingizga bog‘lanmaydi. Yangiliklar va takliflar haqidagi bildirishnomalarni Sozlamalardagi Bildirishnomalar bo‘limida o‘chirishingiz mumkin.</p>
+        <p>Bildirishnomalar (push) Google Firebase Cloud Messaging orqali yuboriladi. Buning uchun Google qurilmangizga bildirishnoma manzilini (token) beradi. Hisobingizga kirgan bo‘lsangiz, token buyurtmalaringiz holati haqida xabar berish uchun hisobingizga bog‘lanadi va hisobdan chiqqaningizda uzib qo‘yiladi; hisobga kirmasangiz, token hisobga bog‘lanmaydi. Yangiliklar va takliflar haqidagi bildirishnomalarni Sozlamalardagi Bildirishnomalar bo‘limida o‘chirishingiz mumkin.</p>
 
         <LegalSubheading>2.3. Nima yig‘ilmaydi</LegalSubheading>
         <ul className="mt-3 list-disc space-y-1.5 pl-5">
@@ -110,6 +113,7 @@ export default function PrivacyPage() {
             <tr><td className={TD}>Buyurtmalar va to‘lov yozuvlari</td><td className={TD}>Hisob o‘chirilgandan keyin ham <strong className="text-ink">5 yil</strong> — buxgalteriya va soliq qonunchiligi talabi</td></tr>
             <tr><td className={TD}>Sharhlar</td><td className={TD}>Hisob o‘chirilganda anonimlashtiriladi</td></tr>
             <tr><td className={TD}>Sessiya tokenlari</td><td className={TD}>Chiqqaningizda darhol o‘chiriladi; yangilash tokeni 30 kun</td></tr>
+            <tr><td className={TD}>Qurilmaning bildirishnoma tokeni</td><td className={TD}>Hisobdan chiqqaningizda uziladi; 90 kun ishlatilmagan qurilma unutiladi; hisob o‘chirilganda o‘chadi</td></tr>
           </tbody>
         </LegalTable>
       </LegalSection>
